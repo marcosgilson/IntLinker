@@ -1,24 +1,38 @@
-*.log
-.DS_Store
+# --- Entorno y Secretos ---
 .env
 .env.backup
 .env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
 /auth.json
+
+# --- Dependencias ---
+/vendor
 /node_modules
+
+# --- Compilación (React/Vite) ---
 /public/build
 /public/hot
 /public/storage
+
+# --- Almacenamiento y Logs ---
 /storage/*.key
 /storage/pail
-/vendor
+*.log
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# --- Herramientas de Editor ---
+.DS_Store
+Thumbs.db
+/.vscode
+/.idea
+/.fleet
+/.nova
+/.zed
+.phpunit.result.cache
+/.phpunit.cache
+.phpactor.json
+
+# --- Configuración de Máquinas Virtuales ---
 Homestead.json
 Homestead.yaml
-Thumbs.db
