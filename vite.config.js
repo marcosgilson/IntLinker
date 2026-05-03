@@ -10,4 +10,21 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        host: '0.0.0.0',
+        port: 5174,
+        strictPort: true,
+        origin: 'http://localhost:5174',
+        cors: false,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+        hmr: {
+            host: 'localhost',
+            protocol: 'ws',
+            port: 5174,
+        },
+    },
 });

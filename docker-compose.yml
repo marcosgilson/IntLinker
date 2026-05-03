@@ -1,0 +1,53 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: intlinker-dev
+    container_name: intlinker-app
+    ports:
+      - '8000:80'
+    volumes:
+      - ./:/var/www/html
+      - ./storage:/var/www/html/storage
+      - ./public/build:/var/www/html/public/build
+    environment:
+      APP_ENV: local
+      APP_DEBUG: 'true'
+      APP_URL: http://localhost:8000
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_DATABASE: laravel
+      DATABASE_USERNAME: laravel
+      DATABASE_PASSWORD: secret
+    depends_on:
+      - db
+
+  vite:
+    image: node:20-bullseye
+    container_name: intlinker-vite
+    working_dir: /var/www/html
+    ports:
+      - '5174:5174'
+    volumes:
+      - ./:/var/www/html
+      - node_modules:/var/www/html/node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5174"
+
+  db:
+    image: mysql:8.0
+    container_name: intlinker-db
+    restart: unless-stopped
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+  node_modules:
