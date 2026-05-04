@@ -15,6 +15,10 @@ export default defineConfig({
         port: 5174,
         strictPort: true,
         origin: 'http://localhost:5174',
+        watch: {
+            usePolling: true,
+            interval: 1000,
+        },
         cors: false,
         headers: {
             'Access-Control-Allow-Origin': '*',
