@@ -7,6 +7,35 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Ejecutar con Podman (local)
+
+1. Copia variables de entorno base:
+
+```bash
+cp .env.example .env
+```
+
+2. Levanta los contenedores:
+
+```bash
+podman compose up -d --build
+```
+
+3. Genera clave de Laravel y ejecuta migraciones:
+
+```bash
+podman compose exec app php artisan key:generate
+podman compose exec app php artisan migrate
+```
+
+4. Accede desde el host:
+
+- App Laravel: http://localhost:8000
+- Vite (HMR): http://localhost:5174
+- MySQL expuesto al host: localhost:3307
+
+Si tu entorno no tiene el subcomando `podman compose`, instala `podman-compose` o usa un alias equivalente configurado en tu sistema.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
