@@ -26,6 +26,8 @@ services:
       CACHE_STORE: file
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
+    extra_hosts:
+      - "db:10.89.2.2"
     depends_on:
       db:
         condition: service_healthy
