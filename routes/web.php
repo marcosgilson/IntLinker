@@ -1,22 +1,61 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CompanyApplicationController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanyEnrollmentController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return redirect('/IntLinker');
-});
+Route::get('/', fn () => redirect('/IntLinker'));
 
-Route::get('/IntLinker', function () {
-    return Inertia::render('Home');
-})->name('home');
+Route::get('/IntLinker', fn () => Inertia::render('Home'))->name('home');
 
+// ─── Public routes ───────────────────────────────────────────────────────────
+Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
+Route::get('/companies/{company}', [CompanyController::class, 'show'])->name('companies.show');
+
+// ─── Authenticated routes ────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Student role
+    Route::post('/student', [StudentController::class, 'store'])->name('student.store');
+    Route::post('/student/renew', [StudentController::class, 'renew'])->name('student.renew');
+    Route::post('/student/schools', [StudentController::class, 'addSchool'])->name('student.schools.add');
+    Route::delete('/student/schools/{school}', [StudentController::class, 'removeSchool'])->name('student.schools.remove');
+
+    // Enrollments (student perspective – private)
+    Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
+    Route::post('/enrollments', [EnrollmentController::class, 'store'])->name('enrollments.store');
+    Route::delete('/enrollments/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+
+    // Company membership
+    Route::post('/companies/{company}/join', [CompanyController::class, 'join'])->name('companies.join');
+    Route::delete('/companies/{company}/leave', [CompanyController::class, 'leave'])->name('companies.leave');
+
+    // Company enrollment management (employee/admin perspective)
+    Route::get('/companies/{company}/enrollments', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');
+    Route::patch('/companies/{company}/enrollments/{enrollment}/accept', [CompanyEnrollmentController::class, 'accept'])->name('companies.enrollments.accept');
+    Route::delete('/companies/{company}/enrollments/{enrollment}', [CompanyEnrollmentController::class, 'remove'])->name('companies.enrollments.remove');
+
+    // Request creation of a new company
+    Route::post('/company-applications', [CompanyApplicationController::class, 'store'])->name('company-applications.store');
+
+    // ─── Admin routes ────────────────────────────────────────────────────────
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/company-applications', [AdminController::class, 'companyApplications'])->name('company-applications.index');
+        Route::patch('/company-applications/{application}/approve', [AdminController::class, 'approveApplication'])->name('company-applications.approve');
+        Route::patch('/company-applications/{application}/reject', [AdminController::class, 'rejectApplication'])->name('company-applications.reject');
+    });
 });
 
 require __DIR__ . '/auth.php';
+

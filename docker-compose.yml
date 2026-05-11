@@ -26,8 +26,7 @@ services:
       CACHE_STORE: file
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
-    extra_hosts:
-      - "db:10.89.2.2"
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
@@ -41,6 +40,9 @@ services:
     volumes:
       - ./:/var/www/html
       - node_modules:/var/www/html/node_modules
+    restart: unless-stopped
+    depends_on:
+      - app
     command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5174"
 
   db:
