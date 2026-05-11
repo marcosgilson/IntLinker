@@ -38,6 +38,39 @@ class CompanyController extends Controller
     }
 
     /**
+     * Worker dashboard: show companies the authenticated user belongs to
+     * and their enrollment lists.
+     */
+    public function myCompany(Request $request): Response|RedirectResponse
+    {
+        $user = $request->user();
+
+        $companies = $user->companies()
+            ->withCount([
+                'enrollments as waiting_count'  => fn ($q) => $q->where('status', 'waiting'),
+                'enrollments as accepted_count' => fn ($q) => $q->where('status', 'accepted'),
+            ])
+            ->get(['companies.id', 'companies.name', 'companies.description', 'companies.logo', 'companies.applications_email']);
+
+        if ($companies->isEmpty()) {
+            return redirect()->route('home')->with('status', 'No perteneces a ninguna empresa. Únete a una desde la lista de empresas.');
+        }
+
+        // Load enrollments for each company (only non-cancelled so the page is useful)
+        foreach ($companies as $company) {
+            $company->setRelation('enrollments', $company->enrollments()
+                ->with('student:id,user_id', 'student.user:id,name,email')
+                ->whereIn('status', ['waiting', 'accepted'])
+                ->latest()
+                ->get());
+        }
+
+        return Inertia::render('Company/MyCompany', [
+            'companies' => $companies,
+        ]);
+    }
+
+    /**
      * Join an existing company as an employee.
      */
     public function join(Request $request, Company $company): RedirectResponse

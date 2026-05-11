@@ -13,6 +13,41 @@ use Inertia\Response;
 class AdminController extends Controller
 {
     /**
+     * Admin dashboard: create company form + pending applications.
+     */
+    public function dashboard(): Response
+    {
+        $applications = CompanyApplication::with('user:id,name,email')
+            ->orderByRaw("FIELD(status, 'pending', 'approved', 'rejected')")
+            ->latest()
+            ->paginate(20);
+
+        return Inertia::render('Admin/Dashboard', [
+            'applications' => $applications,
+        ]);
+    }
+
+    /**
+     * Admin: create a company directly (no review needed).
+     */
+    public function storeCompany(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name'               => 'required|string|max:255|unique:companies,name',
+            'description'        => 'nullable|string|max:2000',
+            'applications_email' => 'nullable|email|max:255',
+        ]);
+
+        Company::create([
+            'name'               => $request->name,
+            'description'        => $request->description,
+            'applications_email' => $request->applications_email,
+        ]);
+
+        return back()->with('status', "Empresa '{$request->name}' creada correctamente.");
+    }
+
+    /**
      * List all pending company creation requests.
      */
     public function companyApplications(Request $request): Response

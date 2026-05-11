@@ -1,40 +1,28 @@
-import { Head, Link } from '@inertiajs/react';
+import { useState } from 'react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import AuthModal from '@/Components/AuthModal';
 
-const offers = [
-    {
-        id: 1,
-        company: 'Siemens Mobility',
-        logo: 'SM',
-        color: 'bg-teal-600',
-        title: 'Desarrollador Frontend React',
-        location: 'Madrid',
-        type: 'Presencial',
-        duration: '6 meses',
-        tags: ['React', 'TypeScript', 'Tailwind'],
-    },
-    {
-        id: 2,
-        company: 'Indra',
-        logo: 'IN',
-        color: 'bg-blue-700',
-        title: 'Analista de Datos / Machine Learning',
-        location: 'Barcelona',
-        type: 'Híbrido',
-        duration: '4 meses',
-        tags: ['Python', 'SQL', 'TensorFlow'],
-    },
-    {
-        id: 3,
-        company: 'Accenture',
-        logo: 'AC',
-        color: 'bg-violet-600',
-        title: 'Backend Developer Java',
-        location: 'Sevilla',
-        type: 'Remoto',
-        duration: '6 meses',
-        tags: ['Java', 'Spring Boot', 'AWS'],
-    },
-];
+// Generate a consistent colour from a string (company name)
+function stringToColor(str) {
+    const palette = [
+        'bg-indigo-600', 'bg-violet-600', 'bg-teal-600',
+        'bg-blue-700',   'bg-rose-600',   'bg-amber-600',
+        'bg-emerald-600','bg-sky-600',     'bg-fuchsia-600',
+    ];
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    return palette[Math.abs(hash) % palette.length];
+}
+
+// Get initials from a company name (up to 2 chars)
+function initials(name) {
+    return name
+        .split(' ')
+        .slice(0, 2)
+        .map((w) => w[0])
+        .join('')
+        .toUpperCase();
+}
 
 const steps = [
     {
@@ -49,8 +37,8 @@ const steps = [
     },
     {
         number: '02',
-        title: 'Explora ofertas',
-        desc: 'Filtra por sector, ubicación o modalidad y descubre las prácticas que encajan contigo.',
+        title: 'Explora empresas',
+        desc: 'Descubre las empresas colaboradoras y encuentra la que mejor encaja con tu perfil.',
         icon: (
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -60,7 +48,7 @@ const steps = [
     {
         number: '03',
         title: 'Conecta y crece',
-        desc: 'Postula directamente y empieza tu carrera profesional con las mejores empresas.',
+        desc: 'Postula directamente (máx. 5 activas) y empieza tu carrera profesional.',
         icon: (
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -69,10 +57,31 @@ const steps = [
     },
 ];
 
-export default function Home() {
+export default function Home({ companies = [], stats = {}, canResetPassword = true }) {
+    const { auth } = usePage().props;
+    const user  = auth?.user;
+    const roles = auth?.roles ?? {};
+
+    // null | 'login' | 'register'
+    const [authModal, setAuthModal] = useState(null);
+
+    const openLogin    = () => setAuthModal('login');
+    const openRegister = () => setAuthModal('register');
+    const closeModal   = () => setAuthModal(null);
+
+    const studentCount  = stats.students  ?? 0;
+    const companyCount  = stats.companies ?? 0;
+
     return (
         <>
             <Head title="IntLinker — Encuentra tus prácticas" />
+
+            <AuthModal
+                show={authModal !== null}
+                onClose={closeModal}
+                defaultTab={authModal ?? 'login'}
+                canResetPassword={canResetPassword}
+            />
 
             <div className="min-h-screen bg-white font-sans">
 
@@ -88,17 +97,59 @@ export default function Home() {
 
                         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
                             <a href="#como-funciona" className="hover:text-indigo-600 transition-colors">Cómo funciona</a>
-                            <a href="#ofertas" className="hover:text-indigo-600 transition-colors">Ofertas</a>
-                            <a href="#empresas" className="hover:text-indigo-600 transition-colors">Empresas</a>
+                            <Link href="/companies" className="hover:text-indigo-600 transition-colors">Empresas</Link>
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2">
-                                Iniciar sesión
-                            </Link>
-                            <Link href="/register" className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors">
-                                Registrarse
-                            </Link>
+                            {user ? (
+                                <>
+                                    <Link
+                                        href="/profile"
+                                        className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2"
+                                    >
+                                        {user.name}
+                                    </Link>
+                                    {roles.is_student && (
+                                        <Link
+                                            href="/enrollments"
+                                            className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors"
+                                        >
+                                            Mis postulaciones
+                                        </Link>
+                                    )}
+                                    {roles.is_worker && (
+                                        <Link
+                                            href="/my-company"
+                                            className="text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg transition-colors"
+                                        >
+                                            Mi empresa
+                                        </Link>
+                                    )}
+                                    {roles.is_admin && (
+                                        <Link
+                                            href="/admin"
+                                            className="text-sm font-semibold bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-colors"
+                                        >
+                                            Panel Admin
+                                        </Link>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <button
+                                        onClick={openLogin}
+                                        className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2"
+                                    >
+                                        Iniciar sesión
+                                    </button>
+                                    <button
+                                        onClick={openRegister}
+                                        className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors"
+                                    >
+                                        Registrarse
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
                 </nav>
@@ -111,10 +162,12 @@ export default function Home() {
                     />
 
                     <div className="relative max-w-7xl mx-auto px-6 py-28 text-center">
-                        <span className="inline-flex items-center gap-2 bg-white/10 text-indigo-200 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-white/20">
-                            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                            +200 nuevas ofertas esta semana
-                        </span>
+                        {companyCount > 0 && (
+                            <span className="inline-flex items-center gap-2 bg-white/10 text-indigo-200 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-white/20">
+                                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                                {companyCount} empresa{companyCount !== 1 ? 's' : ''} colaboradora{companyCount !== 1 ? 's' : ''}
+                            </span>
+                        )}
 
                         <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
                             Tu primer paso<br />
@@ -128,29 +181,40 @@ export default function Home() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/register" className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-lg shadow-indigo-900/30 text-base">
-                                Buscar prácticas
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </Link>
+                            {user ? (
+                                <Link href="/companies" className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-lg shadow-indigo-900/30 text-base">
+                                    Explorar empresas
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </Link>
+                            ) : (
+                                <button onClick={openRegister} className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-lg shadow-indigo-900/30 text-base">
+                                    Buscar prácticas
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </button>
+                            )}
                             <a href="#como-funciona" className="inline-flex items-center justify-center gap-2 border border-white/30 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/10 transition-all text-base">
                                 Cómo funciona
                             </a>
                         </div>
 
                         {/* Stats */}
-                        <div className="mt-20 grid grid-cols-3 gap-6 max-w-2xl mx-auto border-t border-white/10 pt-10">
-                            {[
-                                { value: '1.200+', label: 'Estudiantes activos' },
-                                { value: '340+', label: 'Empresas colaboradoras' },
-                                { value: '95%', label: 'Tasa de satisfacción' },
-                            ].map((stat) => (
-                                <div key={stat.label}>
-                                    <div className="text-3xl font-extrabold text-white">{stat.value}</div>
-                                    <div className="text-sm text-indigo-300 mt-1">{stat.label}</div>
+                        <div className="mt-20 grid grid-cols-2 gap-6 max-w-sm mx-auto border-t border-white/10 pt-10">
+                            <div>
+                                <div className="text-3xl font-extrabold text-white">
+                                    {studentCount > 0 ? studentCount.toLocaleString() : '—'}
                                 </div>
-                            ))}
+                                <div className="text-sm text-indigo-300 mt-1">Estudiantes activos</div>
+                            </div>
+                            <div>
+                                <div className="text-3xl font-extrabold text-white">
+                                    {companyCount > 0 ? companyCount.toLocaleString() : '—'}
+                                </div>
+                                <div className="text-sm text-indigo-300 mt-1">Empresas colaboradoras</div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -179,73 +243,111 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* Ofertas destacadas */}
-                <section id="ofertas" className="py-24 bg-white">
+                {/* Empresas colaboradoras */}
+                <section id="empresas" className="py-24 bg-white">
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="flex items-end justify-between mb-12">
                             <div>
-                                <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Ofertas</span>
-                                <h2 className="text-4xl font-bold text-gray-900 mt-2">Prácticas destacadas</h2>
+                                <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Empresas</span>
+                                <h2 className="text-4xl font-bold text-gray-900 mt-2">Empresas colaboradoras</h2>
                             </div>
-                            <a href="#" className="hidden md:flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline">
+                            <Link href="/companies" className="hidden md:flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline">
                                 Ver todas
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                 </svg>
-                            </a>
+                            </Link>
                         </div>
 
-                        <div className="grid md:grid-cols-3 gap-6">
-                            {offers.map((offer) => (
-                                <div key={offer.id} className="group border border-gray-200 rounded-2xl p-6 hover:border-indigo-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className={`w-10 h-10 rounded-xl ${offer.color} flex items-center justify-center text-white font-bold text-sm`}>
-                                            {offer.logo}
+                        {companies.length === 0 ? (
+                            <div className="text-center py-20 text-gray-400">
+                                <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                                <p className="text-lg font-medium">Todavía no hay empresas registradas.</p>
+                                <p className="text-sm mt-1">Pronto aparecerán aquí las primeras colaboraciones.</p>
+                            </div>
+                        ) : (
+                            <div className="grid md:grid-cols-3 gap-6">
+                                {companies.map((company) => (
+                                    <Link
+                                        key={company.id}
+                                        href={`/companies/${company.id}`}
+                                        className="group border border-gray-200 rounded-2xl p-6 hover:border-indigo-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                                    >
+                                        <div className="flex items-center gap-3 mb-4">
+                                            {company.logo ? (
+                                                <img
+                                                    src={`/storage/${company.logo}`}
+                                                    alt={company.name}
+                                                    className="w-10 h-10 rounded-xl object-cover"
+                                                />
+                                            ) : (
+                                                <div className={`w-10 h-10 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
+                                                    {initials(company.name)}
+                                                </div>
+                                            )}
+                                            <h3 className="text-sm font-bold text-gray-800 group-hover:text-indigo-600 transition-colors leading-tight">
+                                                {company.name}
+                                            </h3>
+                                            {company.open_spots > 0 && (
+                                                <span className="ml-auto text-xs bg-emerald-50 text-emerald-600 font-semibold px-2.5 py-1 rounded-full border border-emerald-100 flex-shrink-0">
+                                                    {company.open_spots} activa{company.open_spots !== 1 ? 's' : ''}
+                                                </span>
+                                            )}
                                         </div>
-                                        <div>
-                                            <div className="text-xs text-gray-400">{offer.company}</div>
-                                            <div className="text-sm font-semibold text-gray-700">{offer.location}</div>
+
+                                        {company.description && (
+                                            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
+                                                {company.description}
+                                            </p>
+                                        )}
+
+                                        <div className="mt-4 flex items-center gap-1 text-xs text-indigo-500 font-medium">
+                                            Ver empresa
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
                                         </div>
-                                        <span className="ml-auto text-xs bg-emerald-50 text-emerald-600 font-semibold px-2.5 py-1 rounded-full border border-emerald-100">
-                                            {offer.type}
-                                        </span>
-                                    </div>
-
-                                    <h3 className="text-base font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                                        {offer.title}
-                                    </h3>
-
-                                    <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
-                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        {offer.duration}
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-2">
-                                        {offer.tags.map((tag) => (
-                                            <span key={tag} className="text-xs bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-full font-medium">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </section>
 
                 {/* CTA Banner */}
                 <section className="py-20 bg-gradient-to-r from-indigo-600 to-violet-600">
                     <div className="max-w-4xl mx-auto px-6 text-center">
-                        <h2 className="text-4xl font-extrabold text-white mb-4">¿Listo para dar el salto?</h2>
-                        <p className="text-indigo-200 text-lg mb-8">Únete a miles de estudiantes que ya encontraron sus prácticas con IntLinker.</p>
-                        <Link href="/register" className="inline-flex items-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-xl text-base">
-                            Crear cuenta gratis
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </Link>
+                        <h2 className="text-4xl font-extrabold text-white mb-4">
+                            {user ? '¡Bienvenido de nuevo!' : '¿Listo para dar el salto?'}
+                        </h2>
+                        <p className="text-indigo-200 text-lg mb-8">
+                            {user
+                                ? 'Explora las empresas disponibles y gestiona tus postulaciones.'
+                                : 'Únete a la plataforma que conecta estudiantes con las mejores empresas.'}
+                        </p>
+                        {user ? (
+                            <Link
+                                href="/companies"
+                                className="inline-flex items-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-xl text-base"
+                            >
+                                Explorar empresas
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </Link>
+                        ) : (
+                            <button
+                                onClick={openRegister}
+                                className="inline-flex items-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-xl text-base"
+                            >
+                                Crear cuenta gratis
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </button>
+                        )}
                     </div>
                 </section>
 

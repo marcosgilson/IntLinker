@@ -5,14 +5,14 @@ use App\Http\Controllers\CompanyApplicationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyEnrollmentController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', fn () => redirect('/IntLinker'));
 
-Route::get('/IntLinker', fn () => Inertia::render('Home'))->name('home');
+Route::get('/IntLinker', [HomeController::class, 'index'])->name('home');
 
 // ─── Public routes ───────────────────────────────────────────────────────────
 Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/companies/{company}/join', [CompanyController::class, 'join'])->name('companies.join');
     Route::delete('/companies/{company}/leave', [CompanyController::class, 'leave'])->name('companies.leave');
 
+    // Worker dashboard — my company
+    Route::get('/my-company', [CompanyController::class, 'myCompany'])->name('companies.mine');
+
     // Company enrollment management (employee/admin perspective)
     Route::get('/companies/{company}/enrollments', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');
     Route::patch('/companies/{company}/enrollments/{enrollment}/accept', [CompanyEnrollmentController::class, 'accept'])->name('companies.enrollments.accept');
@@ -51,6 +54,8 @@ Route::middleware('auth')->group(function () {
 
     // ─── Admin routes ────────────────────────────────────────────────────────
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::post('/companies', [AdminController::class, 'storeCompany'])->name('companies.store');
         Route::get('/company-applications', [AdminController::class, 'companyApplications'])->name('company-applications.index');
         Route::patch('/company-applications/{application}/approve', [AdminController::class, 'approveApplication'])->name('company-applications.approve');
         Route::patch('/company-applications/{application}/reject', [AdminController::class, 'rejectApplication'])->name('company-applications.reject');
