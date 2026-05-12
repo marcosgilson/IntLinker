@@ -8,7 +8,12 @@ services:
     ports:
       - '8000:80'
     volumes:
-      - ./:/var/www/html
+      - ./app:/var/www/html/app
+      - ./bootstrap:/var/www/html/bootstrap
+      - ./config:/var/www/html/config
+      - ./database:/var/www/html/database
+      - ./resources:/var/www/html/resources
+      - ./routes:/var/www/html/routes
       - ./storage:/var/www/html/storage
       - ./public/build:/var/www/html/public/build
     environment:
@@ -22,13 +27,17 @@ services:
       DB_DATABASE: laravel
       DB_USERNAME: laravel
       DB_PASSWORD: secret
-      SESSION_DRIVER: file
-      CACHE_STORE: file
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      SESSION_DRIVER: redis
+      CACHE_STORE: redis
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
     restart: unless-stopped
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   vite:
@@ -43,7 +52,8 @@ services:
     restart: unless-stopped
     depends_on:
       - app
-    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5174"
+    # npm install solo si node_modules está vacío, evita reinstalar en cada arranque
+    command: sh -c "[ -d node_modules/.bin ] || npm install && npm run dev -- --host 0.0.0.0 --port 5174"
 
   db:
     image: mysql:8.0
@@ -63,6 +73,16 @@ services:
       retries: 20
     volumes:
       - dbdata:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    container_name: intlinker-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
 volumes:
   dbdata:
