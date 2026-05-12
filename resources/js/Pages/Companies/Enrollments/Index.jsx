@@ -37,6 +37,13 @@ function EnrollmentRow({ enrollment, companyId }) {
             <div className="flex-1 min-w-0">
                 <p className="font-semibold text-gray-900 text-sm">{studentName}</p>
                 <p className="text-xs text-gray-400">{studentEmail}</p>
+                <Link
+                    href={route('students.profile', enrollment.student?.id)}
+                    className="text-xs font-medium text-indigo-600 hover:underline mt-1 inline-block"
+                >
+                    Ver perfil →
+                </Link>
+                </div>
                 <p className="text-xs text-gray-400 mt-0.5">
                     {new Date(enrollment.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
                 </p>

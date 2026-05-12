@@ -51,7 +51,7 @@ class Student extends Model
 
     public function isActive(): bool
     {
-        return $this->verified && $this->expires_at->isFuture();
+        return $this->verified && ($this->expires_at === null || $this->expires_at->isFuture());
     }
 
     public function isPending(): bool

@@ -3,7 +3,11 @@ import { useForm, usePage, Link } from '@inertiajs/react';
 
 export default function BecomeWorkerForm({ companies, status }) {
     const { auth } = usePage().props;
-    const isWorker = auth.roles?.is_worker;
+    const roles = auth.roles ?? {};
+    const isVerifiedWorker = roles.is_worker;
+    const isPendingWorker  = roles.is_pending_worker;
+    const hasAnyWorkerStatus = isVerifiedWorker || isPendingWorker;
+
     const [open, setOpen] = useState(false);
     const [preview, setPreview] = useState(null);
     const fileRef = useRef(null);
@@ -14,6 +18,8 @@ export default function BecomeWorkerForm({ companies, status }) {
         position: '',
         work_card_image: null,
     });
+
+    const leaveForm = useForm();
 
     const handleFile = (e) => {
         const file = e.target.files[0];
@@ -26,62 +32,66 @@ export default function BecomeWorkerForm({ companies, status }) {
         e.preventDefault();
         post(route('worker.store'), {
             forceFormData: true,
-            onSuccess: () => {
-                setOpen(false);
-                reset('company_name', 'position', 'work_card_image');
-                setPreview(null);
-            },
+            onSuccess: () => { setOpen(false); reset('company_name', 'position', 'work_card_image'); setPreview(null); },
         });
     };
 
-    if (isWorker && companies && companies.length > 0) {
+    const doLeave = () => {
+        if (!confirm('¿Seguro que quieres abandonar tu empresa? Tendras que volver a verificarte para unirte a otra.')) return;
+        leaveForm.delete(route('worker.leave'));
+    };
+
+    // Already a verified or pending worker — show current status + leave option
+    if (hasAnyWorkerStatus) {
+        const currentCompany = companies?.[0];
         return (
-            <div className="bg-violet-50 border border-violet-200 rounded-2xl p-5">
-                <div className="flex items-start gap-3 mb-3">
+            <div className="bg-violet-50 border border-violet-200 rounded-2xl p-5 space-y-4">
+                <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-xl bg-violet-500 flex items-center justify-center flex-shrink-0">
                         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                     </div>
                     <div className="flex-1">
-                        <h3 className="font-bold text-violet-900 text-sm">Trabajador activo</h3>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                            {companies.map(c => (
-                                <span key={c.id} className="px-2 py-0.5 bg-violet-100 text-violet-700 text-xs rounded-full">{c.name}</span>
-                            ))}
-                        </div>
+                        <h3 className="font-bold text-violet-900 text-sm">
+                            {isVerifiedWorker ? 'Trabajador verificado' : 'Verificacion pendiente'}
+                        </h3>
+                        {currentCompany ? (
+                            <p className="text-xs text-violet-700 mt-1">
+                                {isVerifiedWorker ? '✓' : '⏳'} {currentCompany.name}
+                                {currentCompany.city ? ` · ${currentCompany.city}` : ''}
+                            </p>
+                        ) : (
+                            <p className="text-xs text-violet-500 mt-1">Solicitud en revision</p>
+                        )}
                     </div>
-                    <Link href="/my-company" className="text-xs font-semibold text-violet-600 hover:underline whitespace-nowrap">
-                        Mi empresa →
-                    </Link>
+                    {isVerifiedWorker && (
+                        <Link href="/my-company" className="text-xs font-semibold text-violet-600 hover:underline whitespace-nowrap">
+                            Mi empresa →
+                        </Link>
+                    )}
                 </div>
+
+                <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-800">
+                    Solo puedes pertenecer a <strong>una empresa</strong> a la vez. Para cambiar de empresa, primero debes abandonar la actual.
+                </div>
+
                 <button
                     type="button"
-                    onClick={() => setOpen(!open)}
-                    className="text-xs font-semibold text-violet-700 hover:text-violet-800 underline"
+                    onClick={doLeave}
+                    disabled={leaveForm.processing}
+                    className="text-xs font-semibold text-red-500 hover:text-red-700 border border-red-200 hover:border-red-400 hover:bg-red-50 px-4 py-2 rounded-lg transition disabled:opacity-50"
                 >
-                    {open ? 'Cancelar' : '+ Unirse a otra empresa'}
+                    {leaveForm.processing ? 'Procesando...' : 'Abandonar empresa'}
                 </button>
-                {open && (
-                    <form onSubmit={submit} className="mt-4 space-y-3">
-                        <WorkerFormFields data={data} setData={setData} errors={errors} preview={preview} handleFile={handleFile} fileRef={fileRef} />
-                        <button type="submit" disabled={processing}
-                            className="w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-60 text-white text-sm font-semibold py-2 rounded-lg transition">
-                            {processing ? 'Enviando…' : 'Solicitar unión a empresa'}
-                        </button>
-                    </form>
-                )}
             </div>
         );
     }
 
+    // Not a worker yet — show registration form
     return (
         <div className={`bg-white border rounded-2xl overflow-hidden transition-all ${open ? 'border-violet-300 shadow-md' : 'border-gray-200 shadow-sm hover:border-violet-200 hover:shadow-md'}`}>
-            <button
-                type="button"
-                onClick={() => setOpen(!open)}
-                className="w-full flex items-center gap-3 p-5 text-left"
-            >
+            <button type="button" onClick={() => setOpen(!open)} className="w-full flex items-center gap-3 p-5 text-left">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition ${open ? 'bg-violet-500' : 'bg-gray-100'}`}>
                     <svg className={`w-5 h-5 ${open ? 'text-white' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -100,7 +110,7 @@ export default function BecomeWorkerForm({ companies, status }) {
                     <WorkerFormFields data={data} setData={setData} errors={errors} preview={preview} handleFile={handleFile} fileRef={fileRef} />
                     <button type="submit" disabled={processing}
                         className="w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-60 text-white text-sm font-semibold py-2.5 rounded-lg transition">
-                        {processing ? 'Enviando…' : 'Solicitar alta como trabajador'}
+                        {processing ? 'Enviando...' : 'Solicitar alta como trabajador'}
                     </button>
                 </form>
             )}

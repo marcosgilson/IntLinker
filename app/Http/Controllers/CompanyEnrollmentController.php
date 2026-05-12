@@ -22,9 +22,16 @@ class CompanyEnrollmentController extends Controller
         }
 
         $enrollments = $company->enrollments()
-            ->with('student.user:id,name,email')
+            ->with('student.user:id,name,email,profile_photo')
             ->latest()
             ->get();
+        $enrollments->each(function ($e) {
+            if ($e->student?->user?->profile_photo) {
+                $e->student->user->photo_url = Storage::disk('public')->url($e->student->user->profile_photo);
+            } else {
+                $e->student?->user && $e->student->user->photo_url = null;
+            }
+        });
 
         return Inertia::render('Companies/Enrollments/Index', [
             'company'     => $company->only('id', 'name'),

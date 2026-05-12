@@ -19,7 +19,6 @@ class ProfileController extends Controller
         $user = $request->user();
 
         return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail'  => $user instanceof MustVerifyEmail,
             'status'           => session('status'),
             'student'          => $user->student,
             'companies'        => $user->companies()->select('companies.id', 'companies.name')->get(),
@@ -32,10 +31,6 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
 
         $request->user()->save();
 

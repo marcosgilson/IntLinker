@@ -36,8 +36,24 @@ function EnrollmentRow({ enrollment, companyId }) {
     return (
         <tr className="border-t border-gray-100 hover:bg-gray-50 transition">
             <td className="px-4 py-3">
-                <p className="font-medium text-gray-900 text-sm">{studentName}</p>
-                <p className="text-xs text-gray-400">{studentEmail}</p>
+                <Link
+                    href={enrollment.student?.id ? route('students.profile', enrollment.student.id) : '#'}
+                    className="flex items-center gap-3 group"
+                >
+                    <div className="w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-gray-200 group-hover:ring-indigo-400 transition">
+                        {enrollment.student?.user?.photo_url ? (
+                            <img src={enrollment.student.user.photo_url} alt={studentName} className="w-full h-full object-cover" />
+                        ) : (
+                            <div className={`w-full h-full ${stringToColor(studentName)} flex items-center justify-center text-white font-bold text-xs`}>
+                                {studentName.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase()}
+                            </div>
+                        )}
+                    </div>
+                    <div>
+                        <p className="font-medium text-gray-900 text-sm group-hover:text-indigo-600 transition">{studentName}</p>
+                        <p className="text-xs text-gray-400">{studentEmail}</p>
+                    </div>
+                </Link>
             </td>
             <td className="px-4 py-3">
                 <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusCfg.cls}`}>

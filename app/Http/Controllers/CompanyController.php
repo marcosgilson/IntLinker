@@ -53,7 +53,9 @@ class CompanyController extends Controller
 
     public function show(Company $company): Response
     {
-        $company->load(['employees:id,name']);
+        $company->load(['employees' => function ($q) {
+            $q->select('users.id', 'users.name')->where('users.is_admin', false);
+        }]);
         return Inertia::render('Companies/Show', ['company' => $company]);
     }
 
@@ -73,9 +75,16 @@ class CompanyController extends Controller
 
         foreach ($companies as $company) {
             $company->setRelation('enrollments', $company->enrollments()
-                ->with('student:id,user_id', 'student.user:id,name,email')
+                ->with('student:id,user_id', 'student.user:id,name,email,profile_photo')
                 ->whereIn('status', ['waiting', 'accepted'])
                 ->latest()->get());
+            $company->enrollments->each(function ($e) {
+                if ($e->student?->user?->profile_photo) {
+                    $e->student->user->photo_url = \Illuminate\Support\Facades\Storage::disk('public')->url($e->student->user->profile_photo);
+                } elseif ($e->student?->user) {
+                    $e->student->user->photo_url = null;
+                }
+            });
         }
 
         return Inertia::render('Company/MyCompany', ['companies' => $companies]);

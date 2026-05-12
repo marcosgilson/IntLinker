@@ -7,7 +7,9 @@ use App\Http\Controllers\CompanyEnrollmentController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfilePhotoController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentProfileController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,7 @@ Route::middleware('auth')->group(function () {
 
     // Worker role
     Route::post('/worker', [WorkerController::class, 'store'])->name('worker.store');
+    Route::delete('/worker/leave', [WorkerController::class, 'leave'])->name('worker.leave');
     Route::post('/student/schools', [StudentController::class, 'addSchool'])->name('student.schools.add');
     Route::delete('/student/schools/{school}', [StudentController::class, 'removeSchool'])->name('student.schools.remove');
 
@@ -52,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/companies/{company}/enrollments', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');
     Route::patch('/companies/{company}/enrollments/{enrollment}/accept', [CompanyEnrollmentController::class, 'accept'])->name('companies.enrollments.accept');
     Route::delete('/companies/{company}/enrollments/{enrollment}', [CompanyEnrollmentController::class, 'remove'])->name('companies.enrollments.remove');
+    Route::get('/students/{student}/profile', [StudentProfileController::class, 'show'])->name('students.profile');
 
     // Request creation of a new company
     Route::post('/company-applications', [CompanyApplicationController::class, 'store'])->name('company-applications.store');
