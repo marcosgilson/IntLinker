@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, usePage, router } from '@inertiajs/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
@@ -11,6 +11,7 @@ function AvatarUpload({ photoUrl, initials }) {
     const fileRef = useRef(null);
     const [preview, setPreview] = useState(photoUrl);
     const [uploading, setUploading] = useState(false);
+    useEffect(() => { setPreview(photoUrl); }, [photoUrl]);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
