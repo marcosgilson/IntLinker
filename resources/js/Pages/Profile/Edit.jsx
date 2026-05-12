@@ -108,7 +108,7 @@ export default function Edit({ mustVerifyEmail, status, student, companies, prof
         .toUpperCase();
 
     return (
-        <AuthenticatedLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Mi Perfil</h2>}>
+        <AuthenticatedLayout>
             <Head title="Perfil — IntLinker" />
 
             <div className="py-8">
