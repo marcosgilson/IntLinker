@@ -11,9 +11,12 @@ class Student extends Model
 {
     protected $fillable = [
         'user_id',
+        'school_name',
+        'school_email',
         'expires_at',
         'student_card_image',
         'verified',
+        'id_alumno',
     ];
 
     protected function casts(): array
@@ -48,7 +51,12 @@ class Student extends Model
 
     public function isActive(): bool
     {
-        return $this->expires_at->isFuture();
+        return $this->verified && $this->expires_at->isFuture();
+    }
+
+    public function isPending(): bool
+    {
+        return !$this->verified;
     }
 
     public function hasActiveEnrollmentSlots(): bool

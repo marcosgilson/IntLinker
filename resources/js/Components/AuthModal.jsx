@@ -26,7 +26,7 @@ function Input({ className = '', ...props }) {
 }
 
 // ── Login form ────────────────────────────────────────────────────────────────
-function LoginForm({ onSwitch, canResetPassword }) {
+function LoginForm({ onSwitch, onClose, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -35,7 +35,7 @@ function LoginForm({ onSwitch, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('login'), { onFinish: () => reset('password') });
+        post(route('login'), { onSuccess: () => onClose(), onFinish: () => reset('password') });
     };
 
     return (
@@ -104,7 +104,7 @@ function LoginForm({ onSwitch, canResetPassword }) {
 }
 
 // ── Register form ─────────────────────────────────────────────────────────────
-function RegisterForm({ onSwitch }) {
+function RegisterForm({ onSwitch, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -115,7 +115,7 @@ function RegisterForm({ onSwitch }) {
     const submit = (e) => {
         e.preventDefault();
         post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
+            onSuccess: () => onClose(), onFinish: () => reset('password', 'password_confirmation'),
         });
     };
 
@@ -271,10 +271,11 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
                     {tab === 'login' ? (
                         <LoginForm
                             onSwitch={() => setTab('register')}
+                            onClose={onClose}
                             canResetPassword={canResetPassword}
                         />
                     ) : (
-                        <RegisterForm onSwitch={() => setTab('login')} />
+                        <RegisterForm onSwitch={() => setTab('login')} onClose={onClose} />
                     )}
                 </div>
             </div>

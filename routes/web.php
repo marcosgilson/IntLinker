@@ -8,6 +8,7 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect('/IntLinker'));
@@ -25,10 +26,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('profile/photo', [ProfilePhotoController::class, 'update'])->name('profile.photo.update');
+    Route::delete('profile/photo', [ProfilePhotoController::class, 'destroy'])->name('profile.photo.destroy');
 
     // Student role
     Route::post('/student', [StudentController::class, 'store'])->name('student.store');
     Route::post('/student/renew', [StudentController::class, 'renew'])->name('student.renew');
+
+    // Worker role
+    Route::post('/worker', [WorkerController::class, 'store'])->name('worker.store');
     Route::post('/student/schools', [StudentController::class, 'addSchool'])->name('student.schools.add');
     Route::delete('/student/schools/{school}', [StudentController::class, 'removeSchool'])->name('student.schools.remove');
 
@@ -38,8 +44,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/enrollments/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
 
     // Company membership
-    Route::post('/companies/{company}/join', [CompanyController::class, 'join'])->name('companies.join');
-    Route::delete('/companies/{company}/leave', [CompanyController::class, 'leave'])->name('companies.leave');
 
     // Worker dashboard — my company
     Route::get('/my-company', [CompanyController::class, 'myCompany'])->name('companies.mine');
@@ -59,6 +63,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/company-applications', [AdminController::class, 'companyApplications'])->name('company-applications.index');
         Route::patch('/company-applications/{application}/approve', [AdminController::class, 'approveApplication'])->name('company-applications.approve');
         Route::patch('/company-applications/{application}/reject', [AdminController::class, 'rejectApplication'])->name('company-applications.reject');
+        // Student verification
+        Route::patch('/students/{student}/verify', [AdminController::class, 'verifyStudent'])->name('students.verify');
+        Route::delete('/students/{student}/reject', [AdminController::class, 'rejectStudent'])->name('students.reject');
+        // Worker verification
+        Route::patch('/workers/verify', [AdminController::class, 'verifyWorker'])->name('workers.verify');
+        Route::delete('/workers/reject', [AdminController::class, 'rejectWorker'])->name('workers.reject');
     });
 });
 

@@ -21,6 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'profile_photo',
     ];
 
     protected $hidden = [
@@ -46,7 +47,9 @@ class User extends Authenticatable
 
     public function companies(): BelongsToMany
     {
-        return $this->belongsToMany(Company::class, 'company_employees')->withTimestamps();
+        return $this->belongsToMany(Company::class, 'company_employees')
+            ->withPivot(['position', 'work_card_image', 'id_trabajador', 'verified'])
+            ->withTimestamps();
     }
 
     public function companyApplications(): HasMany
@@ -59,6 +62,24 @@ class User extends Authenticatable
     public function isStudent(): bool
     {
         return $this->student !== null && $this->student->isActive();
+    }
+
+    public function isWorker(): bool
+    {
+        return $this->companies()->wherePivot('verified', true)->exists();
+    }
+
+    public function isPendingWorker(): bool
+    {
+        return !$this->isWorker() && (
+            $this->companies()->wherePivot('verified', false)->exists() ||
+            $this->companyApplications()->where('status', 'pending')->exists()
+        );
+    }
+
+    public function isPendingStudent(): bool
+    {
+        return $this->student !== null && $this->student->isPending();
     }
 
     public function isEmployeeOf(int $companyId): bool

@@ -1,0 +1,74 @@
+Plataforma de Conexión Académico-Laboral: Roles y Funcionalidades
+Esta plataforma está diseñada para conectar estudiantes con oportunidades laborales y empresas, ofreciendo una gestión eficiente y flexible de roles y postulaciones.
+
+1. Cuentas de Usuario (General)
+La base de la plataforma, permitiendo flexibilidad en la asignación de roles.
+
+Acceso General: Todos los usuarios pueden explorar tanto el mercado de alumnos como el de empresas, fomentando la visibilidad y la interacción.
+Flexibilidad de Roles: Un usuario puede adoptar uno o varios roles simultáneamente:
+Usuario Normal: Acceso básico a la plataforma sin roles específicos de alumno o empresa.
+Alumno: Rol enfocado en la búsqueda de oportunidades académicas y laborales.
+Trabajador (Empleado de Empresa): Rol para representantes de empresas que gestionan postulaciones y la presencia de su organización.
+Combinación: Un usuario puede ser simultáneamente "Alumno" y "Trabajador", ofreciendo una gran versatilidad.
+Visualización: Un usuario normal puede ver cualquier perfil de usuario o entidad, promoviendo la transparencia y el descubrimiento.
+2. Rol de Alumno
+Diseñado para estudiantes que buscan oportunidades, con un enfoque en la gestión de su perfil académico y postulaciones.
+
+Registro y Vigencia:
+Registro: Los usuarios pueden registrarse y activar su rol de alumno.
+Vigencia: La cuenta de alumno tiene una caducidad de 1 año.
+Renovación: Es posible renovar la cuenta para mantener la vigencia.
+Proceso de Renovación: Requiere la presentación de una imagen del carnet de estudiante, que será procesada mediante OCR para su verificación. ¡Esto agiliza y asegura la validez!
+Gestión de Escuelas:
+Agregar Escuelas: Pueden añadir múltiples escuelas a su perfil, presentando los carnets de estudiante correspondientes (verificados con OCR).
+Eliminar Escuelas: Los alumnos tienen la opción de quitar una escuela de su perfil cuando lo deseen.
+Gestión de Postulaciones (¡Diseñado para evitar el spam y optimizar la experiencia!):
+Privacidad: Las postulaciones son privadas; solo el alumno puede verlas, no son visibles para otros usuarios.
+Límite de Postulaciones: Los alumnos pueden tener un máximo de 5 postulaciones activas simultáneamente.
+Cancelación Voluntaria: Pueden cancelar una postulación en cualquier momento para liberar un cupo y postularse a otra empresa.
+Restricción de Re-postulación: Una vez que un alumno se retracta de una postulación o es eliminado del proceso por una empresa, no podrá volver a postularse a esa misma empresa.
+Estados de Postulación (Visuales y Claros para el Alumno):
+Gris (No seleccionada):
+Significado: Estado por defecto; el alumno aún no ha seleccionado ninguna empresa para postularse.
+Negro (En espera):
+Significado: La postulación está activa y en revisión por la empresa. El alumno espera una respuesta.
+Verde (Aceptado como candidato):
+Significado: La empresa ha mostrado interés y el alumno ha superado una primera fase. No implica contratación, sino continuidad en el proceso.
+Acciones del Alumno: Puede seguir buscando otras opciones con sus "tokens" de postulación restantes.
+Cancelación Voluntaria: Si decide cancelar, la postulación pasará a estado Rojo.
+Rojo (Eliminado o Cancelado):
+Significado: La postulación ya no está activa para esa empresa.
+Causas: Puede ser por eliminación por parte de la empresa o cancelación voluntaria del alumno.
+Recuperación de Token: Al pasar a estado Rojo, el alumno recupera automáticamente el "token" de postulación, permitiéndole postularse a otra empresa (que no sea la misma en Rojo).
+Restricción: No podrá volver a postularse a esa misma empresa en el futuro, para mantener la coherencia y evitar la indecisión repetida.
+3. Rol de Trabajador (Empleado de Empresa)
+Este rol permite a los representantes de empresas gestionar las postulaciones y la presencia de su organización en la plataforma.
+
+Registro en Empresa:
+Los usuarios pueden darse de alta en una empresa.
+Empresa Existente: Si la empresa ya está registrada y cumple con los requisitos, el usuario será incluido como parte de esa entidad.
+Solicitud de Nueva Empresa: Si la empresa no existe en el sistema, el usuario podrá enviar una solicitud para su creación.
+Proceso de Revisión: Esta solicitud generará una notificación para el administrador único, quien la revisará manualmente.
+Respuesta al Usuario: El usuario será informado de que su solicitud está "pendiente de verificación" y recibirá una respuesta una vez que el administrador haya tomado una decisión.
+Administrador Inicial: La persona que gestiona inicialmente la empresa tendrá los poderes administrativos para gestionarla (¡funcionalidad futura!).
+Versión Inicial (Simplificada): En la versión actual, no habrá diferenciación de poderes administrativos. Todos los empleados de una empresa podrán realizar las mismas acciones y recibirán todas las notificaciones, simplificando el desarrollo inicial.
+Vigencia: No hay caducidad para el rol de trabajador/empleado de empresa.
+Eliminación de Rol: Un trabajador puede eliminar su rol de una empresa si ya no forma parte de ella.
+4. Rol de Administrador / Cuenta de Testing
+Un rol fundamental para la gestión, mantenimiento y pruebas de la plataforma.
+
+Acceso Total: Tienen acceso completo a todas las funcionalidades del sistema.
+Capacidades Adicionales: Pueden realizar acciones de cualquier otro rol (postularse como alumno, gestionar empresas, etc.) y gestionar datos, siendo ideal para pruebas y mantenimiento del sistema.
+Gestión de Solicitudes de Empresa: El administrador recibirá y gestionará las notificaciones de nuevas solicitudes de creación de empresas, decidiendo su aprobación o rechazo.
+5. Entidades de Empresa
+Cómo se representan y gestionan las empresas dentro de la plataforma.
+
+Unicidad de Empresa: Solo puede existir una entidad para una misma empresa (ejemplo: "Siemens"), garantizando la coherencia de la información.
+Múltiples Representantes: Varias personas (trabajadores) pueden representar a la misma empresa.
+Gestión de Postulaciones:
+Acceso a Correo de Postulaciones: Múltiples representantes podrán acceder y configurar el correo centralizado de postulaciones.
+Permisos (Futuro): Se prevé implementar permisos para restringir quién puede configurar este correo en futuras versiones.
+Correo Interno: Cada entidad de empresa dispondrá de un correo interno que centralizará todas las postulaciones recibidas, mejorando la organización y el seguimiento.
+Flujos Clave y Consideraciones Adicionales:
+Registro Inicial y Asignación de Roles:
+Propuesta: El flujo más eficiente sería un registro inicial como "usuario normal". Posteriormente, desde el perfil del usuario, se ofrecerían opciones claras para "Convertirse en Alumno" (con su proceso de verificación OCR) o "Unirse a una Empresa / Solicitar Creación de Empresa". Esto permite la máxima flexibilidad, manejando tanto empresas existentes como nuevas solicitudes a través del administrador.

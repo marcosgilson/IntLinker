@@ -10,6 +10,9 @@ class CompanyApplication extends Model
     protected $fillable = [
         'user_id',
         'company_name',
+        'position',
+        'work_card_image',
+        'id_trabajador',
         'description',
         'status',
         'admin_notes',

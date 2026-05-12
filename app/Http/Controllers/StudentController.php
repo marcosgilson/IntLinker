@@ -6,6 +6,7 @@ use App\Http\Requests\AddSchoolRequest;
 use App\Http\Requests\BecomeStudentRequest;
 use App\Models\School;
 use App\Models\Student;
+use App\Services\OcrService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -17,31 +18,35 @@ class StudentController extends Controller
 {
     /**
      * Register the authenticated user as a student.
-     * Stores the student card image and creates the student record (1-year validity).
      */
     public function store(BecomeStudentRequest $request): RedirectResponse
     {
         $user = $request->user();
 
         if ($user->student) {
-            return back()->withErrors(['student' => 'Ya eres alumno. Usa la renovación si tu cuenta ha caducado.']);
+            return back()->withErrors(['student' => 'Ya eres alumno. Usa la renovacion si tu cuenta ha caducado.']);
         }
 
+        $user->update(['name' => $request->validated('name')]);
+
         $imagePath = $request->file('student_card_image')->store('student_cards', 'public');
+        $idAlumno  = (new OcrService())->extractText($request->file('student_card_image'));
 
         Student::create([
             'user_id'            => $user->id,
+            'school_name'        => $request->validated('school_name'),
+            'school_email'       => $request->validated('school_email'),
             'expires_at'         => Carbon::now()->addYear(),
             'student_card_image' => $imagePath,
+            'id_alumno'          => $idAlumno,
             'verified'           => false,
         ]);
 
-        return back()->with('status', 'Cuenta de alumno creada. Pendiente de verificación.');
+        return back()->with('status', 'Cuenta de alumno creada. Pendiente de verificacion.');
     }
 
     /**
      * Renew the student account for another year.
-     * Requires a new student card image for re-verification.
      */
     public function renew(BecomeStudentRequest $request): RedirectResponse
     {
@@ -51,20 +56,23 @@ class StudentController extends Controller
             return back()->withErrors(['student' => 'No tienes cuenta de alumno.']);
         }
 
-        // Delete old image
+        $request->user()->update(['name' => $request->validated('name')]);
+
         if ($student->student_card_image) {
             Storage::disk('public')->delete($student->student_card_image);
         }
 
         $imagePath = $request->file('student_card_image')->store('student_cards', 'public');
+        $idAlumno  = (new OcrService())->extractText($request->file('student_card_image'));
 
         $student->update([
             'expires_at'         => Carbon::now()->addYear(),
             'student_card_image' => $imagePath,
+            'id_alumno'          => $idAlumno,
             'verified'           => false,
         ]);
 
-        return back()->with('status', 'Cuenta de alumno renovada. Pendiente de verificación.');
+        return back()->with('status', 'Cuenta de alumno renovada. Pendiente de verificacion.');
     }
 
     /**
@@ -91,7 +99,7 @@ class StudentController extends Controller
             'verified'           => false,
         ]);
 
-        return back()->with('status', 'Escuela añadida. Pendiente de verificación.');
+        return back()->with('status', 'Escuela anadida. Pendiente de verificacion.');
     }
 
     /**
@@ -111,7 +119,6 @@ class StudentController extends Controller
             return back()->withErrors(['school_id' => 'No tienes esta escuela en tu perfil.']);
         }
 
-        // Delete card image for this school
         Storage::disk('public')->delete($pivot->pivot->student_card_image);
 
         $student->schools()->detach($school->id);

@@ -36,52 +36,33 @@ function CreateCompanyForm() {
     return (
         <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-1">Crear empresa</h2>
-            <p className="text-sm text-gray-500 mb-6">Las empresas creadas aquí están disponibles de inmediato para que los trabajadores se unan.</p>
+            <p className="text-sm text-gray-500 mb-6">Las empresas creadas aqui estan disponibles de inmediato.</p>
 
             {recentlySuccessful && (
                 <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium rounded-lg px-4 py-2.5">
-                    ✓ Empresa creada correctamente.
+                    Empresa creada correctamente.
                 </div>
             )}
 
             <form onSubmit={submit} className="space-y-4">
                 <Field label="Nombre de la empresa *" error={errors.name}>
-                    <Input
-                        placeholder="Ej. Siemens Mobility"
-                        value={data.name}
-                        onChange={e => setData('name', e.target.value)}
-                        required
-                        autoFocus
-                    />
+                    <Input placeholder="Ej. Siemens Mobility" value={data.name}
+                        onChange={e => setData('name', e.target.value)} required autoFocus />
                 </Field>
-
-                <Field label="Descripción" error={errors.description}>
-                    <textarea
-                        rows={3}
-                        placeholder="Breve descripción de la empresa y las oportunidades que ofrece…"
-                        value={data.description}
-                        onChange={e => setData('description', e.target.value)}
+                <Field label="Descripcion" error={errors.description}>
+                    <textarea rows={3} placeholder="Breve descripcion..."
+                        value={data.description} onChange={e => setData('description', e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400
-                            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none"
-                    />
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
                 </Field>
-
                 <Field label="Correo de postulaciones" error={errors.applications_email}>
-                    <Input
-                        type="email"
-                        placeholder="hr@empresa.com"
-                        value={data.applications_email}
-                        onChange={e => setData('applications_email', e.target.value)}
-                    />
+                    <Input type="email" placeholder="hr@empresa.com" value={data.applications_email}
+                        onChange={e => setData('applications_email', e.target.value)} />
                 </Field>
-
                 <div className="pt-2">
-                    <button
-                        type="submit"
-                        disabled={processing}
-                        className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm"
-                    >
-                        {processing ? 'Creando…' : 'Crear empresa'}
+                    <button type="submit" disabled={processing}
+                        className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                        {processing ? 'Creando...' : 'Crear empresa'}
                     </button>
                 </div>
             </form>
@@ -89,17 +70,93 @@ function CreateCompanyForm() {
     );
 }
 
-// ── Application row ───────────────────────────────────────────────────────────
+// ── Pending student row ───────────────────────────────────────────────────────
+function StudentRow({ student }) {
+    const verify = useForm({});
+    const reject = useForm({});
+
+    return (
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <div className="flex items-start justify-between gap-4 mb-2">
+                <div>
+                    <p className="font-bold text-gray-900">{student.user?.name}</p>
+                    <p className="text-xs text-gray-400">{student.user?.email}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                        Escuela: <span className="font-medium">{student.school_name || '—'}</span>
+                        {student.school_email && <> · {student.school_email}</>}
+                    </p>
+                </div>
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200 flex-shrink-0">
+                    Pendiente
+                </span>
+            </div>
+
+            {student.id_alumno && (
+                <details className="mb-3">
+                    <summary className="text-xs text-indigo-600 cursor-pointer font-medium">Ver texto OCR extraido del carnet</summary>
+                    <pre className="mt-2 text-xs bg-gray-50 border border-gray-200 rounded p-2 whitespace-pre-wrap max-h-32 overflow-auto">
+                        {student.id_alumno}
+                    </pre>
+                </details>
+            )}
+
+            <div className="flex gap-2">
+                <button onClick={() => verify.patch(route('admin.students.verify', student.id))}
+                    disabled={verify.processing || reject.processing}
+                    className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    {verify.processing ? 'Verificando...' : 'Verificar alumno'}
+                </button>
+                <button onClick={() => reject.delete(route('admin.students.reject', student.id))}
+                    disabled={verify.processing || reject.processing}
+                    className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    {reject.processing ? 'Rechazando...' : 'Rechazar'}
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// ── Pending worker row ────────────────────────────────────────────────────────
+function WorkerRow({ worker }) {
+    const verify = useForm({ user_id: worker.user_id, company_id: worker.company_id });
+    const reject = useForm({ user_id: worker.user_id, company_id: worker.company_id });
+
+    return (
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <div className="flex items-start justify-between gap-4 mb-2">
+                <div>
+                    <p className="font-bold text-gray-900">{worker.user_name}</p>
+                    <p className="text-xs text-gray-400">{worker.user_email}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                        Empresa: <span className="font-medium">{worker.company_name}</span>
+                        {worker.position && <> · {worker.position}</>}
+                    </p>
+                </div>
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200 flex-shrink-0">
+                    Pendiente
+                </span>
+            </div>
+
+            <div className="flex gap-2">
+                <button onClick={() => verify.patch(route('admin.workers.verify'))}
+                    disabled={verify.processing || reject.processing}
+                    className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    {verify.processing ? 'Verificando...' : 'Verificar trabajador'}
+                </button>
+                <button onClick={() => reject.delete(route('admin.workers.reject'))}
+                    disabled={verify.processing || reject.processing}
+                    className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    {reject.processing ? 'Rechazando...' : 'Rechazar'}
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// ── Company application row ───────────────────────────────────────────────────
 function ApplicationRow({ app }) {
     const approve = useForm({ admin_notes: '' });
     const reject  = useForm({ admin_notes: '' });
-
-    const doApprove = () => {
-        approve.patch(route('admin.company-applications.approve', app.id));
-    };
-    const doReject = () => {
-        reject.patch(route('admin.company-applications.reject', app.id));
-    };
 
     const statusCfg = {
         pending:  { label: 'Pendiente', cls: 'bg-amber-50 text-amber-700 border-amber-200' },
@@ -128,19 +185,15 @@ function ApplicationRow({ app }) {
 
             {app.status === 'pending' && (
                 <div className="flex gap-2">
-                    <button
-                        onClick={doApprove}
+                    <button onClick={() => approve.patch(route('admin.company-applications.approve', app.id))}
                         disabled={approve.processing || reject.processing}
-                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50"
-                    >
-                        {approve.processing ? 'Aprobando…' : '✓ Aprobar'}
+                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                        {approve.processing ? 'Aprobando...' : 'Aprobar empresa'}
                     </button>
-                    <button
-                        onClick={doReject}
+                    <button onClick={() => reject.patch(route('admin.company-applications.reject', app.id))}
                         disabled={approve.processing || reject.processing}
-                        className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50"
-                    >
-                        {reject.processing ? 'Rechazando…' : '✗ Rechazar'}
+                        className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                        {reject.processing ? 'Rechazando...' : 'Rechazar'}
                     </button>
                 </div>
             )}
@@ -148,19 +201,43 @@ function ApplicationRow({ app }) {
     );
 }
 
+// ── Section wrapper ───────────────────────────────────────────────────────────
+function Section({ title, count, children, emptyText }) {
+    return (
+        <div>
+            <div className="flex items-center gap-3 mb-4">
+                <h2 className="text-lg font-bold text-gray-900">{title}</h2>
+                {count > 0 && (
+                    <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
+                        {count} pendiente{count !== 1 ? 's' : ''}
+                    </span>
+                )}
+            </div>
+            {count === 0 ? (
+                <div className="bg-white rounded-2xl border border-gray-200 py-8 text-center text-gray-400">
+                    <p className="font-medium text-sm">{emptyText}</p>
+                </div>
+            ) : (
+                <div className="space-y-3">{children}</div>
+            )}
+        </div>
+    );
+}
+
 // ── Main page ─────────────────────────────────────────────────────────────────
-export default function AdminDashboard({ applications = {} }) {
+export default function AdminDashboard({ applications = {}, pendingStudents = [], pendingWorkers = [] }) {
     const { auth } = usePage().props;
     const appList = applications.data ?? [];
     const pending = appList.filter(a => a.status === 'pending');
     const processed = appList.filter(a => a.status !== 'pending');
+
+    const totalPending = pendingStudents.length + pendingWorkers.length + pending.length;
 
     return (
         <>
             <Head title="Panel Admin — IntLinker" />
 
             <div className="min-h-screen bg-gray-50 font-sans">
-                {/* Navbar */}
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <Link href="/IntLinker" className="flex items-center gap-2">
@@ -171,11 +248,16 @@ export default function AdminDashboard({ applications = {} }) {
                         </Link>
                         <div className="flex items-center gap-3">
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">Admin</span>
+                            {totalPending > 0 && (
+                                <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
+                                    {totalPending} pendiente{totalPending !== 1 ? 's' : ''}
+                                </span>
+                            )}
                             <Link href="/profile" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">
                                 {auth.user?.name}
                             </Link>
                             <Link href="/IntLinker" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">
-                                ← Inicio
+                                Inicio
                             </Link>
                         </div>
                     </div>
@@ -183,46 +265,37 @@ export default function AdminDashboard({ applications = {} }) {
 
                 <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-extrabold text-gray-900">Panel de administración</h1>
-                        <p className="text-gray-500 mt-1">Gestión de empresas y solicitudes.</p>
+                        <h1 className="text-3xl font-extrabold text-gray-900">Panel de administracion</h1>
+                        <p className="text-gray-500 mt-1">Verifica identidades y gestiona empresas.</p>
                     </div>
 
-                    <div className="space-y-8">
+                    <div className="space-y-10">
+                        {/* Pending students */}
+                        <Section title="Alumnos pendientes de verificacion" count={pendingStudents.length}
+                            emptyText="No hay alumnos pendientes de verificacion.">
+                            {pendingStudents.map(s => <StudentRow key={s.id} student={s} />)}
+                        </Section>
+
+                        {/* Pending workers */}
+                        <Section title="Trabajadores pendientes de verificacion" count={pendingWorkers.length}
+                            emptyText="No hay trabajadores pendientes de verificacion.">
+                            {pendingWorkers.map(w => <WorkerRow key={`${w.user_id}-${w.company_id}`} worker={w} />)}
+                        </Section>
+
+                        {/* Company applications */}
+                        <Section title="Solicitudes de nueva empresa" count={pending.length}
+                            emptyText="Sin solicitudes de empresa pendientes.">
+                            {pending.map(app => <ApplicationRow key={app.id} app={app} />)}
+                            {processed.length > 0 && (
+                                <>
+                                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mt-4">Procesadas</p>
+                                    {processed.map(app => <ApplicationRow key={app.id} app={app} />)}
+                                </>
+                            )}
+                        </Section>
+
                         {/* Create company */}
                         <CreateCompanyForm />
-
-                        {/* Pending applications */}
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <h2 className="text-lg font-bold text-gray-900">Solicitudes de empresa</h2>
-                                {pending.length > 0 && (
-                                    <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
-                                        {pending.length} pendiente{pending.length !== 1 ? 's' : ''}
-                                    </span>
-                                )}
-                            </div>
-
-                            {appList.length === 0 ? (
-                                <div className="bg-white rounded-2xl border border-gray-200 py-12 text-center text-gray-400">
-                                    <p className="font-medium">Sin solicitudes todavía.</p>
-                                </div>
-                            ) : (
-                                <div className="space-y-3">
-                                    {pending.length > 0 && (
-                                        <>
-                                            <p className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Pendientes</p>
-                                            {pending.map(app => <ApplicationRow key={app.id} app={app} />)}
-                                        </>
-                                    )}
-                                    {processed.length > 0 && (
-                                        <>
-                                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mt-6">Procesadas</p>
-                                            {processed.map(app => <ApplicationRow key={app.id} app={app} />)}
-                                        </>
-                                    )}
-                                </div>
-                            )}
-                        </div>
                     </div>
                 </div>
             </div>

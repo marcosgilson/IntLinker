@@ -36,9 +36,11 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user'  => $user,
                 'roles' => $user ? [
-                    'is_admin'   => (bool) $user->is_admin,
-                    'is_student' => $user->isStudent(),
-                    'is_worker'  => $user->companies()->exists(),
+                    'is_admin'           => (bool) $user->is_admin,
+                    'is_student'         => $user->isStudent(),
+                    'is_worker'          => $user->isWorker(),
+                    'is_pending_student' => $user->isPendingStudent(),
+                    'is_pending_worker'  => $user->isPendingWorker(),
                 ] : null,
             ],
         ];

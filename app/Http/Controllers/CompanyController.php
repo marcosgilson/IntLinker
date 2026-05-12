@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Models\Enrollment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,40 +10,56 @@ use Inertia\Response;
 
 class CompanyController extends Controller
 {
-    /**
-     * List all companies (publicly accessible).
-     */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $companies = Company::withCount(['activeEnrollments as pending_count'])
-            ->latest()
-            ->paginate(20);
+        $cities    = array_values(array_filter(array_map('trim', (array) $request->query('cities', []))));
+        $companies_filter = array_values(array_filter(array_map('trim', (array) $request->query('companies', []))));
+
+        $query = Company::withCount(['activeEnrollments as pending_count']);
+
+        // Hard filter by company names (OR between each)
+        if (!empty($companies_filter)) {
+            $query->where(function ($q) use ($companies_filter) {
+                foreach ($companies_filter as $name) {
+                    $q->orWhere('name', 'like', '%' . $name . '%');
+                }
+            });
+        }
+
+        // Sort: selected cities first, then alphabetical
+        if (!empty($cities)) {
+            $placeholders = implode(',', array_fill(0, count($cities), '?'));
+            $query->orderByRaw("CASE WHEN city IN ($placeholders) THEN 0 ELSE 1 END", $cities);
+        }
+
+        $query->orderBy('name');
+
+        $paginated = $query->paginate(20)->withQueryString();
+
+        $allCities = Company::select('city')
+            ->whereNotNull('city')->where('city', '!=', '')
+            ->distinct()->orderBy('city')->pluck('city');
+
+        $allCompanyNames = Company::select('id', 'name')->orderBy('name')->get();
 
         return Inertia::render('Companies/Index', [
-            'companies' => $companies,
+            'companies'        => $paginated,
+            'allCities'        => $allCities,
+            'allCompanyNames'  => $allCompanyNames,
+            'selectedCities'   => $cities,
+            'selectedCompanies'=> $companies_filter,
         ]);
     }
 
-    /**
-     * Show a single company profile (publicly accessible).
-     */
     public function show(Company $company): Response
     {
         $company->load(['employees:id,name']);
-
-        return Inertia::render('Companies/Show', [
-            'company' => $company,
-        ]);
+        return Inertia::render('Companies/Show', ['company' => $company]);
     }
 
-    /**
-     * Worker dashboard: show companies the authenticated user belongs to
-     * and their enrollment lists.
-     */
     public function myCompany(Request $request): Response|RedirectResponse
     {
         $user = $request->user();
-
         $companies = $user->companies()
             ->withCount([
                 'enrollments as waiting_count'  => fn ($q) => $q->where('status', 'waiting'),
@@ -53,52 +68,26 @@ class CompanyController extends Controller
             ->get(['companies.id', 'companies.name', 'companies.description', 'companies.logo', 'companies.applications_email']);
 
         if ($companies->isEmpty()) {
-            return redirect()->route('home')->with('status', 'No perteneces a ninguna empresa. Únete a una desde la lista de empresas.');
+            return redirect()->route('home')->with('status', 'No perteneces a ninguna empresa.');
         }
 
-        // Load enrollments for each company (only non-cancelled so the page is useful)
         foreach ($companies as $company) {
             $company->setRelation('enrollments', $company->enrollments()
                 ->with('student:id,user_id', 'student.user:id,name,email')
                 ->whereIn('status', ['waiting', 'accepted'])
-                ->latest()
-                ->get());
+                ->latest()->get());
         }
 
-        return Inertia::render('Company/MyCompany', [
-            'companies' => $companies,
-        ]);
+        return Inertia::render('Company/MyCompany', ['companies' => $companies]);
     }
 
-    /**
-     * Join an existing company as an employee.
-     */
     public function join(Request $request, Company $company): RedirectResponse
     {
-        $user = $request->user();
-
-        if ($company->hasEmployee($user->id)) {
-            return back()->withErrors(['company' => 'Ya eres empleado de esta empresa.']);
-        }
-
-        $company->employees()->attach($user->id);
-
-        return back()->with('status', "Te has unido a {$company->name} como empleado.");
+        return back()->withErrors(['company' => 'Para unirte como trabajador, completa la verificacion en tu perfil.']);
     }
 
-    /**
-     * Leave a company (remove self as employee).
-     */
     public function leave(Request $request, Company $company): RedirectResponse
     {
-        $user = $request->user();
-
-        if (! $company->hasEmployee($user->id)) {
-            return back()->withErrors(['company' => 'No eres empleado de esta empresa.']);
-        }
-
-        $company->employees()->detach($user->id);
-
-        return back()->with('status', "Has abandonado {$company->name}.");
+        return back()->withErrors(['company' => 'Accion no disponible.']);
     }
 }

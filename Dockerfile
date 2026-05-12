@@ -3,6 +3,7 @@ FROM php:8.2-apache
 # 1. Extensiones necesarias + redis
 RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev libzip-dev libicu-dev zip unzip git curl \
+    tesseract-ocr tesseract-ocr-spa poppler-utils \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl zip \
     && pecl install redis \
     && docker-php-ext-enable redis \
