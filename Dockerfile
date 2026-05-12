@@ -8,23 +8,24 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable redis \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 2. OPcache (enorme mejora de rendimiento en Laravel)
+# 2. OPcache
 RUN docker-php-ext-enable opcache
 COPY docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-# 3. Configuración de Apache
+# 3. Configuracion de Apache - fix: ensure only mpm_prefork is loaded
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
-    && a2enmod rewrite
+    && a2dismod mpm_event mpm_worker || true \
+    && a2enmod mpm_prefork rewrite
 
-# 4. Composer e instalación de dependencias
+# 4. Composer e instalacion de dependencias
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html
 COPY . /var/www/html
 
-RUN composer install --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
 
 # 5. Permisos finales
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
