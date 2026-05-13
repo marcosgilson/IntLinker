@@ -48,3 +48,5 @@ Thumbs.db
 # --- Configuración de Máquinas Virtuales ---
 Homestead.json
 Homestead.yaml
+# --- Bootstrap Cache (auto-generado, NO commitear) ---
+/bootstrap/cache/*.php
