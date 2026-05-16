@@ -14,8 +14,16 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        // ── Admin account ─────────────────────────────────────────────────
+        // ── Admin principal (vinculado a todas las empresas, oculto en ellas) ──
         $admin = User::create([
+            'name'     => 'Admin',
+            'email'    => 'admin@admin.com',
+            'password' => bcrypt('admin'),
+            'is_admin' => true,
+        ]);
+
+        // ── Admin legacy ──────────────────────────────────────────────────
+        User::create([
             'name'     => 'Admin',
             'email'    => 'admin@intlinker.test',
             'password' => bcrypt('password'),
@@ -39,10 +47,8 @@ class DatabaseSeeder extends Seeder
         // ── Seed companies ────────────────────────────────────────────────
         $this->call(CompanySeeder::class);
 
-        // ── Attach admin to Siemens Mobility ──────────────────────────────
-        $siemens = Company::where('name', 'Siemens Mobility')->first();
-        if ($siemens) {
-            $siemens->employees()->attach($admin->id);
-        }
+        // ── Vincular admin a TODAS las empresas (aparece oculto por is_admin) ──
+        $allCompanyIds = Company::pluck('id');
+        $admin->companies()->attach($allCompanyIds);
     }
 }
