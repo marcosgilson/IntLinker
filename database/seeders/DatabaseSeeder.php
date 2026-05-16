@@ -22,14 +22,6 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
-        // ── Admin legacy ──────────────────────────────────────────────────
-        User::create([
-            'name'     => 'Admin',
-            'email'    => 'admin@intlinker.test',
-            'password' => bcrypt('password'),
-            'is_admin' => true,
-        ]);
-
         // ── Test user (normal) ────────────────────────────────────────────
         User::create([
             'name'     => 'Test User',
@@ -52,3 +44,4 @@ class DatabaseSeeder extends Seeder
         $admin->companies()->attach($allCompanyIds);
     }
 }
+
