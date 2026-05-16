@@ -7,7 +7,6 @@ use App\Models\School;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // ── Admin account ─────────────────────────────────────────────────
-        $admin = User::factory()->create([
+        $admin = User::create([
             'name'     => 'Admin',
             'email'    => 'admin@intlinker.test',
             'password' => bcrypt('password'),
@@ -24,9 +23,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // ── Test user (normal) ────────────────────────────────────────────
-        $user = User::factory()->create([
-            'name'  => 'Test User',
-            'email' => 'test@example.com',
+        User::create([
+            'name'     => 'Test User',
+            'email'    => 'test@example.com',
+            'password' => bcrypt('password'),
         ]);
 
         // ── Test schools ──────────────────────────────────────────────────
@@ -36,14 +36,13 @@ class DatabaseSeeder extends Seeder
             ['name' => 'MIT',                               'country' => 'USA',    'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        // ── Test company ──────────────────────────────────────────────────
-        $company = Company::create([
-            'name'              => 'Siemens Mobility',
-            'description'       => 'Empresa líder en movilidad y transporte.',
-            'applications_email' => 'jobs@siemens.test',
-        ]);
+        // ── Seed companies ────────────────────────────────────────────────
+        $this->call(CompanySeeder::class);
 
-        $company->employees()->attach($admin->id);
+        // ── Attach admin to Siemens Mobility ──────────────────────────────
+        $siemens = Company::where('name', 'Siemens Mobility')->first();
+        if ($siemens) {
+            $siemens->employees()->attach($admin->id);
+        }
     }
 }
-
