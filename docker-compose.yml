@@ -34,10 +34,14 @@ services:
       CACHE_STORE: redis
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
-      MAIL_MAILER: resend
-      MAIL_FROM_ADDRESS: "onboarding@resend.dev"
-      MAIL_FROM_NAME: "${APP_NAME}"
-      RESEND_API_KEY: ${RESEND_API_KEY}
+      MAIL_MAILER: ${MAIL_MAILER}
+      MAIL_SCHEME: ${MAIL_SCHEME}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
     restart: unless-stopped
     depends_on:
       db:
