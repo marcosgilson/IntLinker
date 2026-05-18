@@ -16,6 +16,7 @@ services:
       - ./routes:/var/www/html/routes
       - ./storage:/var/www/html/storage
       - ./public/build:/var/www/html/public/build
+      - ./storage/app/public:/var/www/html/public/storage
     environment:
       APP_ENV: local
       APP_DEBUG: 'true'
