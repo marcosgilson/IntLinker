@@ -20,7 +20,8 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-echo "==> Fixing Apache MPM (ensuring only prefork)..."
+echo "==> Fixing Apache MPM and enabling rewrite..."
+a2enmod rewrite 2>/dev/null || true
 rm -f /etc/apache2/mods-enabled/mpm_event.conf
 rm -f /etc/apache2/mods-enabled/mpm_event.load
 rm -f /etc/apache2/mods-enabled/mpm_worker.conf
