@@ -18,5 +18,8 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+echo "==> Starting queue worker in background..."
+php artisan queue:work --sleep=3 --tries=3 --timeout=60 --daemon &
+
 echo "==> Starting Apache..."
 exec apache2-foreground
