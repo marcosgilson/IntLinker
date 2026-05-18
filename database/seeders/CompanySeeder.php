@@ -56,7 +56,7 @@ class CompanySeeder extends Seeder
             ['name' => 'Orona',                       'city' => 'Hernani, Gipuzkoa',          'description' => 'Fabricante y mantenedor de ascensores del grupo Mondragon.',                'applications_email' => 'empleo@orona.com'],
             ['name' => 'Viscofan',                    'city' => 'Cizur Menor, Navarra',       'description' => 'Fabricante de envolturas artificiales para productos carnicos.',             'applications_email' => 'rrhh@viscofan.com'],
             // ── Aragon / Rioja ────────────────────────────────────────────────
-            ['name' => 'BSH Electrodomesticos Espana','city' => 'Zaragoza',                   'description' => 'Fabricante de electrodomesticos Bosch, Siemens y Balay en Espana.',         'applications_email' => 'empleo@bsh-group.es'],
+            ['name' => 'BSH Electrodomesticos Espana','city' => 'Zaragoza',                   'description' => 'Fabricante de electrodomesticos de las marcas Bosch, Balay y Neff en Espana.',         'applications_email' => 'empleo@bsh-group.es'],
             ['name' => 'Opel Espana — Stellantis',    'city' => 'Figueruelas, Zaragoza',      'description' => 'Planta de produccion de vehiculos Opel/Stellantis en Aragon.',              'applications_email' => 'rrhh.zaragoza@stellantis.com'],
             ['name' => 'Bodegas Muga',                'city' => 'Haro, La Rioja',             'description' => 'Bodega riojana con elaboracion de vinos de alta gama desde 1932.',          'applications_email' => 'empleo@bodegasmuga.com'],
             // ── Galicia / Asturias / Cantabria ────────────────────────────────
@@ -73,8 +73,8 @@ class CompanySeeder extends Seeder
             ['name' => 'Binter Canarias',             'city' => 'Las Palmas de Gran Canaria', 'description' => 'Aerolinea regional con vuelos interinsulares y a destinos europeos.',       'applications_email' => 'empleo@bintercanarias.com'],
             ['name' => 'Disa Corporacion Petrolifera', 'city' => 'Santa Cruz de Tenerife',   'description' => 'Grupo energetico lider en distribucion de carburantes en Canarias.',        'applications_email' => 'rrhh@disa.es'],
             ['name' => 'Estrella de Levante',         'city' => 'Murcia',                     'description' => 'Cervecera regional con mas de un siglo de historia en la Region de Murcia.', 'applications_email' => 'empleo@estrellalevante.es'],
-            // ── Siemens Mobility ya existente ─────────────────────────────────
-            ['name' => 'Siemens Mobility',            'city' => 'Madrid',                     'description' => 'Lider en soluciones de movilidad y transporte ferroviario.',                 'applications_email' => 'jobs@siemens.test'],
+            // ── Talgo ────────────────────────────────────────────────────────
+            ['name' => 'Talgo',                            'city' => 'Las Rozas, Madrid',          'description' => 'Fabricante espanol de trenes de alta velocidad y larga distancia.',        'applications_email' => 'empleo@talgo.com'],
         ];
 
         foreach ($companies as $data) {

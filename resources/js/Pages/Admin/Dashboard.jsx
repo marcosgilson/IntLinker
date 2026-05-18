@@ -55,7 +55,7 @@ function CreateCompanyForm() {
 
             <form onSubmit={submit} className="space-y-4">
                 <Field label="Nombre de la empresa *" error={errors.name}>
-                    <Input placeholder="Ej. Siemens Mobility" value={data.name}
+                    <Input placeholder="Ej. Indra Sistemas" value={data.name}
                         onChange={e => setData('name', e.target.value)} required autoFocus />
                 </Field>
                 <Field label="Localidad" error={errors.city}>
