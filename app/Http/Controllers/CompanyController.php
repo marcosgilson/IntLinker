@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -54,9 +55,14 @@ class CompanyController extends Controller
     public function show(Company $company): Response
     {
         $company->load(['employees' => function ($q) {
-            $q->select('users.id', 'users.name')->where('users.is_admin', false);
+            $q->select('users.id', 'users.name', 'users.profile_photo')->where('users.is_admin', false);
         }]);
-        return Inertia::render('Companies/Show', ['company' => $company]);
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $canManageLogo = $user && ($user->is_admin || $user->companies()->where('companies.id', $company->id)->exists());
+        return Inertia::render('Companies/Show', [
+            'company'       => $company,
+            'canManageLogo' => $canManageLogo,
+        ]);
     }
 
     public function myCompany(Request $request): Response|RedirectResponse
@@ -98,5 +104,25 @@ class CompanyController extends Controller
     public function leave(Request $request, Company $company): RedirectResponse
     {
         return back()->withErrors(['company' => 'Accion no disponible.']);
+    }
+
+    public function updateLogo(Request $request, Company $company): RedirectResponse
+    {
+        $user = $request->user();
+        $isWorker = $user->companies()->where('companies.id', $company->id)->exists();
+        abort_unless($isWorker || $user->is_admin, 403);
+
+        $request->validate([
+            'logo' => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
+        ]);
+
+        if ($company->logo) {
+            Storage::disk('public')->delete($company->logo);
+        }
+
+        $path = $request->file('logo')->store('company-logos', 'public');
+        $company->update(['logo' => $path]);
+
+        return back()->with('status', 'Logo actualizado correctamente.');
     }
 }
