@@ -21,5 +21,9 @@ php artisan view:cache
 echo "==> Starting queue worker in background..."
 php artisan queue:work --sleep=3 --tries=3 --timeout=60 --daemon &
 
+echo "==> Ensuring only mpm_prefork is loaded..."
+rm -f /etc/apache2/mods-enabled/mpm_event.conf /etc/apache2/mods-enabled/mpm_event.load
+rm -f /etc/apache2/mods-enabled/mpm_worker.conf /etc/apache2/mods-enabled/mpm_worker.load
+
 echo "==> Starting Apache..."
 exec apache2-foreground
