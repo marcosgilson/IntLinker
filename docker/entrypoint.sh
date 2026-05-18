@@ -19,11 +19,13 @@ php artisan route:cache
 php artisan view:cache
 
 echo "==> Starting queue worker in background..."
-php artisan queue:work --sleep=3 --tries=3 --timeout=60 --daemon &
+php artisan queue:work --sleep=3 --tries=3 --timeout=60 &
 
-echo "==> Ensuring only mpm_prefork is loaded..."
-rm -f /etc/apache2/mods-enabled/mpm_event.conf /etc/apache2/mods-enabled/mpm_event.load
-rm -f /etc/apache2/mods-enabled/mpm_worker.conf /etc/apache2/mods-enabled/mpm_worker.load
+echo "==> Apache MPM modules loaded:"
+ls /etc/apache2/mods-enabled/mpm_* 2>&1 || echo "(none)"
+
+echo "==> Testing Apache config..."
+apache2ctl configtest 2>&1 || true
 
 echo "==> Starting Apache..."
 exec apache2-foreground

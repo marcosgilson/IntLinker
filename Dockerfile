@@ -20,7 +20,7 @@ RUN docker-php-ext-enable opcache
 COPY docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 # 4. Apache config - force only mpm_prefork
-ARG CACHEBUST=3
+ARG CACHEBUST=4
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
@@ -28,7 +28,8 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
     && rm -f /etc/apache2/mods-enabled/mpm_*.load \
     && ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load \
     && ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf \
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # 5. Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
