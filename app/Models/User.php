@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected $appends = ['photo_url'];
+
+    public function getPhotoUrlAttribute(): ?string
+    {
+        if (!$this->profile_photo) return null;
+        return Storage::disk('public')->url($this->profile_photo);
+    }
 
     protected function casts(): array
     {

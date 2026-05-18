@@ -7,7 +7,6 @@ use App\Models\School;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,18 +14,19 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        // ── Admin account ─────────────────────────────────────────────────
-        $admin = User::factory()->create([
+        // ── Admin principal (vinculado a todas las empresas, oculto en ellas) ──
+        $admin = User::create([
             'name'     => 'Admin',
-            'email'    => 'admin@intlinker.test',
-            'password' => bcrypt('password'),
+            'email'    => 'admin@admin.com',
+            'password' => bcrypt('admin'),
             'is_admin' => true,
         ]);
 
         // ── Test user (normal) ────────────────────────────────────────────
-        $user = User::factory()->create([
-            'name'  => 'Test User',
-            'email' => 'test@example.com',
+        User::create([
+            'name'     => 'Test User',
+            'email'    => 'test@example.com',
+            'password' => bcrypt('password'),
         ]);
 
         // ── Test schools ──────────────────────────────────────────────────
@@ -36,14 +36,12 @@ class DatabaseSeeder extends Seeder
             ['name' => 'MIT',                               'country' => 'USA',    'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        // ── Test company ──────────────────────────────────────────────────
-        $company = Company::create([
-            'name'              => 'Siemens Mobility',
-            'description'       => 'Empresa líder en movilidad y transporte.',
-            'applications_email' => 'jobs@siemens.test',
-        ]);
+        // ── Seed companies ────────────────────────────────────────────────
+        $this->call(CompanySeeder::class);
 
-        $company->employees()->attach($admin->id);
+        // ── Vincular admin a TODAS las empresas (aparece oculto por is_admin) ──
+        $allCompanyIds = Company::pluck('id');
+        $admin->companies()->attach($allCompanyIds);
     }
 }
 

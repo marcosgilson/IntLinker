@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 import { useState } from 'react';
 
 const STATUS_CFG = {
@@ -107,7 +108,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
         <>
             <Head title="Solicitudes de empresa — Admin — IntLinker" />
 
-            <div className="min-h-screen bg-gray-50 font-sans">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -132,8 +133,8 @@ export default function AdminCompanyApplications({ applications = {} }) {
                 <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
                     <div className="mb-8 flex items-center gap-4">
                         <div>
-                            <h1 className="text-3xl font-extrabold text-gray-900">Solicitudes de empresa</h1>
-                            <p className="text-gray-500 mt-1">Revisa y procesa las solicitudes de creación de empresa.</p>
+                            <h1 className="text-3xl font-extrabold text-white">Solicitudes de empresa</h1>
+                            <p className="text-gray-300 mt-1">Revisa y procesa las solicitudes de creación de empresa.</p>
                         </div>
                         {pending.length > 0 && (
                             <span className="ml-auto text-xs font-bold bg-amber-100 text-amber-700 px-3 py-1.5 rounded-full">
@@ -161,7 +162,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
 
                             {processed.length > 0 && (
                                 <div>
-                                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">
+                                    <p className="text-xs font-semibold text-indigo-300 uppercase tracking-widest mb-3">
                                         Procesadas ({processed.length})
                                     </p>
                                     <div className="space-y-3">

@@ -1,5 +1,6 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import Footer from '@/Components/Footer';
+import { useState, useRef } from 'react';
 
 function stringToColor(str) {
     const palette = ['bg-indigo-600','bg-violet-600','bg-teal-600','bg-blue-700','bg-rose-600','bg-amber-600','bg-emerald-600'];
@@ -10,6 +11,57 @@ function stringToColor(str) {
 
 function initials(name) {
     return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+}
+
+// ── Logo upload ──────────────────────────────────────────────────────────────
+function LogoUpload({ company }) {
+    const inputRef = useRef(null);
+    const { post, processing } = useForm();
+    const [preview, setPreview] = useState(
+        company.logo_url ? `/storage/${company.logo}` : null
+    );
+
+    const handleChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setPreview(URL.createObjectURL(file));
+        const form = new FormData();
+        form.append('logo', file);
+        form.append('_method', 'POST');
+        post(route('companies.logo.update', company.id), {
+            data: form,
+            forceFormData: true,
+            preserveScroll: true,
+        });
+    };
+
+    return (
+        <div className="relative group flex-shrink-0 cursor-pointer" onClick={() => !processing && inputRef.current?.click()}>
+            <div className="w-14 h-14 rounded-xl overflow-hidden ring-2 ring-transparent group-hover:ring-indigo-400 transition">
+                {preview ? (
+                    <img src={preview} alt={company.name} className="w-full h-full object-cover" />
+                ) : (
+                    <div className={`w-full h-full ${stringToColor(company.name)} flex items-center justify-center text-white font-bold text-lg`}>
+                        {initials(company.name)}
+                    </div>
+                )}
+            </div>
+            <div className="absolute inset-0 rounded-xl bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                {processing ? (
+                    <svg className="w-5 h-5 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                    </svg>
+                ) : (
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                )}
+            </div>
+            <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleChange} />
+        </div>
+    );
 }
 
 // ── Enrollment row ────────────────────────────────────────────────────────────
@@ -102,13 +154,7 @@ function CompanyCard({ company }) {
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
             {/* Header */}
             <div className="p-6 flex items-center gap-4">
-                {company.logo ? (
-                    <img src={`/storage/${company.logo}`} alt={company.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
-                ) : (
-                    <div className={`w-12 h-12 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold flex-shrink-0`}>
-                        {initials(company.name)}
-                    </div>
-                )}
+                <LogoUpload company={company} />
                 <div className="flex-1 min-w-0">
                     <h2 className="text-lg font-bold text-gray-900">{company.name}</h2>
                     {company.description && (
@@ -189,7 +235,7 @@ export default function MyCompany({ companies = [] }) {
         <>
             <Head title="Mi empresa — IntLinker" />
 
-            <div className="min-h-screen bg-gray-50 font-sans">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -213,8 +259,8 @@ export default function MyCompany({ companies = [] }) {
                 <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
                     <div className="mb-8 flex items-center justify-between">
                         <div>
-                            <h1 className="text-3xl font-extrabold text-gray-900">Mi empresa</h1>
-                            <p className="text-gray-500 mt-1">Gestiona las postulaciones de tus candidatos.</p>
+                            <h1 className="text-3xl font-extrabold text-white">Mi empresa</h1>
+                            <p className="text-gray-300 mt-1">Gestiona las postulaciones de tus candidatos.</p>
                         </div>
                         <Link
                             href="/companies"

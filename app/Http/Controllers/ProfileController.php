@@ -21,7 +21,7 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'status'           => session('status'),
             'student'          => $user->student,
-            'companies'        => $user->companies()->select('companies.id', 'companies.name')->get(),
+            'companies'        => $user->companies()->select('companies.id', 'companies.name', 'companies.logo')->get(),
             'profile_photo_url'=> $user->profile_photo
                                     ? Storage::disk('public')->url($user->profile_photo)
                                     : null,

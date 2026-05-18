@@ -12,13 +12,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            // waiting = en espera (negro), accepted = candidato aceptado (verde), cancelled = eliminado/cancelado (rojo)
             $table->enum('status', ['waiting', 'accepted', 'cancelled'])->default('waiting');
-            // who cancelled: student | company (only set when status = cancelled)
             $table->enum('cancelled_by', ['student', 'company'])->nullable();
             $table->timestamps();
 
-            // One record per student-company pair (ever), prevents re-application after cancellation
             $table->unique(['student_id', 'company_id']);
         });
     }

@@ -1,4 +1,5 @@
 import { Link, router, usePage } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ children }) {
@@ -10,7 +11,7 @@ export default function AuthenticatedLayout({ children }) {
     const logout = () => router.post(route('logout'));
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-2">
@@ -34,7 +35,14 @@ export default function AuthenticatedLayout({ children }) {
                     </div>
 
                     <div className="hidden md:flex items-center gap-3">
-                        <Link href="/profile" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2">
+                        <Link href="/profile" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2">
+                            {user?.photo_url ? (
+                                <img src={user.photo_url} alt={user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200"/>
+                            ) : (
+                                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                    <span className="text-indigo-700 font-bold text-xs">{user?.name?.charAt(0).toUpperCase()}</span>
+                                </div>
+                            )}
                             {user?.name}
                         </Link>
                         <button
@@ -75,7 +83,7 @@ export default function AuthenticatedLayout({ children }) {
                 )}
             </nav>
 
-            <main className="pt-16">{children}</main>
+            <main className="pt-16 flex flex-col min-h-screen">{children}<Footer /></main>
         </div>
     );
 }

@@ -12,6 +12,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('company_name');
+            $table->string('position')->nullable();
+            $table->string('work_card_image')->nullable();
+            $table->text('id_trabajador')->nullable();
             $table->text('description')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('admin_notes')->nullable();

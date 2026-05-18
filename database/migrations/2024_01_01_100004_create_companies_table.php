@@ -11,9 +11,10 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('city')->nullable();
             $table->text('description')->nullable();
             $table->string('logo')->nullable();
-            $table->string('applications_email')->nullable(); // internal email for enrollments
+            $table->string('applications_email')->nullable();
             $table->timestamps();
         });
     }

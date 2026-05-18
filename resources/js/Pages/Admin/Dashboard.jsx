@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 
 function Field({ label, error, children }) {
     return (
@@ -24,9 +25,17 @@ function Input({ className = '', ...props }) {
 function CreateCompanyForm() {
     const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
         name: '',
+        city: '',
         description: '',
+        email_local: '',
+        email_domain: '',
         applications_email: '',
     });
+
+    const updateEmail = (local, domain) => {
+        const full = local && domain ? `${local}@${domain}` : '';
+        setData(d => ({ ...d, email_local: local, email_domain: domain, applications_email: full }));
+    };
 
     const submit = (e) => {
         e.preventDefault();
@@ -49,6 +58,10 @@ function CreateCompanyForm() {
                     <Input placeholder="Ej. Siemens Mobility" value={data.name}
                         onChange={e => setData('name', e.target.value)} required autoFocus />
                 </Field>
+                <Field label="Localidad" error={errors.city}>
+                    <Input placeholder="Ej. Madrid" value={data.city}
+                        onChange={e => setData('city', e.target.value)} />
+                </Field>
                 <Field label="Descripcion" error={errors.description}>
                     <textarea rows={3} placeholder="Breve descripcion..."
                         value={data.description} onChange={e => setData('description', e.target.value)}
@@ -56,8 +69,26 @@ function CreateCompanyForm() {
                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
                 </Field>
                 <Field label="Correo de postulaciones" error={errors.applications_email}>
-                    <Input type="email" placeholder="hr@empresa.com" value={data.applications_email}
-                        onChange={e => setData('applications_email', e.target.value)} />
+                    <div className="flex items-center gap-0">
+                        <input
+                            type="text"
+                            placeholder="info"
+                            value={data.email_local}
+                            onChange={e => updateEmail(e.target.value, data.email_domain)}
+                            className="flex-1 min-w-0 px-3.5 py-2.5 rounded-l-lg border border-r-0 border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                        />
+                        <span className="px-2 py-2.5 bg-gray-50 border-t border-b border-gray-300 text-gray-500 text-sm font-medium select-none">@</span>
+                        <input
+                            type="text"
+                            placeholder="educa.madrid.org"
+                            value={data.email_domain}
+                            onChange={e => updateEmail(data.email_local, e.target.value)}
+                            className="flex-1 min-w-0 px-3.5 py-2.5 rounded-r-lg border border-l-0 border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                        />
+                    </div>
+                    {data.applications_email && (
+                        <p className="mt-1 text-xs text-gray-400">Resultado: <span className="font-medium text-gray-600">{data.applications_email}</span></p>
+                    )}
                 </Field>
                 <div className="pt-2">
                     <button type="submit" disabled={processing}
@@ -206,7 +237,7 @@ function Section({ title, count, children, emptyText }) {
     return (
         <div>
             <div className="flex items-center gap-3 mb-4">
-                <h2 className="text-lg font-bold text-gray-900">{title}</h2>
+                <h2 className="text-lg font-bold text-white">{title}</h2>
                 {count > 0 && (
                     <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
                         {count} pendiente{count !== 1 ? 's' : ''}
@@ -237,7 +268,7 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
         <>
             <Head title="Panel Admin — IntLinker" />
 
-            <div className="min-h-screen bg-gray-50 font-sans">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <Link href="/IntLinker" className="flex items-center gap-2">
@@ -265,8 +296,8 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
 
                 <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-extrabold text-gray-900">Panel de administracion</h1>
-                        <p className="text-gray-500 mt-1">Verifica identidades y gestiona empresas.</p>
+                        <h1 className="text-3xl font-extrabold text-white">Panel de administracion</h1>
+                        <p className="text-gray-300 mt-1">Verifica identidades y gestiona empresas.</p>
                     </div>
 
                     <div className="space-y-10">
@@ -288,7 +319,7 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
                             {pending.map(app => <ApplicationRow key={app.id} app={app} />)}
                             {processed.length > 0 && (
                                 <>
-                                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mt-4">Procesadas</p>
+                                    <p className="text-xs font-semibold text-indigo-300 uppercase tracking-widest mt-4">Procesadas</p>
                                     {processed.map(app => <ApplicationRow key={app.id} app={app} />)}
                                 </>
                             )}
@@ -298,6 +329,8 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
                         <CreateCompanyForm />
                     </div>
                 </div>
+                <Footer />
+
             </div>
         </>
     );

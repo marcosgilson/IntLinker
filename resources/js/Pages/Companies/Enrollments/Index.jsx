@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 
 const STATUS = {
     waiting: {
@@ -34,6 +35,17 @@ function EnrollmentRow({ enrollment, companyId }) {
 
     return (
         <div className="bg-white rounded-xl border border-gray-200 p-4 flex flex-col sm:flex-row sm:items-center gap-4">
+            {/* Student avatar */}
+            {enrollment.student?.user?.photo_url ? (
+                <img src={enrollment.student.user.photo_url} alt={studentName}
+                    className="w-10 h-10 rounded-full object-cover flex-shrink-0 ring-2 ring-indigo-200"/>
+            ) : (
+                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                    <span className="text-indigo-700 font-bold text-sm">{studentName.charAt(0).toUpperCase()}</span>
+                </div>
+            )}
+
+            {/* Name / email / date */}
             <div className="flex-1 min-w-0">
                 <p className="font-semibold text-gray-900 text-sm">{studentName}</p>
                 <p className="text-xs text-gray-400">{studentEmail}</p>
@@ -43,16 +55,17 @@ function EnrollmentRow({ enrollment, companyId }) {
                 >
                     Ver perfil →
                 </Link>
-                </div>
                 <p className="text-xs text-gray-400 mt-0.5">
                     {new Date(enrollment.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
                 </p>
             </div>
 
+            {/* Status badge */}
             <span className={`inline-flex items-center px-2.5 py-1 rounded-full border text-xs font-semibold flex-shrink-0 ${cfg.badge}`}>
                 {cfg.label}
             </span>
 
+            {/* Action buttons */}
             {enrollment.status !== 'cancelled' && (
                 <div className="flex gap-2 flex-shrink-0">
                     {enrollment.status === 'waiting' && (
@@ -74,7 +87,7 @@ function EnrollmentRow({ enrollment, companyId }) {
                 </div>
             )}
         </div>
-    );
+    )
 }
 
 export default function CompanyEnrollmentsIndex({ company, enrollments = [] }) {
@@ -87,7 +100,7 @@ export default function CompanyEnrollmentsIndex({ company, enrollments = [] }) {
         <>
             <Head title={`Candidatos — ${company.name} — IntLinker`} />
 
-            <div className="min-h-screen bg-gray-50 font-sans">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -113,8 +126,8 @@ export default function CompanyEnrollmentsIndex({ company, enrollments = [] }) {
 
                 <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-extrabold text-gray-900">Candidatos</h1>
-                        <p className="text-gray-500 mt-1">{company.name} · {enrollments.length} postulación{enrollments.length !== 1 ? 'es' : ''} en total</p>
+                        <h1 className="text-3xl font-extrabold text-white">Candidatos</h1>
+                        <p className="text-gray-300 mt-1">{company.name} · {enrollments.length} postulación{enrollments.length !== 1 ? 'es' : ''} en total</p>
                     </div>
 
                     {enrollments.length === 0 ? (

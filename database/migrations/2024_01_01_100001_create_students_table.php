@@ -11,8 +11,11 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
+            $table->string('school_name')->nullable();
+            $table->string('school_email')->nullable();
+            $table->text('id_alumno')->nullable();
+            $table->string('student_card_image')->nullable();
             $table->timestamp('expires_at')->nullable();
-            $table->string('student_card_image')->nullable(); // last uploaded card image
             $table->boolean('verified')->default(false);
             $table->timestamps();
         });

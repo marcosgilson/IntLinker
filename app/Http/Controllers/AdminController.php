@@ -54,12 +54,14 @@ class AdminController extends Controller
         $request->validate([
             'name'               => 'required|string|max:255|unique:companies,name',
             'description'        => 'nullable|string|max:2000',
+            'city'               => 'nullable|string|max:255',
             'applications_email' => 'nullable|email|max:255',
         ]);
 
         Company::create([
             'name'               => $request->name,
             'description'        => $request->description,
+            'city'               => $request->city,
             'applications_email' => $request->applications_email,
         ]);
 

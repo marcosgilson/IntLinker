@@ -152,7 +152,7 @@ export default function Edit({ mustVerifyEmail, status, student, companies, prof
 
                     {/* Role registration options */}
                     <div>
-                        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3 px-1">
+                        <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3 px-1">
                             Activar roles
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -163,7 +163,7 @@ export default function Edit({ mustVerifyEmail, status, student, companies, prof
 
                     {/* Account settings */}
                     <div>
-                        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3 px-1">
+                        <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3 px-1">
                             Configuración de cuenta
                         </h2>
                         <div className="space-y-4">

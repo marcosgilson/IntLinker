@@ -12,6 +12,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
+            $table->string('position')->nullable();
+            $table->string('work_card_image')->nullable();
+            $table->text('id_trabajador')->nullable();
+            $table->boolean('verified')->default(false);
             $table->timestamps();
 
             $table->unique(['user_id', 'company_id']);
