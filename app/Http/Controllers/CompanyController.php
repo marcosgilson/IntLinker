@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ImageHelper;
 use App\Models\Company;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
     public function index(Request $request): Response
     {
-        $cities    = array_values(array_filter(array_map('trim', (array) $request->query('cities', []))));
+        $cities           = array_values(array_filter(array_map('trim', (array) $request->query('cities', []))));
         $companies_filter = array_values(array_filter(array_map('trim', (array) $request->query('companies', []))));
 
         $query = Company::withCount(['activeEnrollments as pending_count']);
 
-        // Hard filter by company names (OR between each)
         if (!empty($companies_filter)) {
             $query->where(function ($q) use ($companies_filter) {
                 foreach ($companies_filter as $name) {
@@ -27,7 +27,6 @@ class CompanyController extends Controller
             });
         }
 
-        // Sort: selected cities first, then alphabetical
         if (!empty($cities)) {
             $placeholders = implode(',', array_fill(0, count($cities), '?'));
             $query->orderByRaw("CASE WHEN city IN ($placeholders) THEN 0 ELSE 1 END", $cities);
@@ -35,20 +34,16 @@ class CompanyController extends Controller
 
         $query->orderBy('name');
 
-        $paginated = $query->paginate(20)->withQueryString();
-
-        $allCities = Company::select('city')
-            ->whereNotNull('city')->where('city', '!=', '')
-            ->distinct()->orderBy('city')->pluck('city');
-
+        $paginated       = $query->paginate(20)->withQueryString();
+        $allCities       = Company::select('city')->whereNotNull('city')->where('city', '!=', '')->distinct()->orderBy('city')->pluck('city');
         $allCompanyNames = Company::select('id', 'name')->orderBy('name')->get();
 
         return Inertia::render('Companies/Index', [
-            'companies'        => $paginated,
-            'allCities'        => $allCities,
-            'allCompanyNames'  => $allCompanyNames,
-            'selectedCities'   => $cities,
-            'selectedCompanies'=> $companies_filter,
+            'companies'         => $paginated,
+            'allCities'         => $allCities,
+            'allCompanyNames'   => $allCompanyNames,
+            'selectedCities'    => $cities,
+            'selectedCompanies' => $companies_filter,
         ]);
     }
 
@@ -57,8 +52,10 @@ class CompanyController extends Controller
         $company->load(['employees' => function ($q) {
             $q->select('users.id', 'users.name', 'users.profile_photo')->where('users.is_admin', false);
         }]);
-        $user = \Illuminate\Support\Facades\Auth::user();
+
+        $user          = Auth::user();
         $canManageLogo = $user && ($user->is_admin || $user->companies()->where('companies.id', $company->id)->exists());
+
         return Inertia::render('Companies/Show', [
             'company'       => $company,
             'canManageLogo' => $canManageLogo,
@@ -67,7 +64,7 @@ class CompanyController extends Controller
 
     public function myCompany(Request $request): Response|RedirectResponse
     {
-        $user = $request->user();
+        $user      = $request->user();
         $companies = $user->companies()
             ->withCount([
                 'enrollments as waiting_count'  => fn ($q) => $q->where('status', 'waiting'),
@@ -84,11 +81,10 @@ class CompanyController extends Controller
                 ->with('student:id,user_id', 'student.user:id,name,email,profile_photo')
                 ->whereIn('status', ['waiting', 'accepted'])
                 ->latest()->get());
+
             $company->enrollments->each(function ($e) {
-                if ($e->student?->user?->profile_photo) {
-                    $e->student->user->photo_url = \Illuminate\Support\Facades\Storage::disk('public')->url($e->student->user->profile_photo);
-                } elseif ($e->student?->user) {
-                    $e->student->user->photo_url = null;
+                if ($e->student?->user) {
+                    $e->student->user->photo_url = $e->student->user->photo_url;
                 }
             });
         }
@@ -108,7 +104,7 @@ class CompanyController extends Controller
 
     public function updateLogo(Request $request, Company $company): RedirectResponse
     {
-        $user = $request->user();
+        $user     = $request->user();
         $isWorker = $user->companies()->where('companies.id', $company->id)->exists();
         abort_unless($isWorker || $user->is_admin, 403);
 
@@ -116,12 +112,8 @@ class CompanyController extends Controller
             'logo' => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
         ]);
 
-        if ($company->logo) {
-            Storage::disk('public')->delete($company->logo);
-        }
-
-        $path = $request->file('logo')->store('company-logos', 'public');
-        $company->update(['logo' => $path]);
+        $base64 = ImageHelper::compressToBase64($request->file('logo'), 600, 80);
+        $company->update(['logo' => $base64]);
 
         return back()->with('status', 'Logo actualizado correctamente.');
     }

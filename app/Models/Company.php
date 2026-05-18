@@ -2,26 +2,28 @@
 
 namespace App\Models;
 
+use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Company extends Model
 {
-    protected $fillable = [
-        'name',
-        'city',
-        'description',
-        'logo',
-        'applications_email',
-    ];
+    protected $fillable = ['name', 'city', 'description', 'logo', 'applications_email'];
+
+    protected $hidden = ['logo'];
 
     protected $appends = ['logo_url'];
 
     public function getLogoUrlAttribute(): ?string
     {
-        if (!$this->logo) return null;
+        if (! $this->logo) return null;
+
+        if (ImageHelper::isBase64($this->logo)) {
+            return $this->logo;
+        }
+
         return Storage::disk('public')->url($this->logo);
     }
 

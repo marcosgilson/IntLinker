@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ImageHelper;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProfilePhotoController extends Controller
 {
@@ -14,16 +14,13 @@ class ProfilePhotoController extends Controller
             'photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ]);
 
-        $user = $request->user();
+        $user   = $request->user();
+        $base64 = ImageHelper::compressToBase64($request->file('photo'));
 
-        // Delete old photo if exists
-        if ($user->profile_photo) {
-            Storage::disk('public')->delete($user->profile_photo);
-        }
+        $user->update(['profile_photo' => $base64]);
 
-        $path = $request->file('photo')->store('profile-photos', 'public');
-
-        $user->update(['profile_photo' => $path]);
+        // Refresh session cache so the new photo shows immediately
+        session(['photo_url_' . $user->id => $base64, 'photo_tag_' . $user->id => $user->fresh()->updated_at?->timestamp]);
 
         return back()->with('status', 'Foto de perfil actualizada.');
     }
@@ -32,10 +29,9 @@ class ProfilePhotoController extends Controller
     {
         $user = $request->user();
 
-        if ($user->profile_photo) {
-            Storage::disk('public')->delete($user->profile_photo);
-            $user->update(['profile_photo' => null]);
-        }
+        $user->update(['profile_photo' => null]);
+
+        session()->forget(['photo_url_' . $user->id, 'photo_tag_' . $user->id]);
 
         return back()->with('status', 'Foto de perfil eliminada.');
     }

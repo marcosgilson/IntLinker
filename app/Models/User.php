@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Helpers\ImageHelper;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,27 +14,24 @@ use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'is_admin',
-        'profile_photo',
-    ];
+    protected $fillable = ['name', 'email', 'password', 'is_admin', 'profile_photo'];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token', 'profile_photo'];
 
     protected $appends = ['photo_url'];
 
     public function getPhotoUrlAttribute(): ?string
     {
-        if (!$this->profile_photo) return null;
+        if (! $this->profile_photo) return null;
+
+        // Base64 data URL — return directly
+        if (ImageHelper::isBase64($this->profile_photo)) {
+            return $this->profile_photo;
+        }
+
+        // Legacy: file path stored on disk
         return Storage::disk('public')->url($this->profile_photo);
     }
 
@@ -42,8 +39,8 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'is_admin' => 'boolean',
+            'password'          => 'hashed',
+            'is_admin'          => 'boolean',
         ];
     }
 
@@ -80,7 +77,7 @@ class User extends Authenticatable
 
     public function isPendingWorker(): bool
     {
-        return !$this->isWorker() && (
+        return ! $this->isWorker() && (
             $this->companies()->wherePivot('verified', false)->exists() ||
             $this->companyApplications()->where('status', 'pending')->exists()
         );
