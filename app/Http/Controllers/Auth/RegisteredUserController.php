@@ -49,6 +49,6 @@ class RegisteredUserController extends Controller
 
         $request->session()->save();
 
-        return redirect(route('home'));
+        return redirect(route('verification.notice'));
     }
 }
