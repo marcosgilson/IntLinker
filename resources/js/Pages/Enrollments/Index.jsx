@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 
 // ── Status config ─────────────────────────────────────────────────────────────
 const STATUS = {
@@ -49,8 +50,8 @@ function EnrollmentCard({ enrollment }) {
         <div className={`bg-white rounded-2xl border-2 ${cfg.ring} p-5 flex flex-col gap-4 transition-shadow hover:shadow-md`}>
             {/* Company header */}
             <div className="flex items-center gap-3">
-                {company.logo ? (
-                    <img src={`/storage/${company.logo}`} alt={company.name}
+                {company.logo_url ? (
+                    <img src={company.logo_url} alt={company.name}
                         className="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
                 ) : (
                     <div className={`w-10 h-10 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
@@ -112,7 +113,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
         <>
             <Head title="Mis postulaciones — IntLinker" />
 
-            <div className="min-h-screen bg-gray-50 font-sans">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -139,8 +140,8 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                 <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
                     {/* Header */}
                     <div className="mb-8">
-                        <h1 className="text-3xl font-extrabold text-gray-900">Mis postulaciones</h1>
-                        <p className="text-gray-500 mt-1">Solo tú puedes ver este apartado.</p>
+                        <h1 className="text-3xl font-extrabold text-white">Mis postulaciones</h1>
+                        <p className="text-gray-300 mt-1">Solo tú puedes ver este apartado.</p>
                     </div>
 
                     {/* Slots counter */}
@@ -157,7 +158,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                             ))}
                         </div>
                         <div>
-                            <p className="font-semibold text-gray-900">{activeSlots} de {maxSlots} cupos usados</p>
+                            <p className="font-semibold text-white">{activeSlots} de {maxSlots} cupos usados</p>
                             <p className="text-sm text-gray-500">
                                 {maxSlots - activeSlots} cupo{maxSlots - activeSlots !== 1 ? 's' : ''} disponible{maxSlots - activeSlots !== 1 ? 's' : ''}
                             </p>
@@ -181,7 +182,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                             </div>
                         </>
                     ) : (
-                        <div className="text-center py-16 text-gray-400">
+                        <div className="text-center py-16 text-gray-300">
                             <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
@@ -206,6 +207,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                     )}
                 </div>
             </div>
+            <Footer />
         </>
     );
 }

@@ -2,6 +2,8 @@
 .env
 .env.backup
 .env.production
+.env.local
+.env.*.local
 /auth.json
 
 # --- Dependencias ---
@@ -25,13 +27,10 @@ pnpm-debug.log*
 /storage/framework/sessions/*
 /storage/framework/views/*
 
-# --- Entorno y Secretos ---
-.env
-.env.backup
-.env.production
-.env.local
-.env.*.local
-/auth.json
+# --- Archivos subidos por usuarios (no versionar) ---
+/storage/app/public/profile-photos/*
+/storage/app/public/student_cards/*
+/storage/app/public/logos/*
 
 # --- Herramientas de Editor ---
 .DS_Store
@@ -48,5 +47,10 @@ Thumbs.db
 # --- Configuración de Máquinas Virtuales ---
 Homestead.json
 Homestead.yaml
+
 # --- Bootstrap Cache (auto-generado, NO commitear) ---
 /bootstrap/cache/*.php
+
+# --- Archivos temporales ---
+*.txt
+with

@@ -1,4 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 
 const STATUS = {
     waiting:   { label: 'En espera',  cls: 'bg-amber-50 text-amber-700 border-amber-200' },
@@ -19,7 +20,7 @@ export default function StudentProfile({ student, enrollments = [] }) {
         <>
             <Head title={`Perfil de ${student.name} — IntLinker`} />
 
-            <div className="min-h-screen bg-gray-50 font-sans">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <Link href="/IntLinker" className="flex items-center gap-2">
@@ -93,11 +94,21 @@ export default function StudentProfile({ student, enrollments = [] }) {
                                     const cfg = STATUS[e.status] ?? STATUS.waiting;
                                     return (
                                         <div key={e.id} className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3">
-                                            <div>
-                                                <p className="text-sm font-semibold text-gray-800">{e.company?.name}</p>
-                                                {e.company?.city && (
-                                                    <p className="text-xs text-gray-400">📍 {e.company.city}</p>
+                                            <div className="flex items-center gap-3">
+                                                {e.company?.logo_url ? (
+                                                    <img src={e.company.logo_url} alt={e.company.name}
+                                                        className="w-9 h-9 rounded-lg object-cover flex-shrink-0"/>
+                                                ) : (
+                                                    <div className="w-9 h-9 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                                                        <span className="text-indigo-700 font-bold text-xs">{e.company?.name?.charAt(0).toUpperCase()}</span>
+                                                    </div>
                                                 )}
+                                                <div>
+                                                    <p className="text-sm font-semibold text-gray-800">{e.company?.name}</p>
+                                                    {e.company?.city && (
+                                                        <p className="text-xs text-gray-400">📍 {e.company.city}</p>
+                                                    )}
+                                                </div>
                                             </div>
                                             <span className={`text-xs font-semibold border px-2.5 py-1 rounded-full ${cfg.cls}`}>
                                                 {cfg.label}
@@ -109,6 +120,8 @@ export default function StudentProfile({ student, enrollments = [] }) {
                         </div>
                     )}
                 </div>
+                <Footer />
+
             </div>
         </>
     );

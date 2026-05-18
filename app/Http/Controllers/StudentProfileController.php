@@ -41,7 +41,7 @@ class StudentProfileController extends Controller
             ? null
             : $user->companies()->wherePivot('verified', true)->pluck('companies.id');
 
-        $enrollmentsQuery = $student->enrollments()->with('company:id,name,city');
+        $enrollmentsQuery = $student->enrollments()->with('company:id,name,city,logo');
         if ($workerCompanyIds !== null) {
             $enrollmentsQuery->whereIn('company_id', $workerCompanyIds)
                              ->whereIn('status', ['waiting', 'accepted']);

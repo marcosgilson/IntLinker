@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 import { useState, useRef, useEffect } from 'react';
 
 function stringToColor(str) {
@@ -162,8 +163,8 @@ function CompanyCard({ company, highlightedCity }) {
     return (
         <div className={`bg-white rounded-2xl shadow-sm border p-6 flex flex-col gap-4 hover:shadow-md transition ${highlightedCity ? 'border-indigo-200 ring-1 ring-indigo-100' : 'border-gray-100'}`}>
             <div className="flex items-center gap-3">
-                {company.logo ? (
-                    <img src={`/storage/${company.logo}`} alt={company.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0"/>
+                {company.logo_url ? (
+                    <img src={company.logo_url} alt={company.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0"/>
                 ) : (
                     <div className={`w-12 h-12 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold flex-shrink-0`}>
                         {initials(company.name)}
@@ -227,7 +228,7 @@ export default function CompaniesIndex({
     return (
         <>
             <Head title="Empresas — IntLinker"/>
-            <div className="min-h-screen bg-gray-50 font-sans">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <Link href="/IntLinker" className="flex items-center gap-2">
@@ -251,8 +252,8 @@ export default function CompaniesIndex({
 
                 <div className="pt-24 pb-12 max-w-6xl mx-auto px-6">
                     <div className="mb-6">
-                        <h1 className="text-3xl font-extrabold text-gray-900">Empresas colaboradoras</h1>
-                        <p className="text-gray-500 mt-1">Busca por empresa o localidad.</p>
+                        <h1 className="text-3xl font-extrabold text-white">Empresas colaboradoras</h1>
+                        <p className="text-gray-300 mt-1">Busca por empresa o localidad.</p>
                     </div>
 
                     <div className="mb-8">
@@ -267,14 +268,14 @@ export default function CompaniesIndex({
                     </div>
 
                     {(selectedCities.length > 0 || selectedCompanies.length > 0) && (
-                        <p className="text-sm text-gray-500 mb-4">
+                        <p className="text-sm text-gray-300 mb-4">
                             {selectedCities.length > 0 && <>Priorizando <span className="font-medium text-indigo-600">{selectedCities.join(', ')}</span>. </>}
                             {selectedCompanies.length > 0 && <>Filtrando por <span className="font-medium text-violet-600">{selectedCompanies.join(', ')}</span>.</>}
                         </p>
                     )}
 
                     {list.length === 0 ? (
-                        <div className="text-center py-20 text-gray-400">
+                        <div className="text-center py-20 text-gray-300">
                             <p className="text-lg font-medium">No se encontraron empresas.</p>
                         </div>
                     ) : (
@@ -301,6 +302,8 @@ export default function CompaniesIndex({
                         </div>
                     )}
                 </div>
+                <Footer />
+
             </div>
         </>
     );

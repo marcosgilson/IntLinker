@@ -276,9 +276,9 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                         className="group border border-gray-200 rounded-2xl p-6 hover:border-indigo-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                                     >
                                         <div className="flex items-center gap-3 mb-4">
-                                            {company.logo ? (
+                                            {company.logo_url ? (
                                                 <img
-                                                    src={`/storage/${company.logo}`}
+                                                    src={company.logo_url}
                                                     alt={company.name}
                                                     className="w-10 h-10 rounded-xl object-cover"
                                                 />
