@@ -6,6 +6,8 @@ use App\Models\Company;
 use App\Models\CompanyApplication;
 use App\Models\Student;
 use App\Models\User;
+use App\Notifications\StudentVerifiedNotification;
+use App\Notifications\WorkerVerifiedNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -134,6 +136,7 @@ class AdminController extends Controller
     public function verifyStudent(Student $student): RedirectResponse
     {
         $student->update(['verified' => true]);
+        $student->user->notify(new StudentVerifiedNotification());
         return back()->with('status', "Alumno '{$student->user->name}' verificado correctamente.");
     }
 
@@ -161,6 +164,8 @@ class AdminController extends Controller
 
         $user    = User::find($request->user_id);
         $company = Company::find($request->company_id);
+
+        $user->notify(new WorkerVerifiedNotification($company->name));
 
         return back()->with('status', "Trabajador '{$user->name}' verificado en '{$company->name}'.");
     }
