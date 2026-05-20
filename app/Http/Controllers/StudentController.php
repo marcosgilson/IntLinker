@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ImageHelper;
 use App\Http\Requests\AddSchoolRequest;
 use App\Http\Requests\BecomeStudentRequest;
+use App\Helpers\ImageHelper;
+use App\Jobs\ProcessStudentCard;
 use App\Models\School;
 use App\Models\Student;
-use App\Services\OcrService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class StudentController extends Controller
 {
@@ -25,44 +24,43 @@ class StudentController extends Controller
         $user->update(['name' => $request->validated('name')]);
 
         $file     = $request->file('student_card_image');
-        $idAlumno = (new OcrService())->extractText($file);
-        $base64   = ImageHelper::compressToBase64($file, 800, 85);
+        $tempPath = $file->store('temp/student-cards');
+        $fullPath = storage_path('app/' . $tempPath);
 
-        Student::create([
-            'user_id'            => $user->id,
-            'school_name'        => $request->validated('school_name'),
-            'school_email'       => $request->validated('school_email'),
-            'expires_at'         => Carbon::now()->addYear(),
-            'student_card_image' => $base64,
-            'id_alumno'          => $idAlumno,
-            'verified'           => false,
-        ]);
+        ProcessStudentCard::dispatch(
+            $user->id,
+            $fullPath,
+            $file->getClientOriginalName(),
+            $file->getMimeType(),
+            false,
+        );
 
-        return back()->with('status', 'Cuenta de alumno creada. Pendiente de verificacion.');
+        return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificacion.');
     }
 
     public function renew(BecomeStudentRequest $request): RedirectResponse
     {
-        $student = $request->user()->student;
+        $user = $request->user();
 
-        if (! $student) {
+        if (! $user->student) {
             return back()->withErrors(['student' => 'No tienes cuenta de alumno.']);
         }
 
-        $request->user()->update(['name' => $request->validated('name')]);
+        $user->update(['name' => $request->validated('name')]);
 
         $file     = $request->file('student_card_image');
-        $idAlumno = (new OcrService())->extractText($file);
-        $base64   = ImageHelper::compressToBase64($file, 800, 85);
+        $tempPath = $file->store('temp/student-cards');
+        $fullPath = storage_path('app/' . $tempPath);
 
-        $student->update([
-            'expires_at'         => Carbon::now()->addYear(),
-            'student_card_image' => $base64,
-            'id_alumno'          => $idAlumno,
-            'verified'           => false,
-        ]);
+        ProcessStudentCard::dispatch(
+            $user->id,
+            $fullPath,
+            $file->getClientOriginalName(),
+            $file->getMimeType(),
+            true,
+        );
 
-        return back()->with('status', 'Cuenta de alumno renovada. Pendiente de verificacion.');
+        return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificacion.');
     }
 
     public function addSchool(AddSchoolRequest $request): RedirectResponse
@@ -101,7 +99,6 @@ class StudentController extends Controller
             return back()->withErrors(['school_id' => 'No tienes esta escuela en tu perfil.']);
         }
 
-        // Base64 stored in DB — nothing to delete from disk
         $student->schools()->detach($school->id);
 
         return back()->with('status', 'Escuela eliminada del perfil.');
