@@ -12,6 +12,9 @@ php artisan package:discover --ansi
 echo "==> Running migrations..."
 php artisan migrate --force
 
+echo "==> Seeding database (if empty)..."
+php artisan db:seed --force 2>/dev/null || true
+
 echo "==> Linking storage..."
 php artisan storage:link --quiet 2>/dev/null || true
 
