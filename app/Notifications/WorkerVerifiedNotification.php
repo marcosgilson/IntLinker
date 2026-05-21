@@ -15,17 +15,17 @@ class WorkerVerifiedNotification extends Notification implements ShouldQueue
 
     public function via(object $notifiable): array
     {
-        return [''mail''];
+        return ['mail'];
     }
 
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(''¡Tu cuenta de trabajador ha sido verificada! - IntLinker'')
-            ->view(''emails.worker_verified'', [
-                ''name''        => $notifiable->name,
-                ''companyName'' => $this->companyName,
-                ''url''         => url(''/dashboard''),
+            ->subject('Tu cuenta de trabajador ha sido verificada! - IntLinker')
+            ->view('emails.worker_verified', [
+                'name'        => $notifiable->name,
+                'companyName' => $this->companyName,
+                'url'         => url('/dashboard'),
             ]);
     }
 }

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 550" width="100%" height="100%">
+    <rect width="100%" height="100%" fill="#ffffff"/>
+    
+    <g transform="translate(320, 70)">
+        <path d="M 120,105 C 50,105 20,160 20,220 C 20,290 80,340 150,340 C 230,340 250,260 270,220" 
+              fill="none" stroke="#4f46e5" stroke-width="14" stroke-linecap="round"/>
+        
+        <path d="M 60,115 L 15,140 L 60,165 L 105,140 Z" fill="#4f46e5"/>
+        <path d="M 32,150 L 32,190 C 32,195 28,195 28,190 Z" fill="#4f46e5" stroke="#4f46e5" stroke-width="2"/>
+        <rect x="25" y="185" width="6" height="12" rx="2" fill="#4f46e5"/>
+        
+        <path d="M 140,220 C 160,260 180,340 260,340 C 330,340 380,290 380,230 C 380,180 360,150 340,135" 
+              fill="none" stroke="#4f46e5" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 325,145 L 365,120 L 365,165 Z" fill="#4f46e5"/>
+
+        <path d="M 100,160 C 130,160 160,180 170,210" fill="none" stroke="#7c3aed" stroke-width="8" stroke-linecap="round"/>
+        <path d="M 215,220 C 215,260 230,310 260,315" fill="none" stroke="#7c3aed" stroke-width="8" stroke-linecap="round"/>
+
+        <path d="M 45,240 Q 195,150 345,240" fill="none" stroke="#4f46e5" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 45,240 Q 195,190 345,240 Z" fill="#4f46e5" opacity="0.15"/>
+        
+        <line x1="95" y1="218" x2="95" y2="240" stroke="#4f46e5" stroke-width="6"/>
+        <line x1="135" y1="202" x2="135" y2="240" stroke="#4f46e5" stroke-width="6"/>
+        <line x1="175" y1="195" x2="175" y2="240" stroke="#4f46e5" stroke-width="6"/>
+        <line x1="215" y1="195" x2="215" y2="240" stroke="#4f46e5" stroke-width="6"/>
+        <line x1="255" y1="202" x2="255" y2="240" stroke="#4f46e5" stroke-width="6"/>
+        <line x1="295" y1="218" x2="295" y2="240" stroke="#4f46e5" stroke-width="6"/>
+        
+        <line x1="195" y1="150" x2="195" y2="240" stroke="#7c3aed" stroke-width="10" stroke-linecap="round"/>
+
+        <g fill="#4f46e5" transform="translate(290, 110)">
+            <path d="M 0,90 L 20,70 L 20,110 L 0,110 Z"/>
+            <path d="M 23,50 L 45,30 L 45,110 L 23,110 Z"/>
+            <path d="M 48,75 L 65,60 L 65,110 L 48,110 Z"/>
+        </g>
+    </g>
+    
+    <g text-anchor="middle">
+        <text x="500" y="450" font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-size="76" font-weight="800" fill="#4f46e5" letter-spacing="8">INTLINKER</text>
+        <text x="500" y="500" font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#7c3aed" letter-spacing="5">CONECTANDO ALUMNOS Y EMPRESAS</text>
+    </g>
+</svg>

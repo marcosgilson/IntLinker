@@ -1,3 +1,4 @@
+import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { useEffect, useRef, useState } from 'react';
 import { useForm, Link } from '@inertiajs/react';
 
@@ -229,10 +230,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
                 <div className="px-6 pt-6 pb-4 border-b border-gray-100">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-                                <span className="text-white font-bold text-xs">IL</span>
-                            </div>
-                            <span className="font-bold text-gray-900">IntLinker</span>
+                            <IntLinkerLogo className="h-10 w-auto" />
                         </div>
                         <button
                             onClick={onClose}
@@ -287,3 +285,8 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
         </div>
     );
 }
+
+
+
+
+

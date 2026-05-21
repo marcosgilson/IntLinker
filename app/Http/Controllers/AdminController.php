@@ -131,9 +131,19 @@ class AdminController extends Controller
         return back()->with('status', 'Solicitud rechazada.');
     }
 
+    
+    public function updateCompanyEmail(Request $request, Company $company): RedirectResponse
+    {
+        $request->validate([
+            'applications_email' => 'nullable|email|max:255',
+        ]);
+        $company->update(['applications_email' => $request->applications_email]);
+        return back()->with('status', "Correo de '{$company->name}' actualizado.");
+    }
+
     // ── Student verification ──────────────────────────────────────────────────
 
-    public function verifyStudent(Student $student): RedirectResponse
+        public function verifyStudent(Student $student): RedirectResponse
     {
         $student->update(['verified' => true]);
         $student->user->notify(new StudentVerifiedNotification());
@@ -185,3 +195,5 @@ class AdminController extends Controller
         return back()->with('status', 'Registro de trabajador rechazado y eliminado.');
     }
 }
+
+

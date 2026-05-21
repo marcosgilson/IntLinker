@@ -1,3 +1,4 @@
+import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Register() {
@@ -24,10 +25,7 @@ export default function Register() {
 
                     <div className="px-8 pt-8 pb-6 border-b border-gray-100">
                         <Link href="/" className="flex items-center gap-2 mb-6">
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">IL</span>
-                            </div>
-                            <span className="font-bold text-gray-900 text-lg">IntLinker</span>
+                            <IntLinkerLogo className="h-10 w-auto" />
                         </Link>
                         <h1 className="text-2xl font-bold text-gray-900">Crear cuenta</h1>
                         <p className="text-gray-500 text-sm mt-1">
@@ -116,3 +114,9 @@ export default function Register() {
         </>
     );
 }
+
+
+
+
+
+

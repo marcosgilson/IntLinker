@@ -1,3 +1,4 @@
+import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import AuthModal from '@/Components/AuthModal';
@@ -89,10 +90,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">IL</span>
-                            </div>
-                            <span className="text-xl font-bold text-gray-900">IntLinker</span>
+                            <IntLinkerLogo className="h-10 w-auto" />
                         </div>
 
                         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
@@ -356,10 +354,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                             <div className="flex items-center gap-2">
-                                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-                                    <span className="text-white font-bold text-xs">IL</span>
-                                </div>
-                                <span className="text-white font-bold">IntLinker</span>
+                                <IntLinkerLogo className="h-10 w-auto" />
                             </div>
                             <p className="text-sm">© 2026 IntLinker. Todos los derechos reservados.</p>
                             <div className="flex gap-6 text-sm">
@@ -375,3 +370,9 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
         </>
     );
 }
+
+
+
+
+
+
