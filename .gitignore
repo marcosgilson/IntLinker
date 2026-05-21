@@ -54,3 +54,6 @@ Homestead.yaml
 # --- Archivos temporales ---
 *.txt
 with
+
+*Zone.Identifier
+.env.railway.bak
