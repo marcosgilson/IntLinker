@@ -32,6 +32,11 @@ rm -f /etc/apache2/mods-enabled/mpm_worker.load
 ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load 2>/dev/null || true
 ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf 2>/dev/null || true
 
+echo "==> Configuring Apache port (PORT=${PORT:-80})..."
+PORT="${PORT:-80}"
+sed -i "s/^Listen 80$/Listen ${PORT}/" /etc/apache2/ports.conf
+sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-enabled/*.conf
+
 echo "==> Starting queue worker in background..."
 php artisan queue:work --sleep=3 --tries=3 &
 
