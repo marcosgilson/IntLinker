@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BecomeWorkerRequest;
 use App\Models\Company;
 use App\Models\CompanyApplication;
-use App\Services\OcrService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class WorkerController extends Controller
 {
@@ -29,13 +28,13 @@ class WorkerController extends Controller
             return back()->withErrors(['company_name' => 'Ya tienes una solicitud pendiente de verificacion. Espera a que el administrador la revise o cancela la actual.']);
         }
 
-        $companyName = $request->validated('company_name');
-        $position    = $request->validated('position');
+        $companyName  = $request->validated('company_name');
+        $position     = $request->validated('position');
 
         $user->update(['name' => $request->validated('name')]);
 
         $imagePath    = $request->file('work_card_image')->store('work_cards', 'public');
-        $idTrabajador = (new OcrService())->extractText($request->file('work_card_image'));
+        $idTrabajador = 'TRB-' . strtoupper(Str::random(8));
 
         $company = Company::where('name', $companyName)->first();
 

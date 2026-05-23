@@ -4,7 +4,6 @@ FROM php:8.2-apache
 RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev libzip-dev libicu-dev libpq-dev \
     zip unzip git curl \
-    tesseract-ocr tesseract-ocr-spa poppler-utils \
     && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd intl zip \
     && pecl install redis \
     && docker-php-ext-enable redis \
@@ -51,3 +50,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 EXPOSE 80
 CMD ["/entrypoint.sh"]
+
+
