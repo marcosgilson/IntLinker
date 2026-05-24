@@ -14,34 +14,41 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        // ── Admin principal (vinculado a todas las empresas, oculto en ellas) ──
-        $admin = User::create([
-            'name'     => 'Admin',
-            'email'    => 'admin@admin.com',
-            'password' => bcrypt('admin'),
-            'is_admin' => true,
-        ]);
+        // ── Admin principal ──────────────────────────────────────────────────
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@admin.com'],
+            [
+                'name'              => 'Admin',
+                'password'          => bcrypt('admin'),
+                'is_admin'          => true,
+                'email_verified_at' => now(),
+            ]
+        );
 
-        // ── Test user (normal) ────────────────────────────────────────────
-        User::create([
-            'name'     => 'Test User',
-            'email'    => 'test@example.com',
-            'password' => bcrypt('password'),
-        ]);
+        // ── Test user ────────────────────────────────────────────────────────
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'name'     => 'Test User',
+                'password' => bcrypt('password'),
+            ]
+        );
 
-        // ── Test schools ──────────────────────────────────────────────────
-        School::insert([
-            ['name' => 'Universidad Politécnica de Madrid', 'country' => 'España', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Universidad Complutense de Madrid', 'country' => 'España', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'MIT',                               'country' => 'USA',    'created_at' => now(), 'updated_at' => now()],
-        ]);
+        // ── Test schools ─────────────────────────────────────────────────────
+        $schools = [
+            ['name' => 'Universidad Politécnica de Madrid', 'country' => 'España'],
+            ['name' => 'Universidad Complutense de Madrid', 'country' => 'España'],
+            ['name' => 'MIT',                               'country' => 'USA'],
+        ];
+        foreach ($schools as $school) {
+            School::firstOrCreate(['name' => $school['name']], $school);
+        }
 
-        // ── Seed companies ────────────────────────────────────────────────
+        // ── Seed companies ───────────────────────────────────────────────────
         $this->call(CompanySeeder::class);
 
-        // ── Vincular admin a TODAS las empresas (aparece oculto por is_admin) ──
+        // ── Vincular admin a TODAS las empresas ──────────────────────────────
         $allCompanyIds = Company::pluck('id');
-        $admin->companies()->attach($allCompanyIds);
+        $admin->companies()->syncWithoutDetaching($allCompanyIds);
     }
 }
-
