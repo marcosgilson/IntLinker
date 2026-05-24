@@ -37,8 +37,5 @@ PORT="${PORT:-80}"
 sed -i "s/^Listen 80$/Listen ${PORT}/" /etc/apache2/ports.conf
 sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-enabled/*.conf
 
-echo "==> Starting queue worker in background..."
-php artisan queue:work --sleep=3 --tries=3 &
-
 echo "==> Starting Apache..."
 exec apache2-foreground
