@@ -25,6 +25,7 @@ php artisan view:cache
 
 echo "==> Fixing Apache MPM and enabling rewrite..."
 a2enmod rewrite 2>/dev/null || true
+a2enconf mpm_prefork_tune 2>/dev/null || true
 rm -f /etc/apache2/mods-enabled/mpm_event.conf
 rm -f /etc/apache2/mods-enabled/mpm_event.load
 rm -f /etc/apache2/mods-enabled/mpm_worker.conf
