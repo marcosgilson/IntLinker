@@ -161,7 +161,7 @@ function FormFields({ data, setData, errors, preview, handleFile, fileRef, isRen
                     className="border-2 border-dashed border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-emerald-300 transition"
                 >
                     {preview ? (
-                        <img src={preview} alt="preview" className="h-20 object-contain mx-auto rounded" />
+                        <img src={preview} alt="vista previa" className="h-20 object-contain mx-auto rounded" />
                     ) : (
                         <p className="text-xs text-gray-400">Haz clic para subir imagen</p>
                     )}

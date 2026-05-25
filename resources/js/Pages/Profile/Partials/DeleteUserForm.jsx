@@ -80,7 +80,7 @@ export default function DeleteUserForm({ className = '' }) {
                     <div className="mt-6">
                         <InputLabel
                             htmlFor="password"
-                            value="Password"
+                            value="Contraseña"
                             className="sr-only"
                         />
 
@@ -95,7 +95,7 @@ export default function DeleteUserForm({ className = '' }) {
                             }
                             className="mt-1 block w-3/4"
                             isFocused
-                            placeholder="Password"
+                            placeholder="Contraseña"
                         />
 
                         <InputError
@@ -118,3 +118,4 @@ export default function DeleteUserForm({ className = '' }) {
         </section>
     );
 }
+
