@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -23,9 +23,7 @@ class ProfileController extends Controller
             'student'           => $user->student,
             'companies'         => $user->companies()->select('companies.id', 'companies.name', 'companies.logo')->get(),
             'banner_color'      => $user->banner_color ?? '#9ca3af',
-            'profile_photo_url' => $user->profile_photo
-                                    ? Storage::disk('public')->url($user->profile_photo)
-                                    : null,
+            'profile_photo_url' => $user->photo_url,
         ]);
     }
 
