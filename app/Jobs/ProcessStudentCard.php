@@ -26,7 +26,7 @@ class ProcessStudentCard implements ShouldQueue
 
     public function __construct(
         private readonly int    $userId,
-        private readonly string $fileContents,   // base64 encoded
+        private readonly string $fileContents,
         private readonly string $originalName,
         private readonly string $mimeType,
         private readonly bool   $isRenewal = false,
@@ -34,16 +34,21 @@ class ProcessStudentCard implements ShouldQueue
 
     public function handle(DocuPipeService $docuPipe): void
     {
+        Log::info("ProcessStudentCard: start for user {$this->userId}");
+
         $user = User::findOrFail($this->userId);
 
-        // Write to a fresh temp file inside the job
         $tmpPath = tempnam(sys_get_temp_dir(), 'student_card_');
         file_put_contents($tmpPath, base64_decode($this->fileContents));
+
+        Log::info("ProcessStudentCard: temp file written to {$tmpPath}, size=" . filesize($tmpPath));
 
         try {
             $file = new UploadedFile($tmpPath, $this->originalName, $this->mimeType, null, true);
 
+            Log::info("ProcessStudentCard: calling DocuPipe...");
             $data = $docuPipe->extractStudentCard($file);
+            Log::info("ProcessStudentCard: DocuPipe response", $data);
 
             $isStudent   = (bool) ($data['isStudent'] ?? false);
             $firstName   = trim($data['firstName'] ?? '');
@@ -53,6 +58,8 @@ class ProcessStudentCard implements ShouldQueue
             $yearStart   = (int) ($data['academicYearStart'] ?? 0);
             $yearEnd     = (int) ($data['academicYearEnd'] ?? 0);
 
+            Log::info("ProcessStudentCard: parsed fields", compact('isStudent','firstName','surname1','surname2','yearStart','yearEnd'));
+
             if (! $isStudent) {
                 $this->reject($user, 'El documento no identifica al portador como estudiante.');
                 return;
@@ -61,11 +68,10 @@ class ProcessStudentCard implements ShouldQueue
             $fullNameFromCard = $this->normalize("{$firstName} {$surname1} {$surname2}");
             $userFullName     = $this->normalize($user->name);
 
+            Log::info("ProcessStudentCard: name comparison", ['card' => $fullNameFromCard, 'user' => $userFullName]);
+
             if ($fullNameFromCard !== $userFullName) {
-                $this->reject(
-                    $user,
-                    "El nombre del carnet ({$firstName} {$surname1} {$surname2}) no coincide con el nombre de tu cuenta ({$user->name})."
-                );
+                $this->reject($user, "El nombre del carnet ({$firstName} {$surname1} {$surname2}) no coincide con el nombre de tu cuenta ({$user->name}).");
                 return;
             }
 
@@ -102,10 +108,13 @@ class ProcessStudentCard implements ShouldQueue
                 ]);
             }
 
+            Log::info("ProcessStudentCard: user {$this->userId} verified successfully");
             $user->notify(new StudentVerifiedNotification());
 
         } catch (\Throwable $e) {
-            Log::error("ProcessStudentCard failed for user {$this->userId}: " . $e->getMessage());
+            Log::error("ProcessStudentCard failed for user {$this->userId}: " . $e->getMessage(), [
+                'exception' => $e->getTraceAsString(),
+            ]);
             $user->notify(new StudentRejectedNotification(
                 'No se pudo procesar el documento. Por favor, intentalo de nuevo.'
             ));
@@ -118,6 +127,7 @@ class ProcessStudentCard implements ShouldQueue
 
     private function reject(User $user, string $reason): void
     {
+        Log::warning("ProcessStudentCard: rejected user {$user->id} — {$reason}");
         if (! $this->isRenewal) {
             $user->student?->delete();
         }
