@@ -37,6 +37,13 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit');
     }
 
+    public function updateBanner(Request \): RedirectResponse
+    {
+        \->validate(['banner_color' => ['required', 'string', 'regex:/^#[0-9a-fA-F]{6}\$/']]);
+        \->user()->update(['banner_color' => \->banner_color]);
+        return back();
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate(['password' => ['required', 'current_password']]);
@@ -52,3 +59,4 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 }
+
