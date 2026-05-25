@@ -15,7 +15,7 @@
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.10.1",
     "tightenco/ziggy": "^2.0",
-        "resend/resend-laravel": "^0.14.0"
+        "resend/resend-laravel": "^1.4.0"
   },
   "require-dev": {
     "fakerphp/faker": "^1.23",
@@ -92,5 +92,6 @@
   "minimum-stability": "stable",
   "prefer-stable": true
 }
+
 
 
