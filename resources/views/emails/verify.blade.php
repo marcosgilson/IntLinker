@@ -7,7 +7,7 @@
       <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;">
         <tr>
           <td style="background:linear-gradient(135deg,#4f46e5,#7c3aed);padding:36px 40px;text-align:center;">
-            <span style="color:#fff;font-size:24px;font-weight:800;">IntLinker</span>
+            <img src="https://intlinker.up.railway.app/intlinker_logo.svg" alt="IntLinker" style="height:48px;width:auto;" />
           </td>
         </tr>
         <tr>
@@ -45,3 +45,4 @@
   </table>
 </body>
 </html>
+
