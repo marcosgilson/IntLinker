@@ -38,7 +38,7 @@ sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-enabl
 
 echo "==> Starting scheduler in background..."
 (while true; do
-    php artisan schedule:run --no-interaction >> /dev/null 2>&1
+    php artisan schedule:run --no-interaction
     sleep 60
 done) &
 
