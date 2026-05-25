@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm, usePage, router } from '@inertiajs/react';
+import { Head, usePage, router } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
@@ -8,18 +8,9 @@ import BecomeStudentForm from './Partials/BecomeStudentForm';
 import BecomeWorkerForm from './Partials/BecomeWorkerForm';
 
 const BANNER_COLORS = [
-    '#9ca3af', // gray (default)
-    '#6366f1', // indigo
-    '#8b5cf6', // violet
-    '#ec4899', // pink
-    '#ef4444', // red
-    '#f97316', // orange
-    '#eab308', // yellow
-    '#22c55e', // green
-    '#06b6d4', // cyan
-    '#3b82f6', // blue
-    '#1e293b', // dark slate
-    '#111827', // near black
+    '#9ca3af','#6366f1','#8b5cf6','#ec4899','#ef4444',
+    '#f97316','#eab308','#22c55e','#06b6d4','#3b82f6',
+    '#1e293b','#111827',
 ];
 
 function BannerUpload({ bannerColor, userName }) {
@@ -34,12 +25,9 @@ function BannerUpload({ bannerColor, userName }) {
 
     return (
         <div className="relative h-28 sm:h-32 group" style={{ backgroundColor: color }}>
-            {/* Username on banner */}
             <div className="absolute bottom-3 left-4 sm:left-6">
                 <span className="text-white font-bold text-lg sm:text-xl drop-shadow-md">{userName}</span>
             </div>
-
-            {/* Edit banner button */}
             <button
                 type="button"
                 onClick={() => setShowPicker(v => !v)}
@@ -47,26 +35,16 @@ function BannerUpload({ bannerColor, userName }) {
                     text-xs flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
             >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                        d="M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3z"/>
                 </svg>
                 Color
             </button>
-
-            {/* Color picker dropdown */}
             {showPicker && (
                 <div className="absolute top-10 right-3 bg-white rounded-xl shadow-xl p-3 z-20 flex flex-wrap gap-2 w-52">
                     {BANNER_COLORS.map(c => (
-                        <button
-                            key={c}
-                            type="button"
-                            onClick={() => handleColorSelect(c)}
+                        <button key={c} type="button" onClick={() => handleColorSelect(c)}
                             className="w-8 h-8 rounded-lg border-2 transition-transform hover:scale-110"
-                            style={{
-                                backgroundColor: c,
-                                borderColor: c === color ? '#fff' : 'transparent',
-                                outline: c === color ? '2px solid #6366f1' : 'none',
-                            }}
+                            style={{ backgroundColor: c, borderColor: c === color ? '#fff' : 'transparent', outline: c === color ? '2px solid #6366f1' : 'none' }}
                         />
                     ))}
                 </div>
@@ -87,14 +65,13 @@ function AvatarUpload({ photoUrl, initials }) {
         setPreview(URL.createObjectURL(file));
         setUploading(true);
         router.post(route('profile.photo.update'), { photo: file }, {
-            forceFormData: true,
-            preserveScroll: true,
+            forceFormData: true, preserveScroll: true,
             onFinish: () => setUploading(false),
         });
     };
 
     const handleDelete = () => {
-        if (!confirm('¿Eliminar foto de perfil?')) return;
+        if (!confirm('Eliminar foto de perfil?')) return;
         setPreview(null);
         router.delete(route('profile.photo.destroy'), { preserveScroll: true });
     };
@@ -110,7 +87,6 @@ function AvatarUpload({ photoUrl, initials }) {
                     <span className="text-white font-bold text-2xl">{initials}</span>
                 </div>
             )}
-
             <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading}
                 title="Cambiar foto"
                 className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100
@@ -128,7 +104,6 @@ function AvatarUpload({ photoUrl, initials }) {
                     </svg>
                 )}
             </button>
-
             {preview && (
                 <button type="button" onClick={handleDelete} title="Eliminar foto"
                     className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 hover:bg-red-600 text-white
@@ -138,14 +113,13 @@ function AvatarUpload({ photoUrl, initials }) {
                     </svg>
                 </button>
             )}
-
             <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp"
                 className="hidden" onChange={handleFileChange} />
         </div>
     );
 }
 
-export default function Edit({ mustVerifyEmail, status, student, companies, profile_photo_url, banner_color }) {
+export default function Edit({ status, student, companies, profile_photo_url, banner_color }) {
     const { auth } = usePage().props;
     const user = auth.user;
     const roles = auth.roles ?? {};
@@ -162,21 +136,16 @@ export default function Edit({ mustVerifyEmail, status, student, companies, prof
 
                     {/* Profile header card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        {/* Banner */}
                         <BannerUpload bannerColor={banner_color} userName={user.name} />
 
+                        {/* Avatar + info row — avatar floats up with negative margin, but name is BELOW avatar */}
                         <div className="px-4 sm:px-6 pb-4 sm:pb-6">
-                            <div className="flex flex-col sm:flex-row sm:items-end gap-3 -mt-10 mb-3">
+                            {/* Avatar overlapping banner */}
+                            <div className="flex items-start justify-between -mt-10 mb-3">
                                 <AvatarUpload photoUrl={profile_photo_url} initials={initials} />
-
-                                <div className="pb-0 sm:pb-1 min-w-0">
-                                    <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">{user.name}</h1>
-                                    <p className="text-sm text-gray-500 truncate">{user.email}</p>
-                                    <p className="text-xs text-gray-400 mt-0.5 hidden sm:block">
-                                        Pasa el cursor sobre la foto o el banner para editarlos
-                                    </p>
-                                </div>
-
-                                <div className="sm:ml-auto flex gap-2 flex-wrap">
+                                {/* Roles badges top-right */}
+                                <div className="flex gap-2 flex-wrap justify-end mt-12 sm:mt-12">
                                     {roles.is_admin && (
                                         <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">Admin</span>
                                     )}
@@ -197,14 +166,20 @@ export default function Edit({ mustVerifyEmail, status, student, companies, prof
                                     )}
                                 </div>
                             </div>
+                            {/* Name + email below avatar */}
+                            <div>
+                                <h1 className="text-lg sm:text-xl font-bold text-gray-900">{user.name}</h1>
+                                <p className="text-sm text-gray-500">{user.email}</p>
+                                <p className="text-xs text-gray-400 mt-0.5 hidden sm:block">
+                                    Pasa el cursor sobre la foto o el banner para editarlos
+                                </p>
+                            </div>
                         </div>
                     </div>
 
                     {/* Role registration options */}
                     <div>
-                        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">
-                            Activar roles
-                        </h2>
+                        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">Activar roles</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <BecomeStudentForm student={student} status={status} />
                             <BecomeWorkerForm companies={companies} status={status} />
@@ -213,9 +188,7 @@ export default function Edit({ mustVerifyEmail, status, student, companies, prof
 
                     {/* Account settings */}
                     <div>
-                        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">
-                            Configuración de cuenta
-                        </h2>
+                        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">Configuración de cuenta</h2>
                         <div className="space-y-4">
                             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
                                 <UpdateProfileInformationForm status={status} className="max-w-xl" />
