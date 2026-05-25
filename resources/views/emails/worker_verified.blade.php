@@ -35,7 +35,7 @@
         </tr>
         <tr>
           <td style="background:#f9fafb;border-top:1px solid #e5e7eb;padding:20px 40px;text-align:center;">
-            <p style="margin:0;font-size:12px;color:#9ca3af;">&copy; {{ date(''Y'') }} IntLinker &middot; No respondas a este correo</p>
+            <p style="margin:0;font-size:12px;color:#9ca3af;">&copy; {{ now()->year }} IntLinker &middot; No respondas a este correo</p>
           </td>
         </tr>
       </table>

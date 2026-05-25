@@ -8,6 +8,7 @@ use App\Http\Requests\BecomeStudentRequest;
 use App\Models\School;
 use App\Models\Student;
 use App\Services\DocuPipeService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -130,5 +131,27 @@ class StudentController extends Controller
         $student->schools()->detach($school->id);
 
         return back()->with('status', 'Escuela eliminada del perfil.');
+    }
+
+    public function status(Request $request): JsonResponse
+    {
+        $student = $request->user()->student;
+
+        if (! $student) {
+            return response()->json(['status' => 'none']);
+        }
+
+        if ($student->verified) {
+            return response()->json(['status' => 'verified']);
+        }
+
+        if ($student->docupipe_status === 'failed') {
+            return response()->json([
+                'status' => 'failed',
+                'reason' => $student->docupipe_failure_reason,
+            ]);
+        }
+
+        return response()->json(['status' => 'pending']);
     }
 }

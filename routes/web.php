@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('profile/photo', [ProfilePhotoController::class, 'destroy'])->name('profile.photo.destroy');
 
     // Student role
+    Route::get('/student/status', [StudentController::class, 'status'])->name('student.status');
     Route::post('/student', [StudentController::class, 'store'])->name('student.store');
     Route::post('/student/renew', [StudentController::class, 'renew'])->name('student.renew');
 

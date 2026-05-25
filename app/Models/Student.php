@@ -17,6 +17,11 @@ class Student extends Model
         'student_card_image',
         'verified',
         'id_alumno',
+        'docupipe_document_id',
+        'docupipe_job_id',
+        'docupipe_standardization_id',
+        'docupipe_status',
+        'docupipe_failure_reason',
     ];
 
     protected function casts(): array

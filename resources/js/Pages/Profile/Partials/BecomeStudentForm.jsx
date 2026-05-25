@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { useForm, usePage, Link } from '@inertiajs/react';
+import { useState, useRef, useEffect } from 'react';
+import { useForm, usePage, Link, router } from '@inertiajs/react';
 
 export default function BecomeStudentForm({ student, status }) {
     const { auth } = usePage().props;
@@ -16,6 +16,25 @@ export default function BecomeStudentForm({ student, status }) {
 
     const isActive = student && student.verified && (student.expires_at === null || new Date(student.expires_at) > new Date());
     const isPending = student && !student.verified;
+
+    // Poll every 2 minutes when verification is pending
+    useEffect(() => {
+        if (!isPending) return;
+
+        const poll = async () => {
+            try {
+                const res = await fetch(route('student.status'));
+                const data = await res.json();
+                if (data.status !== 'pending') {
+                    router.reload({ only: ['student'] });
+                }
+            } catch (_) {}
+        };
+
+        const id = setInterval(poll, 2 * 60 * 1000);
+        return () => clearInterval(id);
+    }, [isPending]);
+
 
     const handleFile = (e) => {
         const file = e.target.files[0];
