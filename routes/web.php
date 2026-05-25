@@ -69,6 +69,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/company-applications', [AdminController::class, 'companyApplications'])->name('company-applications.index');
         Route::patch('/company-applications/{application}/approve', [AdminController::class, 'approveApplication'])->name('company-applications.approve');
         Route::patch('/company-applications/{application}/reject', [AdminController::class, 'rejectApplication'])->name('company-applications.reject');
+        // DocuPipe test (temporary)
+        Route::get('/test-docupipe', function () {
+            return inertia('Admin/TestDocuPipe');
+        })->name('admin.test-docupipe');
+        Route::post('/test-docupipe', function (\Illuminate\Http\Request $request, \App\Services\DocuPipeService $docuPipe) {
+            $request->validate(['image' => ['required', 'image', 'max:10240']]);
+            try {
+                $file   = $request->file('image');
+                $result = $docuPipe->extractStudentCard($file);
+                return back()->with('docupipe_result', json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            } catch (\Throwable $e) {
+                return back()->withErrors(['image' => 'DocuPipe error: ' . $e->getMessage()]);
+            }
+        })->name('admin.test-docupipe.post');
         // Student verification
         Route::patch('/students/{student}/verify', [AdminController::class, 'verifyStudent'])->name('students.verify');
         Route::delete('/students/{student}/reject', [AdminController::class, 'rejectStudent'])->name('students.reject');

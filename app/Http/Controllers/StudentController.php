@@ -9,6 +9,7 @@ use App\Jobs\ProcessStudentCard;
 use App\Models\School;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -26,6 +27,7 @@ class StudentController extends Controller
         $file     = $request->file('student_card_image');
         $contents = base64_encode(file_get_contents($file->getRealPath()));
 
+        Log::info("StudentController: dispatching ProcessStudentCard for user {$user->id}, file={$file->getClientOriginalName()}, size=" . strlen($contents));
         ProcessStudentCard::dispatch(
             $user->id,
             $contents,
@@ -33,6 +35,7 @@ class StudentController extends Controller
             $file->getMimeType(),
             false,
         );
+        Log::info("StudentController: job dispatched for user {$user->id}");
 
         return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificacion.');
     }

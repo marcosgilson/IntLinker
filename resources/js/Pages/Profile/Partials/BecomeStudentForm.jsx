@@ -14,7 +14,8 @@ export default function BecomeStudentForm({ student, status }) {
         student_card_image: null,
     });
 
-    const isActive = student && new Date(student.expires_at) > new Date();
+    const isActive = student && student.verified && (student.expires_at === null || new Date(student.expires_at) > new Date());
+    const isPending = student && !student.verified;
 
     const handleFile = (e) => {
         const file = e.target.files[0];
@@ -34,6 +35,24 @@ export default function BecomeStudentForm({ student, status }) {
             },
         });
     };
+
+    if (isPending && !isActive) {
+        return (
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-amber-900 text-sm">Verificación pendiente</h3>
+                        <p className="text-xs text-amber-700 mt-0.5">Tu carnet está siendo revisado. Te avisaremos por correo cuando se complete.</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (isActive) {
         return (

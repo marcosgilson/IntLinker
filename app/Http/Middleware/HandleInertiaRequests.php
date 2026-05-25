@@ -34,6 +34,10 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
+            'flash' => [
+                'status'           => session('status'),
+                'docupipe_result'  => session('docupipe_result'),
+            ],
             'auth' => [
                 'user'  => $user ? array_merge($user->toArray(), ['photo_url' => $photoUrl]) : null,
                 'roles' => $user ? [
