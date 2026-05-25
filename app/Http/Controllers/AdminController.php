@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -40,7 +40,7 @@ class AdminController extends Controller
             ->get();
 
         $applications = CompanyApplication::with('user:id,name,email')
-            ->orderByRaw("FIELD(status, 'pending', 'approved', 'rejected')")
+            ->orderByRaw("CASE status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 ELSE 2 END")
             ->latest()
             ->paginate(20);
 
@@ -73,7 +73,7 @@ class AdminController extends Controller
     public function companyApplications(Request $request): Response
     {
         $applications = CompanyApplication::with('user:id,name,email')
-            ->orderByRaw("FIELD(status, 'pending', 'approved', 'rejected')")
+            ->orderByRaw("CASE status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 ELSE 2 END")
             ->latest()
             ->paginate(20);
 
