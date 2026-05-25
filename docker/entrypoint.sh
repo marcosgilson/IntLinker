@@ -37,7 +37,11 @@ sed -i "s/^Listen 80$/Listen ${PORT}/" /etc/apache2/ports.conf
 sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-enabled/*.conf
 
 echo "==> Starting queue worker in background..."
-php -d memory_limit=32M artisan queue:work --sleep=10 --tries=3 --max-time=1800 --max-jobs=10 &
+(while true; do
+    php -d memory_limit=32M artisan queue:work --sleep=10 --tries=3 --max-time=1800 --max-jobs=50
+    echo "==> Queue worker exited, restarting..."
+    sleep 2
+done) &
 
 echo "==> Starting Apache..."
 exec apache2-foreground
