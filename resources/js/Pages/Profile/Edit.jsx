@@ -181,12 +181,8 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
                     <div>
                         <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">Activar roles</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {!roles.is_worker && !roles.is_pending_worker && (
-                                <BecomeStudentForm student={student} status={status} />
-                            )}
-                            {!roles.is_student && !roles.is_pending_student && (
-                                <BecomeWorkerForm companies={companies} status={status} />
-                            )}
+                            <BecomeStudentForm student={student} status={status} />
+                            <BecomeWorkerForm companies={companies} status={status} />
                         </div>
                     </div>
 
