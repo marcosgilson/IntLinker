@@ -10,7 +10,7 @@ export default function VerifyEmail({ status }) {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout hideLogo>
             <Head title="Verificar correo — IntLinker" />
             <h1 className="text-2xl font-bold text-gray-900 mb-1">Verifica tu correo</h1>
             <p className="text-sm text-gray-500 mb-5">
