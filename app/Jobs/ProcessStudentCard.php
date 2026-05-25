@@ -26,7 +26,7 @@ class ProcessStudentCard implements ShouldQueue
 
     public function __construct(
         private readonly int    $userId,
-        private readonly string $tempFilePath,
+        private readonly string $fileContents,   // base64 encoded
         private readonly string $originalName,
         private readonly string $mimeType,
         private readonly bool   $isRenewal = false,
@@ -36,14 +36,12 @@ class ProcessStudentCard implements ShouldQueue
     {
         $user = User::findOrFail($this->userId);
 
+        // Write to a fresh temp file inside the job
+        $tmpPath = tempnam(sys_get_temp_dir(), 'student_card_');
+        file_put_contents($tmpPath, base64_decode($this->fileContents));
+
         try {
-            $file = new UploadedFile(
-                $this->tempFilePath,
-                $this->originalName,
-                $this->mimeType,
-                null,
-                true
-            );
+            $file = new UploadedFile($tmpPath, $this->originalName, $this->mimeType, null, true);
 
             $data = $docuPipe->extractStudentCard($file);
 
@@ -112,8 +110,8 @@ class ProcessStudentCard implements ShouldQueue
                 'No se pudo procesar el documento. Por favor, intentalo de nuevo.'
             ));
         } finally {
-            if (file_exists($this->tempFilePath)) {
-                @unlink($this->tempFilePath);
+            if (file_exists($tmpPath)) {
+                @unlink($tmpPath);
             }
         }
     }

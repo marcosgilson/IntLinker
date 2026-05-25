@@ -24,12 +24,11 @@ class StudentController extends Controller
         $user->update(['name' => $request->validated('name')]);
 
         $file     = $request->file('student_card_image');
-        $tempPath = $file->store('temp/student-cards');
-        $fullPath = storage_path('app/' . $tempPath);
+        $contents = base64_encode(file_get_contents($file->getRealPath()));
 
         ProcessStudentCard::dispatch(
             $user->id,
-            $fullPath,
+            $contents,
             $file->getClientOriginalName(),
             $file->getMimeType(),
             false,
@@ -49,12 +48,11 @@ class StudentController extends Controller
         $user->update(['name' => $request->validated('name')]);
 
         $file     = $request->file('student_card_image');
-        $tempPath = $file->store('temp/student-cards');
-        $fullPath = storage_path('app/' . $tempPath);
+        $contents = base64_encode(file_get_contents($file->getRealPath()));
 
         ProcessStudentCard::dispatch(
             $user->id,
-            $fullPath,
+            $contents,
             $file->getClientOriginalName(),
             $file->getMimeType(),
             true,
