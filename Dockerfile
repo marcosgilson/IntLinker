@@ -49,7 +49,7 @@ RUN chmod +x /entrypoint.sh
 # 9. Final permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-EXPOSE 8080
+EXPOSE 80
 CMD ["/entrypoint.sh"]
 
 

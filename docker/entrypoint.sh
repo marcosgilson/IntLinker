@@ -26,20 +26,13 @@ php artisan view:cache
 echo "==> Fixing Apache MPM and enabling rewrite..."
 a2enmod rewrite 2>/dev/null || true
 a2enconf mpm_prefork_tune 2>/dev/null || true
-rm -f /etc/apache2/mods-enabled/mpm_event.conf
-rm -f /etc/apache2/mods-enabled/mpm_event.load
-rm -f /etc/apache2/mods-enabled/mpm_worker.conf
-rm -f /etc/apache2/mods-enabled/mpm_worker.load
+rm -f /etc/apache2/mods-enabled/mpm_event.conf /etc/apache2/mods-enabled/mpm_event.load
+rm -f /etc/apache2/mods-enabled/mpm_worker.conf /etc/apache2/mods-enabled/mpm_worker.load
 ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load 2>/dev/null || true
 ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf 2>/dev/null || true
-
-echo "==> Configuring Apache port (PORT=${PORT:-80})..."
-PORT="${PORT:-80}"
-sed -i "s/^Listen 80$/Listen ${PORT}/" /etc/apache2/ports.conf
-sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-enabled/*.conf
 
 echo "==> Starting queue worker in background..."
 php -d memory_limit=64M artisan queue:work --sleep=5 --tries=3 --max-time=3600 --max-jobs=50 &
 
-echo "==> Starting Apache..."
+echo "==> Starting Apache on port 80..."
 exec apache2-foreground
