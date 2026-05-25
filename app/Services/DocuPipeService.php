@@ -24,6 +24,9 @@ class DocuPipeService
         ];
     }
 
+    /**
+     * Upload a document to DocuPipe. Returns immediately with documentId and jobId.
+     */
     public function uploadDocument(UploadedFile $file): array
     {
         $contents = base64_encode(file_get_contents($file->getRealPath()));
@@ -46,33 +49,47 @@ class DocuPipeService
         return $response->json(); // { documentId, jobId }
     }
 
-    public function pollJob(string $jobId, int $maxAttempts = 15): void
+    /**
+     * Upload from raw base64 content (for use inside queued jobs).
+     */
+    public function uploadFromBase64(string $base64Contents, string $filename): array
     {
-        $wait = 2;
+        $response = Http::withHeaders($this->headers())
+            ->post("{$this->baseUrl}/document", [
+                'document' => [
+                    'file' => [
+                        'contents' => $base64Contents,
+                        'filename' => $filename,
+                    ],
+                ],
+            ]);
 
-        for ($i = 0; $i < $maxAttempts; $i++) {
-            sleep($wait);
-
-            $response = Http::withHeaders($this->headers())
-                ->get("{$this->baseUrl}/job/{$jobId}");
-
-            $status = $response->json('status') ?? 'processing';
-
-            if ($status === 'completed') {
-                return;
-            }
-
-            if ($status === 'failed') {
-                throw new RuntimeException('DocuPipe job failed');
-            }
-
-            $wait = min($wait * 2, 16);
+        if (! $response->successful()) {
+            throw new RuntimeException('DocuPipe upload failed: ' . $response->body());
         }
 
-        throw new RuntimeException('DocuPipe job timed out');
+        return $response->json(); // { documentId, jobId }
     }
 
-    public function standardize(string $documentId, string $schemaId): string
+    /**
+     * Check the status of a DocuPipe job. Returns 'completed', 'failed', or 'processing'.
+     */
+    public function checkJob(string $jobId): string
+    {
+        $response = Http::withHeaders($this->headers())
+            ->get("{$this->baseUrl}/job/{$jobId}");
+
+        if (! $response->successful()) {
+            throw new RuntimeException('DocuPipe job check failed: ' . $response->body());
+        }
+
+        return $response->json('status') ?? 'processing';
+    }
+
+    /**
+     * Start standardization for a document. Returns immediately with jobId and standardizationId.
+     */
+    public function startStandardize(string $documentId, string $schemaId): array
     {
         $response = Http::withHeaders($this->headers())
             ->post("{$this->baseUrl}/v2/standardize/batch", [
@@ -84,41 +101,58 @@ class DocuPipeService
             throw new RuntimeException('DocuPipe standardize failed: ' . $response->body());
         }
 
-        $jobId             = $response->json('jobId');
-        $standardizationId = $response->json('standardizationIds.0');
-
-        $this->pollJob($jobId);
-
-        return $standardizationId;
+        return [
+            'jobId'              => $response->json('jobId'),
+            'standardizationId'  => $response->json('standardizationIds.0'),
+        ];
     }
 
+    /**
+     * Get the standardization result.
+     */
     public function getStandardization(string $standardizationId): array
     {
         $response = Http::withHeaders($this->headers())
             ->get("{$this->baseUrl}/standardization/{$standardizationId}");
 
         if (! $response->successful()) {
-            throw new RuntimeException('DocuPipe get standardization failed');
+            throw new RuntimeException('DocuPipe get standardization failed: ' . $response->body());
         }
 
         return $response->json();
     }
 
+    /**
+     * Synchronous full extraction (used in test route or sync queue).
+     */
     public function extractStudentCard(UploadedFile $file): array
     {
-        $schemaId = config('services.docupipe.student_schema_id');
-
-        // 1. Upload and poll until parsed
+        $schemaId   = config('services.docupipe.student_schema_id');
         $upload     = $this->uploadDocument($file);
         $documentId = $upload['documentId'];
-        $uploadJobId = $upload['jobId'];
+        $jobId      = $upload['jobId'];
 
-        $this->pollJob($uploadJobId);
+        $this->pollJob($jobId);
 
-        // 2. Standardize with schema
-        $standardizationId = $this->standardize($documentId, $schemaId);
+        $std = $this->startStandardize($documentId, $schemaId);
+        $this->pollJob($std['jobId']);
 
-        // 3. Get result
-        return $this->getStandardization($standardizationId);
+        return $this->getStandardization($std['standardizationId']);
+    }
+
+    /**
+     * Blocking poll — only use in sync contexts (test route).
+     */
+    public function pollJob(string $jobId, int $maxAttempts = 15): void
+    {
+        $wait = 2;
+        for ($i = 0; $i < $maxAttempts; $i++) {
+            sleep($wait);
+            $status = $this->checkJob($jobId);
+            if ($status === 'completed') return;
+            if ($status === 'failed') throw new RuntimeException('DocuPipe job failed');
+            $wait = min($wait * 2, 16);
+        }
+        throw new RuntimeException('DocuPipe job timed out');
     }
 }

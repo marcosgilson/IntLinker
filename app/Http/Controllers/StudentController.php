@@ -2,45 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ImageHelper;
 use App\Http\Requests\AddSchoolRequest;
 use App\Http\Requests\BecomeStudentRequest;
-use App\Helpers\ImageHelper;
-use App\Jobs\ProcessStudentCard;
 use App\Models\School;
 use App\Models\Student;
+use App\Services\DocuPipeService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
-    public function store(BecomeStudentRequest $request): RedirectResponse
+    public function store(BecomeStudentRequest $request, DocuPipeService $docuPipe): RedirectResponse
     {
         $user = $request->user();
 
         if ($user->student) {
-            return back()->withErrors(['student' => 'Ya eres alumno. Usa la renovacion si tu cuenta ha caducado.']);
+            return back()->withErrors(['student' => 'Ya tienes una solicitud de alumno en proceso o activa.']);
         }
 
         $user->update(['name' => $request->validated('name')]);
 
-        $file     = $request->file('student_card_image');
-        $contents = base64_encode(file_get_contents($file->getRealPath()));
+        $file = $request->file('student_card_image');
 
-        Log::info("StudentController: dispatching ProcessStudentCard for user {$user->id}, file={$file->getClientOriginalName()}, size=" . strlen($contents));
-        ProcessStudentCard::dispatch(
-            $user->id,
-            $contents,
-            $file->getClientOriginalName(),
-            $file->getMimeType(),
-            false,
-        );
-        Log::info("StudentController: job dispatched for user {$user->id}");
+        Log::info("StudentController: uploading card to DocuPipe for user {$user->id}");
+
+        try {
+            $upload = $docuPipe->uploadDocument($file);
+        } catch (\Throwable $e) {
+            Log::error("StudentController: DocuPipe upload failed for user {$user->id}: " . $e->getMessage());
+            return back()->withErrors(['student' => 'Error al enviar el carnet a DocuPipe: ' . $e->getMessage()]);
+        }
+
+        $base64 = ImageHelper::compressToBase64($file, 800, 85);
+
+        Student::create([
+            'user_id'                    => $user->id,
+            'school_name'                => $request->validated('school_name'),
+            'school_email'               => $request->validated('school_email'),
+            'verified'                   => false,
+            'student_card_image'         => $base64,
+            'docupipe_document_id'       => $upload['documentId'],
+            'docupipe_job_id'            => $upload['jobId'],
+            'docupipe_status'            => 'uploaded',
+        ]);
+
+        Log::info("StudentController: student record created for user {$user->id}, documentId={$upload['documentId']}");
 
         return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificacion.');
     }
 
-    public function renew(BecomeStudentRequest $request): RedirectResponse
+    public function renew(BecomeStudentRequest $request, DocuPipeService $docuPipe): RedirectResponse
     {
         $user = $request->user();
 
@@ -50,16 +63,30 @@ class StudentController extends Controller
 
         $user->update(['name' => $request->validated('name')]);
 
-        $file     = $request->file('student_card_image');
-        $contents = base64_encode(file_get_contents($file->getRealPath()));
+        $file = $request->file('student_card_image');
 
-        ProcessStudentCard::dispatch(
-            $user->id,
-            $contents,
-            $file->getClientOriginalName(),
-            $file->getMimeType(),
-            true,
-        );
+        Log::info("StudentController: uploading renewal card to DocuPipe for user {$user->id}");
+
+        try {
+            $upload = $docuPipe->uploadDocument($file);
+        } catch (\Throwable $e) {
+            Log::error("StudentController: DocuPipe upload failed for user {$user->id}: " . $e->getMessage());
+            return back()->withErrors(['student' => 'Error al enviar el carnet: ' . $e->getMessage()]);
+        }
+
+        $base64 = ImageHelper::compressToBase64($file, 800, 85);
+
+        $user->student->update([
+            'verified'                   => false,
+            'student_card_image'         => $base64,
+            'docupipe_document_id'       => $upload['documentId'],
+            'docupipe_job_id'            => $upload['jobId'],
+            'docupipe_status'            => 'uploaded',
+            'docupipe_standardization_id' => null,
+            'docupipe_failure_reason'    => null,
+        ]);
+
+        Log::info("StudentController: renewal uploaded for user {$user->id}, documentId={$upload['documentId']}");
 
         return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificacion.');
     }

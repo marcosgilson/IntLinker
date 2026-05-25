@@ -36,6 +36,12 @@ PORT="${PORT:-80}"
 sed -i "s/^Listen 80$/Listen ${PORT}/" /etc/apache2/ports.conf
 sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-enabled/*.conf
 
+echo "==> Starting scheduler in background..."
+(while true; do
+    php artisan schedule:run --no-interaction >> /dev/null 2>&1
+    sleep 60
+done) &
+
 echo "==> Starting queue worker in background..."
 (while true; do
     php -d memory_limit=32M artisan queue:work --sleep=10 --tries=3 --max-time=1800 --max-jobs=50
