@@ -44,7 +44,7 @@ done) &
 
 echo "==> Starting queue worker in background..."
 (while true; do
-    php -d memory_limit=32M artisan queue:work --sleep=10 --tries=3 --max-time=1800 --max-jobs=50
+    php -d memory_limit=128M artisan queue:work --sleep=10 --tries=3 --max-time=1800 --max-jobs=50
     echo "==> Queue worker exited, restarting..."
     sleep 2
 done) &

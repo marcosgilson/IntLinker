@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Student;
-use App\Models\User;
 use App\Notifications\StudentRejectedNotification;
 use App\Notifications\StudentVerifiedNotification;
 use App\Services\DocuPipeService;
@@ -20,51 +19,24 @@ class CheckDocuPipeStatus extends Command
     {
         $schemaId = config('services.docupipe.student_schema_id');
 
-        // Phase 1: uploaded → check if parsing done → start standardization
-        $uploaded = Student::where('docupipe_status', 'uploaded')
-            ->whereNotNull('docupipe_job_id')
+        $pending = Student::where('verified', false)
+            ->whereNotNull('docupipe_document_id')
+            ->whereIn('docupipe_status', ['uploaded', 'parsed'])
+            ->orWhere(function ($q) {
+                $q->where('verified', false)
+                  ->whereNotNull('docupipe_document_id')
+                  ->whereNull('docupipe_status');
+            })
             ->with('user')
             ->get();
 
-        foreach ($uploaded as $student) {
+        Log::info("docupipe:check found {$pending->count()} pending students");
+
+        foreach ($pending as $student) {
+            Log::info("docupipe:check processing student {$student->id}, status={$student->docupipe_status}, jobId={$student->docupipe_job_id}, stdId={$student->docupipe_standardization_id}");
+
             try {
-                $status = $docuPipe->checkJob($student->docupipe_job_id);
-                Log::info("docupipe:check parsing status for student {$student->id}: {$status}");
-
-                if ($status === 'completed') {
-                    $std = $docuPipe->startStandardize($student->docupipe_document_id, $schemaId);
-                    $student->update([
-                        'docupipe_status'            => 'parsed',
-                        'docupipe_job_id'            => $std['jobId'],
-                        'docupipe_standardization_id' => $std['standardizationId'],
-                    ]);
-                    Log::info("docupipe:check student {$student->id} parsed, standardization started");
-                } elseif ($status === 'failed') {
-                    $this->failStudent($student, 'Error al procesar el documento en DocuPipe.');
-                }
-            } catch (\Throwable $e) {
-                Log::error("docupipe:check error for student {$student->id}: " . $e->getMessage());
-            }
-        }
-
-        // Phase 2: parsed → check if standardization done → verify
-        $parsed = Student::where('docupipe_status', 'parsed')
-            ->whereNotNull('docupipe_job_id')
-            ->with('user')
-            ->get();
-
-        foreach ($parsed as $student) {
-            try {
-                $status = $docuPipe->checkJob($student->docupipe_job_id);
-                Log::info("docupipe:check standardization status for student {$student->id}: {$status}");
-
-                if ($status === 'completed') {
-                    $data = $docuPipe->getStandardization($student->docupipe_standardization_id);
-                    Log::info("docupipe:check standardization result for student {$student->id}", $data);
-                    $this->processResult($student, $data);
-                } elseif ($status === 'failed') {
-                    $this->failStudent($student, 'Error en la standardizacion del documento.');
-                }
+                $this->processStudent($student, $docuPipe, $schemaId);
             } catch (\Throwable $e) {
                 Log::error("docupipe:check error for student {$student->id}: " . $e->getMessage());
             }
@@ -73,17 +45,67 @@ class CheckDocuPipeStatus extends Command
         return self::SUCCESS;
     }
 
+    private function processStudent(Student $student, DocuPipeService $docuPipe, string $schemaId): void
+    {
+        // Phase: have standardization result → verify
+        if ($student->docupipe_standardization_id && $student->docupipe_status === 'parsed') {
+            $status = $docuPipe->checkJob($student->docupipe_job_id);
+            Log::info("docupipe:check std job status for student {$student->id}: {$status}");
+            if ($status === 'completed') {
+                $data = $docuPipe->getStandardization($student->docupipe_standardization_id);
+                Log::info("docupipe:check std result for student {$student->id}", $data);
+                $this->processResult($student, $data);
+            } elseif ($status === 'failed') {
+                $this->failStudent($student, 'Error en la estandarización del documento.');
+            }
+            return;
+        }
+
+        // Phase: have document but no standardization yet → start it
+        // (covers: status='uploaded' with or without jobId, and status=null with documentId)
+        if ($student->docupipe_document_id) {
+            // If we have a parsing jobId, check it first
+            if ($student->docupipe_job_id && $student->docupipe_status === 'uploaded') {
+                $parseStatus = $docuPipe->checkJob($student->docupipe_job_id);
+                Log::info("docupipe:check parse job status for student {$student->id}: {$parseStatus}");
+                if ($parseStatus === 'failed') {
+                    $this->failStudent($student, 'Error al procesar el documento en DocuPipe.');
+                    return;
+                }
+                if ($parseStatus !== 'completed') {
+                    return; // still processing
+                }
+            }
+
+            // Parsing done (or we don't have jobId — try standardize anyway)
+            Log::info("docupipe:check starting standardization for student {$student->id}");
+            try {
+                $std = $docuPipe->startStandardize($student->docupipe_document_id, $schemaId);
+                $student->update([
+                    'docupipe_status'             => 'parsed',
+                    'docupipe_job_id'             => $std['jobId'],
+                    'docupipe_standardization_id' => $std['standardizationId'],
+                ]);
+                Log::info("docupipe:check standardization started for student {$student->id}, stdId={$std['standardizationId']}");
+            } catch (\Throwable $e) {
+                Log::warning("docupipe:check standardize failed for student {$student->id}: " . $e->getMessage() . " — will retry next minute");
+            }
+        }
+    }
+
     private function processResult(Student $student, array $data): void
     {
         $user = $student->user;
 
-        $isStudent   = (bool) ($data['isStudent'] ?? false);
-        $firstName   = trim($data['firstName'] ?? '');
-        $surname1    = trim($data['surname1'] ?? '');
-        $surname2    = trim($data['surname2'] ?? '');
-        $institution = trim($data['institution'] ?? '');
-        $yearStart   = (int) ($data['academicYearStart'] ?? 0);
-        $yearEnd     = (int) ($data['academicYearEnd'] ?? 0);
+        $isStudent   = (bool) ($data['isStudent'] ?? $data['data']['isStudent'] ?? false);
+        $firstName   = trim($data['firstName'] ?? $data['data']['firstName'] ?? '');
+        $surname1    = trim($data['surname1']   ?? $data['data']['surname1']   ?? '');
+        $surname2    = trim($data['surname2']   ?? $data['data']['surname2']   ?? '');
+        $institution = trim($data['institution'] ?? $data['data']['institution'] ?? '');
+        $yearStart   = (int) ($data['academicYearStart'] ?? $data['data']['academicYearStart'] ?? 0);
+        $yearEnd     = (int) ($data['academicYearEnd']   ?? $data['data']['academicYearEnd']   ?? 0);
+
+        Log::info("docupipe:check parsed data", compact('isStudent','firstName','surname1','surname2','yearStart','yearEnd'));
 
         if (! $isStudent) {
             $this->failStudent($student, 'El documento no identifica al portador como estudiante.');
@@ -92,6 +114,7 @@ class CheckDocuPipeStatus extends Command
 
         $cardName = $this->normalize("{$firstName} {$surname1} {$surname2}");
         $userName = $this->normalize($user->name);
+        Log::info("docupipe:check name comparison: card='{$cardName}' user='{$userName}'");
 
         if ($cardName !== $userName) {
             $this->failStudent($student, "El nombre del carnet ({$firstName} {$surname1} {$surname2}) no coincide con el nombre de tu cuenta ({$user->name}).");
@@ -106,21 +129,21 @@ class CheckDocuPipeStatus extends Command
         $expiresAt = Carbon::create($yearEnd, 12, 31, 23, 59, 59);
 
         if ($expiresAt->isPast()) {
-            $this->failStudent($student, "El carnet ha caducado (ano academico {$yearStart}-{$yearEnd}).");
+            $this->failStudent($student, "El carnet ha caducado (curso {$yearStart}-{$yearEnd}).");
             return;
         }
 
         $student->update([
-            'verified'                   => true,
-            'expires_at'                 => $expiresAt,
-            'school_name'                => $institution ?: $student->school_name,
-            'docupipe_status'            => null,
-            'docupipe_job_id'            => null,
-            'docupipe_document_id'       => null,
+            'verified'                    => true,
+            'expires_at'                  => $expiresAt,
+            'school_name'                 => $institution ?: $student->school_name,
+            'docupipe_status'             => null,
+            'docupipe_job_id'             => null,
+            'docupipe_document_id'        => null,
             'docupipe_standardization_id' => null,
         ]);
 
-        Log::info("docupipe:check student {$student->id} (user {$user->id}) verified successfully");
+        Log::info("docupipe:check student {$student->id} (user {$user->id}) VERIFIED");
         $user->notify(new StudentVerifiedNotification());
     }
 
@@ -140,7 +163,6 @@ class CheckDocuPipeStatus extends Command
         $name = mb_strtolower(trim($name));
         $map  = ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ü'=>'u','ñ'=>'n',
                  'à'=>'a','è'=>'e','ì'=>'i','ò'=>'o','ù'=>'u'];
-        $name = strtr($name, $map);
-        return preg_replace('/\s+/', ' ', $name);
+        return preg_replace('/\s+/', ' ', strtr($name, $map));
     }
 }
