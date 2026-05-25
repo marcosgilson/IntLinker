@@ -2,8 +2,9 @@ FROM php:8.2-apache
 
 # 1. System deps + PHP extensions (MySQL + PostgreSQL)
 RUN apt-get update && apt-get install -y \
-    libpng-dev libonig-dev libxml2-dev libzip-dev libicu-dev libpq-dev \
+    libpng-dev libonig-dev libxml2-dev libzip-dev libicu-dev libpq-dev libjpeg62-turbo-dev libwebp-dev \
     zip unzip git curl \
+    && docker-php-ext-configure gd --with-jpeg --with-webp
     && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd intl zip \
     && pecl install redis \
     && docker-php-ext-enable redis \
@@ -52,6 +53,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 EXPOSE 8080
 CMD ["/entrypoint.sh"]
+
+
 
 
 
