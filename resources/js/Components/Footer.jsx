@@ -1,4 +1,4 @@
-import intlinkerLogo from '../../images/logo.png';
+import IntLinkerLogo from '@/Components/IntLinkerLogo';
 
 export default function Footer() {
     return (
@@ -6,12 +6,12 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-2">
-                        <img src={intlinkerLogo} alt="IntLinker" className="h-10 w-auto" />
+                        <IntLinkerLogo className="h-10 w-auto" />
                     </div>
                     <p className="text-sm">&copy; 2026 IntLinker. Todos los derechos reservados.</p>
                     <div className="flex gap-6 text-sm">
                         <a href="#" className="hover:text-white transition-colors">Privacidad</a>
-                        <a href="#" className="hover:text-white transition-colors">Términos</a>
+                        <a href="#" className="hover:text-white transition-colors">T&eacute;rminos</a>
                         <a href="#" className="hover:text-white transition-colors">Contacto</a>
                     </div>
                 </div>
@@ -19,5 +19,3 @@ export default function Footer() {
         </footer>
     );
 }
-
-
