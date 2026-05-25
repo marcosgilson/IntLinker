@@ -17,6 +17,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 # 3. OPcache
 RUN docker-php-ext-enable opcache
 COPY docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY docker/php-uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 COPY docker/mpm_prefork.conf /etc/apache2/conf-available/mpm_prefork_tune.conf
 
 # 4. Apache config - force only mpm_prefork
@@ -51,6 +52,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 EXPOSE 8080
 CMD ["/entrypoint.sh"]
+
 
 
 
