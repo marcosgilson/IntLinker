@@ -7,7 +7,7 @@ export default function GuestLayout({ children }) {
             <div className="w-full max-w-md">
                 <div className="flex justify-center mb-6">
                     <Link href="/" className="flex items-center gap-2">
-                        <IntLinkerLogo className="h-14 w-auto" />
+                        <IntLinkerLogo className="h-20 w-auto" />
                     </Link>
                 </div>
                 <div className="bg-white rounded-2xl shadow-2xl overflow-hidden px-8 py-7">
