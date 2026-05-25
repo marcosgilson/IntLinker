@@ -25,10 +25,7 @@ function BannerUpload({ bannerColor, userName }) {
 
     return (
         <div className="relative h-28 sm:h-32 group" style={{ backgroundColor: color }}>
-            <div className="absolute bottom-3 left-4 sm:left-6">
-                <span className="text-white font-bold text-lg sm:text-xl drop-shadow-md">{userName}</span>
-            </div>
-            <button
+<button
                 type="button"
                 onClick={() => setShowPicker(v => !v)}
                 className="absolute top-3 right-3 bg-black/30 hover:bg-black/50 text-white rounded-lg px-2 py-1
@@ -207,3 +204,4 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
         </AuthenticatedLayout>
     );
 }
+
