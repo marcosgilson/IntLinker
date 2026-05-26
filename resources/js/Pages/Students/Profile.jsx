@@ -1,6 +1,7 @@
 import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { Head, Link, usePage } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
+import PortfolioSection from '@/Pages/Profile/Partials/PortfolioSection';
 
 const STATUS = {
     waiting:   { label: 'En espera',  cls: 'bg-amber-50 text-amber-700 border-amber-200' },
@@ -12,7 +13,7 @@ function initials(name) {
     return (name || 'A').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
-export default function StudentProfile({ student, enrollments = [] }) {
+export default function StudentProfile({ student, enrollments = [], portfolio = null }) {
     const { auth } = usePage().props;
 
     const activeEnrollments = enrollments.filter(e => e.status !== 'cancelled');
@@ -80,6 +81,11 @@ export default function StudentProfile({ student, enrollments = [] }) {
                             </div>
                         </div>
                     </div>
+
+                    {/* Portfolio */}
+                    {portfolio && (
+                        <PortfolioSection portfolio={portfolio} isOwner={false} />
+                    )}
 
                     {/* Enrollments in this company */}
                     {activeEnrollments.length > 0 && (

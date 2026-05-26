@@ -34,7 +34,7 @@ class StudentProfileController extends Controller
             }
         }
 
-        $student->load('user:id,name,email');
+        $student->load('user:id,name,email,portfolio,profile_photo');
 
         // Enrollments only for this worker's companies
         $workerCompanyIds = $user->is_admin
@@ -61,6 +61,7 @@ class StudentProfileController extends Controller
                                     ? Storage::disk('public')->url($student->user->profile_photo)
                                     : null,
             ],
+            'portfolio'   => $student->user->portfolio,
             'enrollments' => $enrollments,
         ]);
     }
