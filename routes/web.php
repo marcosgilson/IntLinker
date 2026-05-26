@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('profile/photo', [ProfilePhotoController::class, 'update'])->name('profile.photo.update');
     Route::post('profile/banner', [ProfileController::class, 'updateBanner'])->name('profile.banner.update');
     Route::delete('profile/photo', [ProfilePhotoController::class, 'destroy'])->name('profile.photo.destroy');
+    Route::patch('profile/portfolio', [ProfileController::class, 'updatePortfolio'])->name('profile.portfolio.update');
 
     // Student role
     Route::get('/student/status', [StudentController::class, 'status'])->name('student.status');
@@ -95,6 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
 
 
 

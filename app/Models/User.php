@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'is_admin', 'profile_photo', 'banner_color'];
+    protected $fillable = ['name', 'email', 'password', 'is_admin', 'profile_photo', 'banner_color', 'portfolio'];
 
     protected $hidden = ['password', 'remember_token', 'profile_photo'];
 
@@ -42,7 +42,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
-            'is_admin'          => 'boolean',
+            'is_admin' => 'boolean',
+            'portfolio' => 'array',
         ];
     }
 
@@ -101,5 +102,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 }
+
 
 

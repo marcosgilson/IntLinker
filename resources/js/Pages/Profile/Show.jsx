@@ -1,7 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
+import PortfolioSection from './Partials/PortfolioSection';
 
-export default function Show({ profile_photo_url, banner_color }) {
+export default function Show({ profile_photo_url, banner_color, portfolio, is_student }) {
     const { auth } = usePage().props;
     const user  = auth.user;
     const roles = auth.roles ?? {};
@@ -14,15 +15,15 @@ export default function Show({ profile_photo_url, banner_color }) {
             <Head title={`${user.name} — IntLinker`} />
 
             <div className="py-6 sm:py-8">
-                <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 space-y-4">
 
+                    {/* Profile card */}
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         {/* Banner */}
                         <div className="h-28 sm:h-36" style={{ backgroundColor: banner_color ?? '#9ca3af' }} />
 
                         <div className="px-4 sm:px-6 pb-6">
                             <div className="flex items-start justify-between -mt-10 mb-4">
-
                                 {/* Avatar */}
                                 <div className="w-20 h-20 flex-shrink-0">
                                     {profile_photo_url ? (
@@ -89,6 +90,12 @@ export default function Show({ profile_photo_url, banner_color }) {
                             </div>
                         </div>
                     </div>
+
+                    {/* Portfolio — only for verified students */}
+                    {is_student && (
+                        <PortfolioSection portfolio={portfolio} isOwner={true} />
+                    )}
+
                 </div>
             </div>
         </AuthenticatedLayout>

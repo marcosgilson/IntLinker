@@ -52,6 +52,13 @@ class ProfileController extends Controller
         return back();
     }
 
+    public function updatePortfolio(Request $request): RedirectResponse
+    {
+        $request->validate(['portfolio' => ['required', 'array']]);
+        $request->user()->update(['portfolio' => $request->portfolio]);
+        return back();
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate(['password' => ['required', 'current_password']]);
