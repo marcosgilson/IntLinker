@@ -1,5 +1,5 @@
 import IntLinkerLogo from '@/Components/IntLinkerLogo';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 import { useState, useRef } from 'react';
 
@@ -214,13 +214,21 @@ function CompanyCard({ company }) {
                                 📧 {company.applications_email}
                             </p>
                         )}
-                        <button
-                            onClick={doLeave}
-                            disabled={leave.processing}
-                            className="ml-auto text-xs text-red-500 hover:underline disabled:opacity-50"
-                        >
-                            Salir de la empresa
-                        </button>
+                        <div className="ml-auto flex items-center gap-3">
+                            <Link
+                                href={route('companies.show', company.id)}
+                                className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-lg transition"
+                            >
+                                Editar portfolio
+                            </Link>
+                            <button
+                                onClick={doLeave}
+                                disabled={leave.processing}
+                                className="text-xs text-red-500 hover:underline disabled:opacity-50"
+                            >
+                                Salir de la empresa
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
