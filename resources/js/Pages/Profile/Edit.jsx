@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage, router } from '@inertiajs/react';
+import { Head, Link, usePage, router } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
@@ -130,6 +130,17 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
 
             <div className="py-6 sm:py-8">
                 <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-5">
+
+                    {/* Back link */}
+                    <div className="flex items-center gap-2 mb-1">
+                        <Link href={route('profile.show')}
+                            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Mi perfil
+                        </Link>
+                    </div>
 
                     {/* Profile header card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
