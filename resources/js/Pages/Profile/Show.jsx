@@ -2,10 +2,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
 import PortfolioSection from './Partials/PortfolioSection';
 
-export default function Show({ profile_photo_url, banner_color, portfolio, is_student }) {
+export default function Show({ profileUser, profileRoles, profile_photo_url, banner_color, portfolio, is_student, is_owner = true }) {
     const { auth } = usePage().props;
-    const user  = auth.user;
-    const roles = auth.roles ?? {};
+
+    // Use passed profileUser or fall back to auth user (own profile)
+    const user  = profileUser ?? auth.user;
+    const roles = profileRoles ?? auth.roles ?? {};
 
     const initials = (user.name || 'U')
         .split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
@@ -37,27 +39,29 @@ export default function Show({ profile_photo_url, banner_color, portfolio, is_st
                                     )}
                                 </div>
 
-                                {/* Options button */}
-                                <Link
-                                    href={route('profile.edit')}
-                                    className="mt-12 flex items-center gap-1.5 text-sm font-medium text-gray-500
-                                        hover:text-indigo-600 bg-gray-100 hover:bg-indigo-50 px-3 py-1.5
-                                        rounded-lg transition-colors"
-                                >
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0
-                                               002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0
-                                               001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0
-                                               00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0
-                                               00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0
-                                               00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0
-                                               00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0
-                                               001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    </svg>
-                                    Editar perfil
-                                </Link>
+                                {/* Edit button — only for profile owner */}
+                                {is_owner && (
+                                    <Link
+                                        href={route('profile.edit')}
+                                        className="mt-12 flex items-center gap-1.5 text-sm font-medium text-gray-500
+                                            hover:text-indigo-600 bg-gray-100 hover:bg-indigo-50 px-3 py-1.5
+                                            rounded-lg transition-colors"
+                                    >
+                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0
+                                                   002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0
+                                                   001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0
+                                                   00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0
+                                                   00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0
+                                                   00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0
+                                                   00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0
+                                                   001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                        Editar perfil
+                                    </Link>
+                                )}
                             </div>
 
                             {/* Name + email */}
@@ -93,7 +97,7 @@ export default function Show({ profile_photo_url, banner_color, portfolio, is_st
 
                     {/* Portfolio — only for verified students */}
                     {is_student && (
-                        <PortfolioSection portfolio={portfolio} isOwner={true} />
+                        <PortfolioSection portfolio={portfolio} isOwner={is_owner} />
                     )}
 
                 </div>

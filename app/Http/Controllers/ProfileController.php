@@ -20,10 +20,41 @@ class ProfileController extends Controller
         $student = $user->student;
 
         return Inertia::render('Profile/Show', [
+            'profileUser'       => ['id' => $user->id, 'name' => $user->name, 'email' => $user->email],
+            'profileRoles'      => [
+                'is_admin'           => $user->is_admin,
+                'is_student'         => $student && $student->verified,
+                'is_pending_student' => $student && !$student->verified,
+                'is_worker'          => $user->isWorker(),
+                'is_pending_worker'  => $user->isPendingWorker(),
+            ],
             'banner_color'      => $user->banner_color ?? '#9ca3af',
             'profile_photo_url' => $user->photo_url,
             'portfolio'         => $user->portfolio,
             'is_student'        => $student && $student->verified,
+            'is_owner'          => true,
+        ]);
+    }
+
+    public function showUser(User $user): Response
+    {
+        $student          = $user->student;
+        $isVerifiedWorker = $user->companies()->wherePivot('verified', true)->exists();
+
+        return Inertia::render('Profile/Show', [
+            'profileUser'       => ['id' => $user->id, 'name' => $user->name, 'email' => $user->email],
+            'profileRoles'      => [
+                'is_admin'           => $user->is_admin,
+                'is_student'         => $student && $student->verified,
+                'is_pending_student' => false,
+                'is_worker'          => $isVerifiedWorker,
+                'is_pending_worker'  => false,
+            ],
+            'banner_color'      => $user->banner_color ?? '#9ca3af',
+            'profile_photo_url' => $user->photo_url,
+            'portfolio'         => $user->portfolio,
+            'is_student'        => $student && $student->verified,
+            'is_owner'          => false,
         ]);
     }
 

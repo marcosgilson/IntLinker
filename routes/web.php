@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('profile/banner', [ProfileController::class, 'updateBanner'])->name('profile.banner.update');
     Route::delete('profile/photo', [ProfilePhotoController::class, 'destroy'])->name('profile.photo.destroy');
     Route::patch('profile/portfolio', [ProfileController::class, 'updatePortfolio'])->name('profile.portfolio.update');
+    Route::get('/users/{user}', [ProfileController::class, 'showUser'])->name('profile.user');
 
     // Student role
     Route::get('/student/status', [StudentController::class, 'status'])->name('student.status');

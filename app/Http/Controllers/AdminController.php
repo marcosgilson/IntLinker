@@ -44,10 +44,16 @@ class AdminController extends Controller
             ->latest()
             ->paginate(20);
 
+        $allStudents = Student::with('user:id,name,email,profile_photo')
+            ->where('verified', true)
+            ->latest()
+            ->get();
+
         return Inertia::render('Admin/Dashboard', [
             'pendingStudents' => $pendingStudents,
             'pendingWorkers'  => $pendingWorkers,
             'applications'    => $applications,
+            'allStudents'     => $allStudents,
         ]);
     }
 

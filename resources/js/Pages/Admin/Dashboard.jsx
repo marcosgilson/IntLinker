@@ -448,7 +448,7 @@ function CompanyEmailRow({ company }) {
     );
 }
 // ── Main page ─────────────────────────────────────────────────────────────────
-export default function AdminDashboard({ applications = {}, pendingStudents = [], pendingWorkers = [], companies = [] }) {
+export default function AdminDashboard({ applications = {}, pendingStudents = [], pendingWorkers = [], companies = [], allStudents = [] }) {
     const { auth } = usePage().props;
     const appList = applications.data ?? [];
     const pending = appList.filter(a => a.status === 'pending');
@@ -528,6 +528,35 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
                                 </div>
                             </div>
                         )}
+
+                        <Section title="Todos los alumnos verificados" count={allStudents.length}
+                            emptyText="No hay alumnos verificados aun.">
+                            {allStudents.map(s => (
+                                <div key={s.id} className="bg-white/10 rounded-xl px-4 py-3 flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-3">
+                                        {s.user?.photo_url ? (
+                                            <img src={s.user.photo_url} alt={s.user?.name}
+                                                className="w-8 h-8 rounded-full object-cover ring-2 ring-white/20" />
+                                        ) : (
+                                            <div className="w-8 h-8 rounded-full bg-indigo-400/30 flex items-center justify-center">
+                                                <span className="text-white text-xs font-bold">
+                                                    {(s.user?.name || 'U').charAt(0).toUpperCase()}
+                                                </span>
+                                            </div>
+                                        )}
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">{s.user?.name}</p>
+                                            <p className="text-xs text-gray-300">{s.user?.email}</p>
+                                        </div>
+                                    </div>
+                                    <Link href={route('students.profile', s.id)}
+                                        className="text-xs font-semibold text-indigo-200 hover:text-white bg-indigo-500/30
+                                            hover:bg-indigo-500/50 px-3 py-1.5 rounded-lg transition-colors">
+                                        Ver perfil
+                                    </Link>
+                                </div>
+                            ))}
+                        </Section>
 
                         <CreateCompanyForm />
                     </div>
