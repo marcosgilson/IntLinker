@@ -99,7 +99,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                                 {citySuggestions.map(city => (
                                     <button key={city} onMouseDown={() => addCity(city)}
                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2 transition">
-                                        <span className="text-indigo-400">📍</span> {city}
+                                        {city}
                                     </button>
                                 ))}
                             </>
@@ -126,7 +126,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                 <div className="flex flex-wrap gap-2 mt-3">
                     {selectedCities.map(city => (
                         <span key={city} className="inline-flex items-center gap-1.5 bg-indigo-100 text-indigo-700 text-sm font-medium px-3 py-1 rounded-full">
-                            📍 {city}
+                            {city}
                             <button onClick={() => removeCity(city)} className="hover:text-indigo-900">
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12"/>
@@ -175,7 +175,7 @@ function CompanyCard({ company, highlightedCity }) {
                     <h2 className="font-bold text-gray-900 truncate">{company.name}</h2>
                     {company.city && (
                         <p className={`text-xs mt-0.5 flex items-center gap-1 ${highlightedCity ? 'text-indigo-500 font-medium' : 'text-gray-400'}`}>
-                            <span>📍</span> {company.city}
+                            {company.city}
                         </p>
                     )}
                     {company.pending_count > 0 && (

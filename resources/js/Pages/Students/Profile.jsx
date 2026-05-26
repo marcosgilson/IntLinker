@@ -110,7 +110,7 @@ export default function StudentProfile({ student, enrollments = [], portfolio = 
                                                 <div>
                                                     <p className="text-sm font-semibold text-gray-800">{e.company?.name}</p>
                                                     {e.company?.city && (
-                                                        <p className="text-xs text-gray-400">📍 {e.company.city}</p>
+                                                        <p className="text-xs text-gray-400"> {e.company.city}</p>
                                                     )}
                                                 </div>
                                             </div>

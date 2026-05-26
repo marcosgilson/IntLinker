@@ -123,7 +123,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                             <h1 className="text-2xl font-extrabold text-gray-900">{company.name}</h1>
                             {company.city && (
                                 <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
-                                    <span>📍</span> {company.city}
+                                    {company.city}
                                 </p>
                             )}
                             {company.applications_email && (
