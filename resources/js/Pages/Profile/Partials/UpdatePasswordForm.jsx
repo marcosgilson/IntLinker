@@ -48,12 +48,11 @@ export default function UpdatePasswordForm({ className = '' }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">
-                    Update Password
+                    Cambiar contraseña
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay
-                    secure.
+                    Usa una contraseña larga y aleatoria para mantener tu cuenta segura.
                 </p>
             </header>
 
@@ -61,7 +60,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 <div>
                     <InputLabel
                         htmlFor="current_password"
-                        value="Current Password"
+                        value="Contraseña actual"
                     />
 
                     <TextInput
@@ -83,7 +82,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password" value="New Password" />
+                    <InputLabel htmlFor="password" value="Nueva contraseña" />
 
                     <TextInput
                         id="password"
@@ -101,7 +100,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 <div>
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="Confirmar contraseña"
                     />
 
                     <TextInput
@@ -131,13 +130,12 @@ export default function UpdatePasswordForm({ className = '' }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">
-                            Saved.
-                        </p>
+                        <p className="text-sm text-gray-600">Guardado.</p>
                     </Transition>
                 </div>
             </form>
         </section>
     );
 }
+
 

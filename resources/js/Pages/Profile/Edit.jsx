@@ -15,6 +15,7 @@ const BANNER_COLORS = [
 
 function BannerUpload({ bannerColor, userName }) {
     const [color, setColor] = useState(bannerColor ?? '#9ca3af');
+    useEffect(() => { setColor(bannerColor ?? '#9ca3af'); }, [bannerColor]);
     const [showPicker, setShowPicker] = useState(false);
 
     const handleColorSelect = (c) => {
@@ -178,9 +179,6 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
                             <div>
                                 <h1 className="text-lg sm:text-xl font-bold text-gray-900">{user.name}</h1>
                                 <p className="text-sm text-gray-500">{user.email}</p>
-                                <p className="text-xs text-gray-400 mt-0.5 hidden sm:block">
-                                    Pasa el cursor sobre la foto o el banner para editarlos
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -215,4 +213,6 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
         </AuthenticatedLayout>
     );
 }
+
+
 
