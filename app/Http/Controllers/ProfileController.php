@@ -14,6 +14,16 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    public function show(Request $request): Response
+    {
+        $user = $request->user();
+
+        return Inertia::render('Profile/Show', [
+            'banner_color'      => $user->banner_color ?? '#9ca3af',
+            'profile_photo_url' => $user->photo_url,
+        ]);
+    }
+
     public function edit(Request $request): Response
     {
         $user = $request->user();
