@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Storage;
 
 class Company extends Model
 {
-    protected $fillable = ['name', 'city', 'description', 'logo', 'applications_email'];
+    protected $fillable = ['name', 'city', 'description', 'logo', 'applications_email', 'portfolio'];
+
+    protected $casts = ['portfolio' => 'array'];
 
     protected $hidden = ['logo'];
 
@@ -49,3 +51,4 @@ class Company extends Model
         return $this->employees()->where('user_id', $userId)->exists();
     }
 }
+
