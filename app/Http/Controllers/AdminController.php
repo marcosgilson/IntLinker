@@ -181,7 +181,7 @@ class AdminController extends Controller
         $user    = User::find($request->user_id);
         $company = Company::find($request->company_id);
 
-        $user->notify(new WorkerVerifiedNotification($company->name));
+        $user->notify(new WorkerVerifiedNotification($company->name, $company->logo));
 
         return back()->with('status', "Trabajador '{$user->name}' verificado en '{$company->name}'.");
     }
@@ -201,5 +201,6 @@ class AdminController extends Controller
         return back()->with('status', 'Registro de trabajador rechazado y eliminado.');
     }
 }
+
 
 

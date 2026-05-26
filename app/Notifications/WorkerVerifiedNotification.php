@@ -11,7 +11,10 @@ class WorkerVerifiedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(private string $companyName) {}
+    public function __construct(
+        private string $companyName,
+        private ?string $companyLogo = null,
+    ) {}
 
     public function via(object $notifiable): array
     {
@@ -25,6 +28,7 @@ class WorkerVerifiedNotification extends Notification implements ShouldQueue
             ->view('emails.worker_verified', [
                 'name'        => $notifiable->name,
                 'companyName' => $this->companyName,
+                'companyLogo' => $this->companyLogo,
                 'url'         => url('/dashboard'),
             ]);
     }

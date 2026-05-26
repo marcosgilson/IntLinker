@@ -7,11 +7,20 @@
       <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;">
         <tr>
           <td style="background:linear-gradient(135deg,#4f46e5,#7c3aed);padding:36px 40px;text-align:center;">
-            <img src="https://intlinker.up.railway.app/intlinker_logo.svg" alt="IntLinker" style="height:48px;width:auto;" />
+            <img src="https://intlinker.up.railway.app/intlinker_logo.svg" alt="IntLinker" style="height:40px;width:auto;" />
           </td>
         </tr>
+        @if($companyLogo)
         <tr>
-          <td style="padding:40px;">
+          <td style="padding:28px 40px 0;text-align:center;">
+            <img src="{{ $companyLogo }}" alt="{{ $companyName }}"
+              style="height:64px;width:auto;max-width:180px;object-fit:contain;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.10);" />
+            <p style="margin:10px 0 0;font-size:14px;font-weight:700;color:#111827;">{{ $companyName }}</p>
+          </td>
+        </tr>
+        @endif
+        <tr>
+          <td style="padding:32px 40px 40px;">
             <h1 style="margin:0 0 12px;font-size:24px;color:#111827;">¡Enhorabuena, {{ $name }}!</h1>
             <p style="margin:0 0 24px;font-size:15px;color:#6b7280;line-height:1.6;">
               Tu solicitud como <strong style="color:#4f46e5;">trabajador</strong> en
@@ -43,4 +52,3 @@
   </table>
 </body>
 </html>
-
