@@ -6,7 +6,6 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Storage;
 
 class StudentProfileController extends Controller
 {
@@ -58,9 +57,7 @@ class StudentProfileController extends Controller
                 'school_email'=> $student->school_email,
                 'verified'    => $student->verified,
                 'expires_at'   => $student->expires_at,
-                'photo_url'    => $student->user->profile_photo
-                                    ? Storage::disk('public')->url($student->user->profile_photo)
-                                    : null,
+                'photo_url'    => $student->user->photo_url,
             ],
             'portfolio'   => $student->user->portfolio,
             'enrollments' => $enrollments,
