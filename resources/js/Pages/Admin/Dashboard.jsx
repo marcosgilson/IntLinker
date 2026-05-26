@@ -473,10 +473,16 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
                                     {totalPending} pendiente{totalPending !== 1 ? 's' : ''}
                                 </span>
                             )}
-                            <Link href="/profile" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">
-                                {auth.user?.name}
+                            <Link href="/profile" className="flex items-center hover:opacity-80 transition">
+                                {auth.user?.photo_url ? (
+                                    <img src={auth.user.photo_url} alt={auth.user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200" />
+                                ) : (
+                                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <span className="text-indigo-700 font-bold text-xs">{auth.user?.name?.charAt(0).toUpperCase()}</span>
+                                    </div>
+                                )}
                             </Link>
-                            <Link href="/IntLinker" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">
+                            <Link href="/" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">
                                 Inicio
                             </Link>
                         </div>

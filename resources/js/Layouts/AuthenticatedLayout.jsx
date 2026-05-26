@@ -73,7 +73,16 @@ export default function AuthenticatedLayout({ children }) {
                         {roles.is_worker  && <Link href="/my-company"  className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mi empresa</Link>}
                         {roles.is_admin   && <Link href="/admin"        className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Panel Admin</Link>}
                         <div className="border-t border-gray-100 pt-3 mt-2 flex flex-col gap-1">
-                            <Link href="/profile" className="text-sm font-semibold text-gray-900 py-1">{user?.name}</Link>
+                            <Link href="/profile" className="flex items-center gap-2 py-1">
+                                {user?.photo_url ? (
+                                    <img src={user.photo_url} alt={user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200" />
+                                ) : (
+                                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <span className="text-indigo-700 font-bold text-xs">{user?.name?.charAt(0).toUpperCase()}</span>
+                                    </div>
+                                )}
+                                <span className="text-sm font-semibold text-gray-900">{user?.name}</span>
+                            </Link>
                             <button onClick={logout} className="text-left text-sm text-red-500 hover:text-red-600 py-1 transition">Cerrar sesión</button>
                         </div>
                     </div>
