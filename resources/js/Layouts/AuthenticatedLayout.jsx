@@ -41,7 +41,6 @@ export default function AuthenticatedLayout({ children }) {
                                     <span className="text-indigo-700 font-bold text-xs">{user?.name?.charAt(0).toUpperCase()}</span>
                                 </div>
                             )}
-                            {user?.name}
                         </Link>
                         <button
                             onClick={logout}
