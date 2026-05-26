@@ -7,15 +7,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('companies', function (Blueprint \) {
-            \->json('portfolio')->nullable()->after('applications_email');
+        Schema::table('companies', function (Blueprint $table) {
+            $table->json('portfolio')->nullable()->after('applications_email');
         });
     }
 
     public function down(): void
     {
-        Schema::table('companies', function (Blueprint \) {
-            \->dropColumn('portfolio');
+        Schema::table('companies', function (Blueprint $table) {
+            $table->dropColumn('portfolio');
         });
     }
 };

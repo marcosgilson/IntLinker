@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::table('users', function (Blueprint \) {
-            \->json('portfolio')->nullable()->after('banner_color');
+        Schema::table('users', function (Blueprint $table) {
+            $table->json('portfolio')->nullable()->after('banner_color');
         });
     }
     public function down(): void {
-        Schema::table('users', function (Blueprint \) {
-            \->dropColumn('portfolio');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('portfolio');
         });
     }
 };
