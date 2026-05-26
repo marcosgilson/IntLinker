@@ -15,6 +15,21 @@ function initials(name) {
     return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
+function NavAvatar({ user }) {
+    if (!user) return null;
+    const ini = initials(user.name);
+    return (
+        <Link href="/profile" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 py-1.5 rounded-lg hover:bg-gray-50">
+            {user.profile_photo_url ? (
+                <img src={user.profile_photo_url} alt={user.name} className="w-8 h-8 rounded-xl object-cover ring-2 ring-gray-200" />
+            ) : (
+                <div className={`w-8 h-8 rounded-xl ${stringToColor(user.name)} flex items-center justify-center text-white text-xs font-bold ring-2 ring-gray-200`}>
+                    {ini}
+                </div>
+            )}
+        </Link>
+    );
+}
 
 function LogoUpload({ company, canManage }) {
     const fileRef = useRef(null);
@@ -35,13 +50,13 @@ function LogoUpload({ company, canManage }) {
 
     return (
         <div
-            className={`relative w-16 h-16 rounded-2xl flex-shrink-0 ${canManage ? 'group cursor-pointer' : ''}`}
+            className={`relative w-20 h-20 rounded-2xl flex-shrink-0 ${canManage ? 'group cursor-pointer' : ''}`}
             onClick={() => canManage && fileRef.current?.click()}
         >
             {preview ? (
-                <img src={preview} alt={company.name} className="w-16 h-16 rounded-2xl object-cover" />
+                <img src={preview} alt={company.name} className="w-20 h-20 rounded-2xl object-cover ring-4 ring-white shadow-md" />
             ) : (
-                <div className={`w-16 h-16 rounded-2xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold text-xl`}>
+                <div className={`w-20 h-20 rounded-2xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold text-2xl ring-4 ring-white shadow-md`}>
                     {initials(company.name)}
                 </div>
             )}
@@ -74,12 +89,9 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
     const employees = company.employees ?? [];
 
     const enrollForm = useForm({ company_id: company.id });
-
     const isEmployee = user && employees.some(e => e.id === user.id);
 
-    const doEnroll = () => {
-        enrollForm.post(route('enrollments.store'));
-    };
+    const doEnroll = () => { enrollForm.post(route('enrollments.store')); };
 
     return (
         <>
@@ -92,76 +104,64 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                             <IntLinkerLogo className="h-10 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3">
-                            {user && (
-                                <Link href="/profile" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">
-                                    {user.name}
-                                </Link>
-                            )}
                             <Link href="/companies" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">
                                 Empresas
                             </Link>
+                            <NavAvatar user={user} />
                         </div>
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
-                    {/* Company header card */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6">
-                        <div className="flex items-start gap-5">
-                            <LogoUpload company={company} canManage={canManageLogo} />
-                            <div className="flex-1 min-w-0">
-                                <h1 className="text-2xl font-extrabold text-gray-900">{company.name}</h1>
-                                {company.city && (
-                                    <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
-                                        <span>📍</span> {company.city}
-                                    </p>
-                                )}
-                                {company.applications_email && (
-                                    <a href={`mailto:${company.applications_email}`}
-                                        className="text-sm text-indigo-600 hover:underline mt-1 block">
-                                        {company.applications_email}
-                                    </a>
-                                )}
+                <div className="pt-24 pb-16 max-w-3xl mx-auto px-6 space-y-5">
+                    {/* Header card */}
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="h-24 bg-gradient-to-r from-indigo-500 to-violet-600" />
+                        <div className="px-6 pb-6">
+                            <div className="flex items-end justify-between -mt-10 mb-4">
+                                <LogoUpload company={company} canManage={canManageLogo} />
                             </div>
+                            <h1 className="text-2xl font-extrabold text-gray-900">{company.name}</h1>
+                            {company.city && (
+                                <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
+                                    <span>📍</span> {company.city}
+                                </p>
+                            )}
+                            {company.applications_email && (
+                                <a href={`mailto:${company.applications_email}`} className="text-sm text-indigo-600 hover:underline mt-1 block">
+                                    {company.applications_email}
+                                </a>
+                            )}
+                            {company.description && (
+                                <p className="mt-4 text-gray-600 leading-relaxed">{company.description}</p>
+                            )}
+
+                            {user && roles.is_student && !isEmployee && (
+                                <div className="mt-5">
+                                    <button onClick={doEnroll} disabled={enrollForm.processing}
+                                        className="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-5 py-2.5 rounded-lg transition">
+                                        {enrollForm.processing ? 'Enviando...' : 'Postularse a esta empresa'}
+                                    </button>
+                                </div>
+                            )}
+                            {isEmployee && (
+                                <div className="mt-5">
+                                    <Link href={route('companies.enrollments.index', company.id)}
+                                        className="text-sm font-semibold text-violet-600 hover:text-violet-800 border border-violet-200 hover:border-violet-400 px-5 py-2.5 rounded-lg transition">
+                                        Ver candidatos
+                                    </Link>
+                                </div>
+                            )}
+                            {user && !roles.is_student && !isEmployee && (
+                                <div className="mt-5 bg-amber-50 border border-amber-200 rounded-xl px-5 py-4 text-sm text-amber-800">
+                                    Para unirte a esta empresa como trabajador, completa el proceso de verificación en tu{' '}
+                                    <Link href="/profile" className="font-semibold underline hover:text-amber-900">perfil</Link>.
+                                </div>
+                            )}
                         </div>
-
-                        {company.description && (
-                            <p className="mt-5 text-gray-600 leading-relaxed">{company.description}</p>
-                        )}
-
-                        {/* Only students can apply via enrollment */}
-                        {user && roles.is_student && !isEmployee && (
-                            <div className="mt-6">
-                                <button
-                                    onClick={doEnroll}
-                                    disabled={enrollForm.processing}
-                                    className="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-5 py-2.5 rounded-lg transition"
-                                >
-                                    {enrollForm.processing ? 'Enviando...' : 'Postularse a esta empresa'}
-                                </button>
-                            </div>
-                        )}
-
-                        {/* Verified employees see candidate list */}
-                        {isEmployee && (
-                            <div className="mt-6">
-                                <Link
-                                    href={route('companies.enrollments.index', company.id)}
-                                    className="text-sm font-semibold text-violet-600 hover:text-violet-800 border border-violet-200 hover:border-violet-400 px-5 py-2.5 rounded-lg transition"
-                                >
-                                    Ver candidatos
-                                </Link>
-                            </div>
-                        )}
-
-                        {/* Info box for non-student, non-employee users */}
-                        {user && !roles.is_student && !isEmployee && (
-                            <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl px-5 py-4 text-sm text-amber-800">
-                                Para unirte a esta empresa como trabajador, completa el proceso de verificacion en tu{' '}
-                                <Link href="/profile" className="font-semibold underline hover:text-amber-900">perfil</Link>.
-                            </div>
-                        )}
                     </div>
+
+                    {/* Portfolio — above employees */}
+                    <CompanyPortfolioSection company={company} canManage={canManagePortfolio} />
 
                     {/* Employees */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -169,9 +169,8 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                             Equipo
                             <span className="ml-2 text-sm font-normal text-gray-400">({employees.length})</span>
                         </h2>
-
                         {employees.length === 0 ? (
-                            <p className="text-sm text-gray-400">Esta empresa todavia no tiene empleados registrados.</p>
+                            <p className="text-sm text-gray-400">Esta empresa todavía no tiene empleados registrados.</p>
                         ) : (
                             <div className="grid sm:grid-cols-2 gap-3">
                                 {employees.map(emp => (
@@ -186,15 +185,9 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                         )}
                     </div>
                 </div>
-                <CompanyPortfolioSection company={company} canManage={canManagePortfolio} />
 
                 <Footer />
-
             </div>
         </>
     );
 }
-
-
-
-
