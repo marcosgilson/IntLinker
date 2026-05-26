@@ -16,11 +16,14 @@ class ProfileController extends Controller
 {
     public function show(Request $request): Response
     {
-        $user = $request->user();
+        $user    = $request->user();
+        $student = $user->student;
 
         return Inertia::render('Profile/Show', [
             'banner_color'      => $user->banner_color ?? '#9ca3af',
             'profile_photo_url' => $user->photo_url,
+            'portfolio'         => $user->portfolio,
+            'is_student'        => $student && $student->verified,
         ]);
     }
 

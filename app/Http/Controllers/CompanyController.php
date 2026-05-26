@@ -56,9 +56,12 @@ class CompanyController extends Controller
         $user          = Auth::user();
         $canManageLogo = $user && ($user->is_admin || $user->companies()->where('companies.id', $company->id)->exists());
 
+        $canManagePortfolio = $user && ($user->is_admin || $user->companies()->where('companies.id', $company->id)->exists());
+
         return Inertia::render('Companies/Show', [
-            'company'       => $company,
-            'canManageLogo' => $canManageLogo,
+            'company'              => $company,
+            'canManageLogo'        => $canManageLogo,
+            'canManagePortfolio'   => $canManagePortfolio,
         ]);
     }
 
@@ -116,5 +119,17 @@ class CompanyController extends Controller
         $company->update(['logo' => $base64]);
 
         return back()->with('status', 'Logo actualizado correctamente.');
+    }
+
+    public function updatePortfolio(Request \$request, Company \$company): RedirectResponse
+    {
+        \$user     = \$request->user();
+        \$isWorker = \$user->companies()->where('companies.id', \$company->id)->exists();
+        abort_unless(\$isWorker || \$user->is_admin, 403);
+
+        \$request->validate(['portfolio' => ['required', 'array']]);
+        \$company->update(['portfolio' => \$request->portfolio]);
+
+        return back()->with('status', 'portfolio-updated');
     }
 }

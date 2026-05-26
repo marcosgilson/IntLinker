@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Worker dashboard — my company
     Route::get('/my-company', [CompanyController::class, 'myCompany'])->name('companies.mine');
     Route::post('/companies/{company}/logo', [CompanyController::class, 'updateLogo'])->name('companies.logo.update');
+    Route::patch('/companies/{company}/portfolio', [CompanyController::class, 'updatePortfolio'])->name('companies.portfolio.update');
 
     // Company enrollment management (employee/admin perspective)
     Route::get('/companies/{company}/enrollments', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');

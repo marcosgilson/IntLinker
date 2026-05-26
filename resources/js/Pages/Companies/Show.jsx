@@ -1,5 +1,6 @@
 import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
+import CompanyPortfolioSection from './Partials/CompanyPortfolioSection';
 import { useRef, useState } from 'react';
 import Footer from '@/Components/Footer';
 
@@ -66,7 +67,7 @@ function LogoUpload({ company, canManage }) {
     );
 }
 
-export default function CompaniesShow({ company, canManageLogo = false }) {
+export default function CompaniesShow({ company, canManageLogo = false, canManagePortfolio = false }) {
     const { auth } = usePage().props;
     const user = auth?.user;
     const roles = auth?.roles ?? {};
@@ -185,6 +186,8 @@ export default function CompaniesShow({ company, canManageLogo = false }) {
                         )}
                     </div>
                 </div>
+                <CompanyPortfolioSection company={company} canManage={canManagePortfolio} />
+
                 <Footer />
 
             </div>
