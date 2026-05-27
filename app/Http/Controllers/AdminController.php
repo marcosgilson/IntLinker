@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -11,6 +11,7 @@ use App\Notifications\WorkerVerifiedNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -18,6 +19,8 @@ class AdminController extends Controller
 {
     public function dashboard(): Response
     {
+        Gate::authorize('admin');
+
         $pendingStudents = Student::with('user:id,name,email')
             ->where('verified', false)
             ->latest()
@@ -59,6 +62,8 @@ class AdminController extends Controller
 
     public function storeCompany(Request $request): RedirectResponse
     {
+        Gate::authorize('admin');
+
         $request->validate([
             'name'               => 'required|string|max:255|unique:companies,name',
             'description'        => 'nullable|string|max:2000',
@@ -78,6 +83,8 @@ class AdminController extends Controller
 
     public function companyApplications(Request $request): Response
     {
+        Gate::authorize('admin');
+
         $applications = CompanyApplication::with('user:id,name,email')
             ->orderByRaw("CASE status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 ELSE 2 END")
             ->latest()
@@ -90,6 +97,8 @@ class AdminController extends Controller
 
     public function approveApplication(Request $request, CompanyApplication $application): RedirectResponse
     {
+        Gate::authorize('admin');
+
         $request->validate(['admin_notes' => ['nullable', 'string', 'max:1000']]);
 
         if (! $application->isPending()) {
@@ -106,10 +115,9 @@ class AdminController extends Controller
                 'description' => $application->description,
             ]);
 
-            // Add requester as first employee — already verified since admin approved
             $company->employees()->attach($application->user_id, [
-                'position'  => $application->position,
-                'verified'  => true,
+                'position' => $application->position,
+                'verified' => true,
             ]);
 
             $application->update([
@@ -123,6 +131,8 @@ class AdminController extends Controller
 
     public function rejectApplication(Request $request, CompanyApplication $application): RedirectResponse
     {
+        Gate::authorize('admin');
+
         $request->validate(['admin_notes' => ['nullable', 'string', 'max:1000']]);
 
         if (! $application->isPending()) {
@@ -137,37 +147,43 @@ class AdminController extends Controller
         return back()->with('status', 'Solicitud rechazada.');
     }
 
-    
     public function updateCompanyEmail(Request $request, Company $company): RedirectResponse
     {
+        Gate::authorize('admin');
+
         $request->validate([
             'applications_email' => 'nullable|email|max:255',
         ]);
+
         $company->update(['applications_email' => $request->applications_email]);
+
         return back()->with('status', "Correo de '{$company->name}' actualizado.");
     }
 
-    // ── Student verification ──────────────────────────────────────────────────
-
-        public function verifyStudent(Student $student): RedirectResponse
+    public function verifyStudent(Student $student): RedirectResponse
     {
+        $this->authorize('verify', $student);
+
         $student->update(['verified' => true]);
         $student->user->notify(new StudentVerifiedNotification());
+
         return back()->with('status', "Alumno '{$student->user->name}' verificado correctamente.");
     }
 
     public function rejectStudent(Request $request, Student $student): RedirectResponse
     {
+        $this->authorize('reject', $student);
+
         $request->validate(['admin_notes' => ['nullable', 'string', 'max:500']]);
-        // Delete the record so the user can re-apply with corrected info
         $student->delete();
+
         return back()->with('status', 'Registro de alumno rechazado y eliminado. El usuario puede volver a solicitarlo.');
     }
 
-    // ── Worker (company_employees pivot) verification ─────────────────────────
-
     public function verifyWorker(Request $request): RedirectResponse
     {
+        Gate::authorize('admin');
+
         $request->validate([
             'user_id'    => 'required|integer|exists:users,id',
             'company_id' => 'required|integer|exists:companies,id',
@@ -188,6 +204,8 @@ class AdminController extends Controller
 
     public function rejectWorker(Request $request): RedirectResponse
     {
+        Gate::authorize('admin');
+
         $request->validate([
             'user_id'    => 'required|integer|exists:users,id',
             'company_id' => 'required|integer|exists:companies,id',
@@ -201,6 +219,3 @@ class AdminController extends Controller
         return back()->with('status', 'Registro de trabajador rechazado y eliminado.');
     }
 }
-
-
-

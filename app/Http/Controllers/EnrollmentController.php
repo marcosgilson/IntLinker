@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -38,11 +38,6 @@ class EnrollmentController extends Controller
 
     /**
      * Apply to a company (create enrollment).
-     *
-     * Rules:
-     * - Must be an active student
-     * - Max 5 active enrollments at a time
-     * - Cannot re-apply to a company where the enrollment was cancelled
      */
     public function store(StoreEnrollmentRequest $request): RedirectResponse
     {
@@ -55,7 +50,6 @@ class EnrollmentController extends Controller
 
         $company = Company::findOrFail($request->validated('company_id'));
 
-        // Check if an enrollment already exists (including cancelled ones)
         if ($student->hasEnrolledIn($company->id)) {
             $existing = $student->enrollments()->where('company_id', $company->id)->first();
 
@@ -63,11 +57,11 @@ class EnrollmentController extends Controller
                 return back()->withErrors(['enrollment' => 'No puedes volver a postularte a esta empresa.']);
             }
 
-            return back()->withErrors(['enrollment' => 'Ya tienes una postulación activa en esta empresa.']);
+            return back()->withErrors(['enrollment' => 'Ya tienes una postulacion activa en esta empresa.']);
         }
 
         if (! $student->hasActiveEnrollmentSlots()) {
-            return back()->withErrors(['enrollment' => 'Has alcanzado el límite de 5 postulaciones activas.']);
+            return back()->withErrors(['enrollment' => 'Has alcanzado el limite de 5 postulaciones activas.']);
         }
 
         Enrollment::create([
@@ -76,23 +70,18 @@ class EnrollmentController extends Controller
             'status'     => 'waiting',
         ]);
 
-        return back()->with('status', 'Postulación enviada correctamente.');
+        return back()->with('status', 'Postulacion enviada correctamente.');
     }
 
     /**
      * Cancel an enrollment (student-initiated).
-     * Status changes to "cancelled", token is freed.
      */
     public function destroy(Request $request, Enrollment $enrollment): RedirectResponse
     {
-        $student = $request->user()->student;
-
-        if (! $student || $enrollment->student_id !== $student->id) {
-            abort(403);
-        }
+        $this->authorize('delete', $enrollment);
 
         if ($enrollment->isCancelled()) {
-            return back()->withErrors(['enrollment' => 'Esta postulación ya estaba cancelada.']);
+            return back()->withErrors(['enrollment' => 'Esta postulacion ya estaba cancelada.']);
         }
 
         $enrollment->update([
@@ -100,6 +89,6 @@ class EnrollmentController extends Controller
             'cancelled_by' => 'student',
         ]);
 
-        return back()->with('status', 'Postulación cancelada. Se ha liberado un cupo.');
+        return back()->with('status', 'Postulacion cancelada. Se ha liberado un cupo.');
     }
 }

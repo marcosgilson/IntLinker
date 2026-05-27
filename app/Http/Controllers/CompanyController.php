@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -53,15 +53,12 @@ class CompanyController extends Controller
             $q->select('users.id', 'users.name', 'users.profile_photo')->where('users.is_admin', false);
         }]);
 
-        $user          = Auth::user();
-        $canManageLogo = $user && ($user->is_admin || $user->companies()->where('companies.id', $company->id)->exists());
-
-        $canManagePortfolio = $user && ($user->is_admin || $user->companies()->where('companies.id', $company->id)->exists());
+        $user = Auth::user();
 
         return Inertia::render('Companies/Show', [
-            'company'              => $company,
-            'canManageLogo'        => $canManageLogo,
-            'canManagePortfolio'   => $canManagePortfolio,
+            'company'            => $company,
+            'canManageLogo'      => $user?->can('update', $company) ?? false,
+            'canManagePortfolio' => $user?->can('update', $company) ?? false,
         ]);
     }
 
@@ -107,9 +104,7 @@ class CompanyController extends Controller
 
     public function updateLogo(Request $request, Company $company): RedirectResponse
     {
-        $user     = $request->user();
-        $isWorker = $user->companies()->where('companies.id', $company->id)->exists();
-        abort_unless($isWorker || $user->is_admin, 403);
+        $this->authorize('update', $company);
 
         $request->validate([
             'logo' => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
@@ -123,9 +118,7 @@ class CompanyController extends Controller
 
     public function updatePortfolio(Request $request, Company $company): RedirectResponse
     {
-        $user     = $request->user();
-        $isWorker = $user->companies()->where('companies.id', $company->id)->exists();
-        abort_unless($isWorker || $user->is_admin, 403);
+        $this->authorize('update', $company);
 
         $request->validate(['portfolio' => ['required', 'array']]);
         $company->update(['portfolio' => $request->portfolio]);
