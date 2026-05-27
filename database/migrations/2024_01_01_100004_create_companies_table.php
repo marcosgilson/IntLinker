@@ -15,6 +15,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('logo')->nullable();
             $table->string('applications_email')->nullable();
+            $table->json('portfolio')->nullable();
             $table->timestamps();
         });
     }

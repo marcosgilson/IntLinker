@@ -13,6 +13,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->text('profile_photo')->nullable();
+            $table->string('banner_color', 20)->default('#9ca3af');
+            $table->json('portfolio')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->default(false);

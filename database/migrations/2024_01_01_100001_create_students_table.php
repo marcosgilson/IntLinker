@@ -14,6 +14,11 @@ return new class extends Migration
             $table->string('school_name')->nullable();
             $table->string('school_email')->nullable();
             $table->text('id_alumno')->nullable();
+            $table->string('docupipe_document_id')->nullable();
+            $table->string('docupipe_job_id')->nullable();
+            $table->string('docupipe_standardization_id')->nullable();
+            $table->string('docupipe_status')->nullable();
+            $table->text('docupipe_failure_reason')->nullable();
             $table->text('student_card_image')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->boolean('verified')->default(false);
