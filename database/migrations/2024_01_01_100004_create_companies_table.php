@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('city')->nullable();
             $table->text('description')->nullable();
-            $table->string('logo')->nullable();
+            $table->text('logo')->nullable();
             $table->string('applications_email')->nullable();
             $table->timestamps();
         });

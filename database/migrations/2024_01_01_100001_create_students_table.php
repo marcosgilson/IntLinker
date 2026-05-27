@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('school_name')->nullable();
             $table->string('school_email')->nullable();
             $table->text('id_alumno')->nullable();
-            $table->string('student_card_image')->nullable();
+            $table->text('student_card_image')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->boolean('verified')->default(false);
             $table->timestamps();

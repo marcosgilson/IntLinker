@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('school_id')->constrained()->cascadeOnDelete();
-            $table->string('student_card_image');
+            $table->text('student_card_image');
             $table->boolean('verified')->default(false);
             $table->timestamps();
 
