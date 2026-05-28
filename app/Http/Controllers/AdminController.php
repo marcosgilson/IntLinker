@@ -40,7 +40,7 @@ class AdminController extends Controller
             ->get();
 
         $applications = CompanyApplication::with('user:id,name,email')
-            ->orderByRaw("FIELD(status, 'pending', 'approved', 'rejected')")
+            ->orderByRaw("CASE status WHEN 'pending' THEN 1 WHEN 'approved' THEN 2 WHEN 'rejected' THEN 3 ELSE 4 END")
             ->latest()
             ->paginate(20);
 
@@ -73,7 +73,7 @@ class AdminController extends Controller
     public function companyApplications(Request $request): Response
     {
         $applications = CompanyApplication::with('user:id,name,email')
-            ->orderByRaw("FIELD(status, 'pending', 'approved', 'rejected')")
+            ->orderByRaw("CASE status WHEN 'pending' THEN 1 WHEN 'approved' THEN 2 WHEN 'rejected' THEN 3 ELSE 4 END")
             ->latest()
             ->paginate(20);
 
@@ -100,7 +100,7 @@ class AdminController extends Controller
                 'description' => $application->description,
             ]);
 
-            // Add requester as first employee — already verified since admin approved
+            // Add requester as first employee â€” already verified since admin approved
             $company->employees()->attach($application->user_id, [
                 'position'  => $application->position,
                 'verified'  => true,
@@ -141,7 +141,7 @@ class AdminController extends Controller
         return back()->with('status', "Correo de '{$company->name}' actualizado.");
     }
 
-    // ── Student verification ──────────────────────────────────────────────────
+    // â”€â”€ Student verification â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
         public function verifyStudent(Student $student): RedirectResponse
     {
@@ -158,7 +158,7 @@ class AdminController extends Controller
         return back()->with('status', 'Registro de alumno rechazado y eliminado. El usuario puede volver a solicitarlo.');
     }
 
-    // ── Worker (company_employees pivot) verification ─────────────────────────
+    // â”€â”€ Worker (company_employees pivot) verification â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public function verifyWorker(Request $request): RedirectResponse
     {
