@@ -2,6 +2,7 @@ import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 import { useState, useRef, useEffect } from 'react';
+import UserAvatar from '@/Components/UserAvatar';
 
 function stringToColor(str) {
     const palette = ['bg-indigo-600','bg-violet-600','bg-teal-600','bg-blue-700','bg-rose-600','bg-amber-600','bg-emerald-600','bg-sky-600','bg-fuchsia-600'];
@@ -239,7 +240,7 @@ export default function CompaniesIndex({
                         <div className="flex items-center gap-3">
                             {user ? (
                                 <>
-                                    <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">{user.name}</Link>
+                                    <Link href="/perfil" className="flex items-center hover:opacity-80 transition px-2 py-1"><UserAvatar user={user} /></Link>
                                     <Link href="/inicio" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">← Inicio</Link>
                                 </>
                             ) : (

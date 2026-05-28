@@ -1,3 +1,4 @@
+import UserAvatar from '@/Components/UserAvatar';
 import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { Link, router, usePage } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
@@ -34,13 +35,7 @@ export default function AuthenticatedLayout({ children }) {
 
                     <div className="hidden md:flex items-center gap-3">
                         <Link href="/perfil" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2">
-                            {user?.photo_url ? (
-                                <img src={user.photo_url} alt={user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200"/>
-                            ) : (
-                                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <span className="text-indigo-700 font-bold text-xs">{user?.name?.charAt(0).toUpperCase()}</span>
-                                </div>
-                            )}
+                            <UserAvatar user={user} />
                         </Link>
                         <button
                             onClick={logout}
@@ -74,13 +69,7 @@ export default function AuthenticatedLayout({ children }) {
                         {roles.is_admin   && <Link href="/admin"        className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Panel Admin</Link>}
                         <div className="border-t border-gray-100 pt-3 mt-2 flex flex-col gap-1">
                             <Link href="/perfil" className="flex items-center gap-2 py-1">
-                                {user?.photo_url ? (
-                                    <img src={user.photo_url} alt={user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200" />
-                                ) : (
-                                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                        <span className="text-indigo-700 font-bold text-xs">{user?.name?.charAt(0).toUpperCase()}</span>
-                                    </div>
-                                )}
+                                <UserAvatar user={user} />
                                 <span className="text-sm font-semibold text-gray-900">{user?.name}</span>
                             </Link>
                             <button onClick={logout} className="text-left text-sm text-red-500 hover:text-red-600 py-1 transition">Cerrar sesión</button>

@@ -109,11 +109,8 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         <div className="hidden md:flex items-center gap-3">
                             {user ? (
                                 <>
-                                    <Link
-                                        href="/perfil"
-                                        className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2"
-                                    >
-                                        {user.name}
+                                    <Link href="/perfil" className="flex items-center hover:opacity-80 transition px-2 py-1">
+                                        <UserAvatar user={user} />
                                     </Link>
                                     {roles.is_student && (
                                         <Link
@@ -165,7 +162,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         <div className="border-t border-gray-100 pt-3 mt-2 space-y-1">
                             {user ? (
                                 <>
-                                    <Link href="/perfil" className="block text-sm font-semibold text-gray-900 py-2 hover:text-indigo-600 transition">{user.name}</Link>
+                                    <Link href="/perfil" className="block text-sm font-semibold text-gray-900 py-2 hover:text-indigo-600 transition"><UserAvatar user={user} /></Link>
                                     {roles.is_student && <Link href="/postulaciones" className="block text-sm font-medium text-indigo-600 py-2 transition">Mis postulaciones</Link>}
                                     {roles.is_worker && <Link href="/mi-empresa" className="block text-sm font-medium text-violet-600 py-2 transition">Mi empresa</Link>}
                                     {roles.is_admin && <Link href="/admin" className="block text-sm font-medium text-gray-700 py-2 transition">Panel Admin</Link>}
@@ -396,7 +393,6 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
         </>
     );
 }
-
 
 
 

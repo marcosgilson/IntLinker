@@ -20,8 +20,8 @@ function NavAvatar({ user }) {
     const ini = initials(user.name);
     return (
         <Link href="/perfil" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 py-1.5 rounded-lg hover:bg-gray-50">
-            {user.profile_photo_url ? (
-                <img src={user.profile_photo_url} alt={user.name} className="w-8 h-8 rounded-xl object-cover ring-2 ring-gray-200" />
+            {user.photo_url ? (
+                <img src={user.photo_url} alt={user.name} className="w-8 h-8 rounded-xl object-cover ring-2 ring-gray-200" />
             ) : (
                 <div className={`w-8 h-8 rounded-xl ${stringToColor(user.name)} flex items-center justify-center text-white text-xs font-bold ring-2 ring-gray-200`}>
                     {ini}
