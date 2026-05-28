@@ -95,6 +95,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Worker verification
         Route::patch('/workers/verify', [AdminController::class, 'verifyWorker'])->name('workers.verify');
         Route::delete('/workers/reject', [AdminController::class, 'rejectWorker'])->name('workers.reject');
+        Route::patch('/companies/{company}/email', [AdminController::class, 'updateCompanyEmail'])->name('companies.email.update');
     });
 });
 
