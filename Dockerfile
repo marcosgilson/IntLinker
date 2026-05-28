@@ -43,7 +43,7 @@ RUN npm ci && npm run build
 
 # 7. PHP dependencies
 RUN composer install --no-dev --optimize-autoloader && \
-    composer require symfony/http-client --no-dev --no-interaction --optimize-autoloader
+    composer require symfony/http-client --no-interaction --update-no-dev --optimize-autoloader
 
 # 8. Entrypoint (migrations + storage:link + apache)
 COPY docker/entrypoint.sh /entrypoint.sh
