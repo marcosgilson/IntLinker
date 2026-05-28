@@ -9,7 +9,7 @@ export default function AuthenticatedLayout({ children }) {
     const roles = auth?.roles ?? {};
     const [open, setOpen] = useState(false);
 
-    const logout = () => router.post(route('logout'));
+    const logout = () => router.post(route('cerrar-sesion'));
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">

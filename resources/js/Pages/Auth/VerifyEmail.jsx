@@ -36,7 +36,7 @@ export default function VerifyEmail({ status }) {
 
             <div className="mt-4 text-center">
                 <Link
-                    href={route('logout')}
+                    href={route('cerrar-sesion')}
                     method="post"
                     as="button"
                     className="text-sm text-gray-500 hover:text-gray-700 underline transition"

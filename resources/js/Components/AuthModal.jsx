@@ -36,7 +36,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('login'), { onSuccess: () => onClose(), onFinish: () => reset('password') });
+        post(route('iniciar-sesion'), { onSuccess: () => onClose(), onFinish: () => reset('password') });
     };
 
     return (
@@ -115,7 +115,7 @@ function RegisterForm({ onSwitch, onClose }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('register'), {
+        post(route('registro'), {
             onSuccess: () => onClose(), onFinish: () => reset('password', 'password_confirmation'),
         });
     };

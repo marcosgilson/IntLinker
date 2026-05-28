@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Worker dashboard — my company
     Route::get('/mi-empresa', [CompanyController::class, 'myCompany'])->name('companies.mine');
+    Route::delete('/empresas/{company}/salir', [WorkerController::class, 'leaveCompany'])->name('companies.leave');
     Route::post('/empresas/{company}/logo', [CompanyController::class, 'updateLogo'])->name('companies.logo.update');
     Route::patch('/empresas/{company}/portafolio', [CompanyController::class, 'updatePortfolio'])->name('companies.portfolio.update');
 
