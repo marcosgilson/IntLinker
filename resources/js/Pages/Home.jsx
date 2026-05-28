@@ -65,6 +65,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
 
     // null | 'login' | 'register'
     const [authModal, setAuthModal] = useState(null);
+    const [navOpen, setNavOpen] = useState(false);
 
     const openLogin    = () => setAuthModal('login');
     const openRegister = () => setAuthModal('register');
@@ -98,7 +99,14 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                             <Link href="/empresas" className="hover:text-indigo-600 transition-colors">Empresas</Link>
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        <button className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition" onClick={() => setNavOpen(o => !o)} aria-label="Menu">
+                            {navOpen ? (
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+                            ) : (
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
+                            )}
+                        </button>
+                        <div className="hidden md:flex items-center gap-3">
                             {user ? (
                                 <>
                                     <Link
@@ -150,6 +158,27 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                             )}
                         </div>
                     </div>
+                {navOpen && (
+                    <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-md px-4 py-4 space-y-1">
+                        <a href="#como-funciona" onClick={() => setNavOpen(false)} className="block text-sm font-medium text-gray-700 hover:text-indigo-600 py-2 transition">Como funciona</a>
+                        <Link href="/empresas" className="block text-sm font-medium text-gray-700 hover:text-indigo-600 py-2 transition">Empresas</Link>
+                        <div className="border-t border-gray-100 pt-3 mt-2 space-y-1">
+                            {user ? (
+                                <>
+                                    <Link href="/perfil" className="block text-sm font-semibold text-gray-900 py-2 hover:text-indigo-600 transition">{user.name}</Link>
+                                    {roles.is_student && <Link href="/postulaciones" className="block text-sm font-medium text-indigo-600 py-2 transition">Mis postulaciones</Link>}
+                                    {roles.is_worker && <Link href="/mi-empresa" className="block text-sm font-medium text-violet-600 py-2 transition">Mi empresa</Link>}
+                                    {roles.is_admin && <Link href="/admin" className="block text-sm font-medium text-gray-700 py-2 transition">Panel Admin</Link>}
+                                </>
+                            ) : (
+                                <div className="flex gap-3 pt-1">
+                                    <button onClick={() => { setNavOpen(false); openLogin(); }} className="flex-1 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg px-4 py-2 transition hover:border-indigo-400 hover:text-indigo-600">Iniciar sesion</button>
+                                    <button onClick={() => { setNavOpen(false); openRegister(); }} className="flex-1 text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-2 transition">Registrarse</button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
                 </nav>
 
                 {/* Hero */}
@@ -159,7 +188,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         style={{ backgroundImage: 'radial-gradient(circle at 25% 50%, #6366f1 0%, transparent 50%), radial-gradient(circle at 75% 20%, #8b5cf6 0%, transparent 50%)' }}
                     />
 
-                    <div className="relative max-w-7xl mx-auto px-6 py-28 text-center">
+                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center">
                         {companyCount > 0 && (
                             <span className="inline-flex items-center gap-2 bg-white/10 text-indigo-200 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-white/20">
                                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
@@ -167,7 +196,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                             </span>
                         )}
 
-                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
                             Tu primer paso<br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-violet-300">
                                 en el mundo laboral
@@ -222,11 +251,11 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="text-center mb-16">
                             <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Proceso</span>
-                            <h2 className="text-4xl font-bold text-gray-900 mt-2">Así de fácil funciona</h2>
+                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mt-2">Así de fácil funciona</h2>
                             <p className="text-gray-500 mt-3 max-w-xl mx-auto">Tres pasos para conectar tu talento con la empresa ideal.</p>
                         </div>
 
-                        <div className="grid md:grid-cols-3 gap-8">
+                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
                             {steps.map((step) => (
                                 <div key={step.number} className="relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                                     <span className="absolute top-6 right-6 text-5xl font-black text-gray-100 select-none">{step.number}</span>
@@ -244,10 +273,10 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                 {/* Empresas colaboradoras */}
                 <section id="empresas" className="py-24 bg-white">
                     <div className="max-w-7xl mx-auto px-6">
-                        <div className="flex items-end justify-between mb-12">
+                        <div className="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-12">
                             <div>
                                 <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Empresas</span>
-                                <h2 className="text-4xl font-bold text-gray-900 mt-2">Empresas colaboradoras</h2>
+                                <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mt-2">Empresas colaboradoras</h2>
                             </div>
                             <Link href="/empresas" className="hidden md:flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline">
                                 Ver todas
@@ -266,7 +295,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                 <p className="text-sm mt-1">Pronto aparecerán aquí las primeras colaboraciones.</p>
                             </div>
                         ) : (
-                            <div className="grid md:grid-cols-3 gap-6">
+                            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                                 {companies.map((company) => (
                                     <Link
                                         key={company.id}
@@ -317,7 +346,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                 {/* CTA Banner */}
                 <section className="py-20 bg-gradient-to-r from-indigo-600 to-violet-600">
                     <div className="max-w-4xl mx-auto px-6 text-center">
-                        <h2 className="text-4xl font-extrabold text-white mb-4">
+                        <h2 className="text-2xl sm:text-4xl font-extrabold text-white mb-4">
                             {user ? '¡Bienvenido de nuevo!' : '¿Listo para dar el salto?'}
                         </h2>
                         <p className="text-indigo-200 text-lg mb-8">

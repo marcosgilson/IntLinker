@@ -39,11 +39,11 @@ export default function StudentProfile({ student, enrollments = [], portfolio = 
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-2xl mx-auto px-6 space-y-6">
+                <div className="pt-24 pb-12 max-w-2xl mx-auto px-4 sm:px-6 space-y-6">
 
                     {/* Student card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                        <div className="flex items-center gap-5">
+                        <div className="flex flex-wrap items-center gap-4">
                             <div className="w-16 h-16 rounded-2xl flex-shrink-0 overflow-hidden ring-2 ring-white shadow-md">
                                 {student.photo_url ? (
                                     <img src={student.photo_url} alt={student.name} className="w-full h-full object-cover" />
@@ -54,7 +54,7 @@ export default function StudentProfile({ student, enrollments = [], portfolio = 
                                 )}
                             </div>
                             <div>
-                                <h1 className="text-2xl font-extrabold text-gray-900">{student.name}</h1>
+                                <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900">{student.name}</h1>
                                 <p className="text-sm text-gray-400 mt-0.5">{student.email}</p>
                                 <span className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
                                     ✓ Alumno verificado

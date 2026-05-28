@@ -135,15 +135,15 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
+                <div className="pt-24 pb-12 max-w-4xl mx-auto px-4 sm:px-6">
                     {/* Header */}
                     <div className="mb-8">
-                        <h1 className="text-3xl font-extrabold text-white">Mis postulaciones</h1>
+                        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mis postulaciones</h1>
                         <p className="text-gray-300 mt-1">Solo tú puedes ver este apartado.</p>
                     </div>
 
                     {/* Slots counter */}
-                    <div className="bg-white rounded-2xl border border-gray-200 p-5 mb-8 flex items-center gap-4">
+                    <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 mb-8 flex flex-wrap items-center gap-4">
                         <div className="flex gap-1.5">
                             {Array.from({ length: maxSlots }).map((_, i) => (
                                 <div key={i} className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
@@ -156,7 +156,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                             ))}
                         </div>
                         <div>
-                            <p className="font-semibold text-white">{activeSlots} de {maxSlots} cupos usados</p>
+                            <p className="font-semibold text-gray-900">{activeSlots} de {maxSlots} cupos usados</p>
                             <p className="text-sm text-gray-500">
                                 {maxSlots - activeSlots} cupo{maxSlots - activeSlots !== 1 ? 's' : ''} disponible{maxSlots - activeSlots !== 1 ? 's' : ''}
                             </p>

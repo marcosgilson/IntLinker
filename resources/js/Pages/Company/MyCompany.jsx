@@ -154,7 +154,7 @@ function CompanyCard({ company }) {
     return (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
             {/* Header */}
-            <div className="p-6 flex items-center gap-4">
+            <div className="p-4 sm:p-6 flex flex-wrap items-center gap-4">
                 <LogoUpload company={company} />
                 <div className="flex-1 min-w-0">
                     <h2 className="text-lg font-bold text-gray-900">{company.name}</h2>
@@ -162,7 +162,7 @@ function CompanyCard({ company }) {
                         <p className="text-sm text-gray-500 truncate">{company.description}</p>
                     )}
                 </div>
-                <div className="flex items-center gap-3 flex-shrink-0">
+                <div className="flex items-center gap-3 ml-auto">
                     <div className="text-right">
                         <p className="text-2xl font-extrabold text-indigo-600">{company.waiting_count ?? 0}</p>
                         <p className="text-xs text-gray-400">en espera</p>
@@ -262,10 +262,10 @@ export default function MyCompany({ companies = [] }) {
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
-                    <div className="mb-8 flex items-center justify-between">
+                <div className="pt-24 pb-12 max-w-4xl mx-auto px-4 sm:px-6">
+                    <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
                         <div>
-                            <h1 className="text-3xl font-extrabold text-white">Mi empresa</h1>
+                            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mi empresa</h1>
                             <p className="text-gray-300 mt-1">Gestiona las postulaciones de tus candidatos.</p>
                         </div>
                         <Link
