@@ -230,7 +230,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
                 <div className="px-6 pt-6 pb-4 border-b border-gray-100">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-10 w-auto" />
+                            <IntLinkerLogo className="h-20 w-auto" />
                         </div>
                         <button
                             onClick={onClose}

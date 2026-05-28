@@ -25,7 +25,7 @@ export default function Register() {
 
                     <div className="px-8 pt-8 pb-6 border-b border-gray-100">
                         <Link href="/" className="flex items-center gap-2 mb-6">
-                            <IntLinkerLogo className="h-10 w-auto" />
+                            <IntLinkerLogo className="h-20 w-auto" />
                         </Link>
                         <h1 className="text-2xl font-bold text-gray-900">Crear cuenta</h1>
                         <p className="text-gray-500 text-sm mt-1">
