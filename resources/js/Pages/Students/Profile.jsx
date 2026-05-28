@@ -57,7 +57,7 @@ export default function StudentProfile({ student, enrollments = [], portfolio = 
                                 <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900">{student.name}</h1>
                                 <p className="text-sm text-gray-400 mt-0.5">{student.email}</p>
                                 <span className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
-                                    ✓ Alumno verificado
+                                    Alumno verificado
                                 </span>
                             </div>
                         </div>

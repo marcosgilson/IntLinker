@@ -76,13 +76,13 @@ export default function Show({ profileUser, profileRoles, profile_photo_url, ban
                                     <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">Admin</span>
                                 )}
                                 {roles.is_student && (
-                                    <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full">✓ Alumno</span>
+                                    <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full">Alumno</span>
                                 )}
                                 {roles.is_pending_student && (
                                     <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">⏳ Verificación alumno pendiente</span>
                                 )}
                                 {roles.is_worker && (
-                                    <span className="px-3 py-1 bg-violet-100 text-violet-700 text-xs font-semibold rounded-full">✓ Trabajador</span>
+                                    <span className="px-3 py-1 bg-violet-100 text-violet-700 text-xs font-semibold rounded-full">Trabajador</span>
                                 )}
                                 {roles.is_pending_worker && (
                                     <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">⏳ Verificación trabajador pendiente</span>
