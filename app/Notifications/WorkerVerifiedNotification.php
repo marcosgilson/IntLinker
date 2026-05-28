@@ -2,33 +2,29 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WorkerVerifiedNotification extends Notification implements ShouldQueue
+class WorkerVerifiedNotification extends Notification
 {
-    use Queueable;
-
     public function __construct(
-        private string $companyName,
-        private ?string $companyLogo = null,
+        private string \,
+        private ?string \ = null,
     ) {}
 
-    public function via(object $notifiable): array
+    public function via(object \): array
     {
         return ['mail'];
     }
 
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object \): MailMessage
     {
         return (new MailMessage)
-            ->subject('Tu cuenta de trabajador ha sido verificada! - IntLinker')
+            ->subject('Tu cuenta de trabajador ha sido verificada - IntLinker')
             ->view('emails.worker_verified', [
-                'name'        => $notifiable->name,
-                'companyName' => $this->companyName,
-                'companyLogo' => $this->companyLogo,
+                'name'        => \->name,
+                'companyName' => \->companyName,
+                'companyLogo' => \->companyLogo,
                 'url'         => url('/dashboard'),
             ]);
     }
