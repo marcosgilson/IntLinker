@@ -18,18 +18,7 @@ class WorkerController extends Controller
         // Block if already verified worker in any company
         if ($user->companies()->wherePivot('verified', true)->exists()) {
             return back()->withErrors(['company_name' => 'Ya eres trabajador verificado en una empresa. Debes abandonarla antes de unirte a otra.']);
-        
-    /**
-     * Worker voluntarily leaves a specific company.
-     */
-    public function leaveCompany(Request $request, \App\Models\Company $company): RedirectResponse
-    {
-        $user = $request->user();
-        $user->companies()->detach($company->id);
-
-        return back()->with('status', 'Has abandonado la empresa. Ya puedes unirte a otra.');
-    }
-}
+        }
 
         // Block if already has a pending pivot or pending application
         $hasPendingPivot = $user->companies()->wherePivot('verified', false)->exists();
@@ -78,17 +67,26 @@ class WorkerController extends Controller
     {
         $user = $request->user();
 
-        // Detach from verified or pending company pivot
         $companies = $user->companies()->get();
         foreach ($companies as $company) {
             $user->companies()->detach($company->id);
         }
 
-        // Cancel any pending application
         CompanyApplication::where('user_id', $user->id)
             ->where('status', 'pending')
             ->update(['status' => 'rejected']);
 
         return back()->with('status', 'Has abandonado tu empresa. Ya puedes unirte a otra.');
+    }
+
+    /**
+     * Worker voluntarily leaves a specific company.
+     */
+    public function leaveCompany(Request $request, \App\Models\Company $company): RedirectResponse
+    {
+        $user = $request->user();
+        $user->companies()->detach($company->id);
+
+        return back()->with('status', 'Has abandonado la empresa. Ya puedes unirte a otra.');
     }
 }
