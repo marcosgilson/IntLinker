@@ -4,35 +4,35 @@ import Footer from '@/Components/Footer';
 import { useState, useRef, useEffect } from 'react';
 
 const SPANISH_CITIES = [
-    // Madrid y área metropolitana
+    // Madrid y ÃƒÂ¡rea metropolitana
     'Madrid','Alcobendas','Tres Cantos','Majadahonda','Boadilla del Monte',
-    'Las Rozas de Madrid','Alcalá de Henares','Leganés','Getafe','Móstoles',
-    'Fuenlabrada','Alcorcón','Pozuelo de Alarcón','Torrejón de Ardoz',
-    // Cataluña
-    'Barcelona','Martorell','El Prat de Llobregat','Sant Cugat del Vallès',
-    'Palau-solità i Plegamans','Sabadell','Terrassa','Badalona','Lleida',
-    'Tarragona','Girona','Mataró','Hospitalet de Llobregat',
+    'Las Rozas de Madrid','AlcalÃƒÂ¡ de Henares','LeganÃƒÂ©s','Getafe','MÃƒÂ³stoles',
+    'Fuenlabrada','AlcorcÃƒÂ³n','Pozuelo de AlarcÃƒÂ³n','TorrejÃƒÂ³n de Ardoz',
+    // CataluÃƒÂ±a
+    'Barcelona','Martorell','El Prat de Llobregat','Sant Cugat del VallÃƒÂ¨s',
+    'Palau-solitÃƒÂ  i Plegamans','Sabadell','Terrassa','Badalona','Lleida',
+    'Tarragona','Girona','MatarÃƒÂ³','Hospitalet de Llobregat',
     // Comunitat Valenciana
-    'Valencia','Tavernes Blanques','Almussafes','Alicante','Castellón de la Plana',
+    'Valencia','Tavernes Blanques','Almussafes','Alicante','CastellÃƒÂ³n de la Plana',
     'Vila-real','Elche','Torrent','Sagunto',
-    // Andalucía
-    'Sevilla','Málaga','Granada','Córdoba','Almería','Cantoria','Huelva',
-    'Jerez de la Frontera','Cádiz','Los Barrios','San Fernando','Algeciras',
+    // AndalucÃƒÂ­a
+    'Sevilla','MÃƒÂ¡laga','Granada','CÃƒÂ³rdoba','AlmerÃƒÂ­a','Cantoria','Huelva',
+    'Jerez de la Frontera','CÃƒÂ¡diz','Los Barrios','San Fernando','Algeciras',
     'Dos Hermanas','Marbella',
-    // País Vasco y Navarra
-    'Bilbao','San Sebastián','Vitoria-Gasteiz','Beasain','Hernani',
-    'Arrasate-Mondragón','Donostia','Pamplona','Cizur Menor',
-    // Aragón y La Rioja
-    'Zaragoza','Figueruelas','Haro','Logroño',
+    // PaÃƒÂ­s Vasco y Navarra
+    'Bilbao','San SebastiÃƒÂ¡n','Vitoria-Gasteiz','Beasain','Hernani',
+    'Arrasate-MondragÃƒÂ³n','Donostia','Pamplona','Cizur Menor',
+    // AragÃƒÂ³n y La Rioja
+    'Zaragoza','Figueruelas','Haro','LogroÃƒÂ±o',
     // Galicia
-    'A Coruña','Arteixo','Vigo','Santiago de Compostela','Lugo','Ourense',
+    'A CoruÃƒÂ±a','Arteixo','Vigo','Santiago de Compostela','Lugo','Ourense',
     // Asturias y Cantabria
-    'Oviedo','Gijón','Avilés','Santander','Torrelavega',
-    // Castilla y León
-    'Valladolid','Burgos','Salamanca','León','Palencia','Segovia',
+    'Oviedo','GijÃƒÂ³n','AvilÃƒÂ©s','Santander','Torrelavega',
+    // Castilla y LeÃƒÂ³n
+    'Valladolid','Burgos','Salamanca','LeÃƒÂ³n','Palencia','Segovia',
     // Otras capitales y ciudades
     'Palma','Las Palmas de Gran Canaria','Santa Cruz de Tenerife',
-    'San Cristóbal de La Laguna','Murcia','Cartagena','Badajoz','Toledo',
+    'San CristÃƒÂ³bal de La Laguna','Murcia','Cartagena','Badajoz','Toledo',
     'Guadalajara','Ciudad Real',
 ];
 
@@ -101,7 +101,7 @@ function CitySelect({ value, onChange, error }) {
                 <span>{value || 'Selecciona una ciudad...'}</span>
                 <div className="flex items-center gap-1">
                     {value && (
-                        <span onClick={clear} className="text-gray-400 hover:text-gray-600 px-1 text-base leading-none">×</span>
+                        <span onClick={clear} className="text-gray-400 hover:text-gray-600 px-1 text-base leading-none">Ãƒâ€”</span>
                     )}
                     <svg className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -149,7 +149,7 @@ function CitySelect({ value, onChange, error }) {
 }
 
 
-// ── Create company form ───────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ Create company form Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function CreateCompanyForm() {
     const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
         name: '',
@@ -232,7 +232,7 @@ function CreateCompanyForm() {
     );
 }
 
-// ── Pending student row ───────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ Pending student row Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function StudentRow({ student }) {
     const verify = useForm({});
     const reject = useForm({});
@@ -244,8 +244,8 @@ function StudentRow({ student }) {
                     <p className="font-bold text-gray-900">{student.user?.name}</p>
                     <p className="text-xs text-gray-400">{student.user?.email}</p>
                     <p className="text-xs text-gray-500 mt-1">
-                        Escuela: <span className="font-medium">{student.school_name || '—'}</span>
-                        {student.school_email && <> · {student.school_email}</>}
+                        Escuela: <span className="font-medium">{student.school_name || 'Ã¢â‚¬â€'}</span>
+                        {student.school_email && <> Ã‚Â· {student.school_email}</>}
                     </p>
                 </div>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200 flex-shrink-0">
@@ -278,7 +278,7 @@ function StudentRow({ student }) {
     );
 }
 
-// ── Pending worker row ────────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ Pending worker row Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function WorkerRow({ worker }) {
     const verify = useForm({ user_id: worker.user_id, company_id: worker.company_id });
     const reject = useForm({ user_id: worker.user_id, company_id: worker.company_id });
@@ -291,7 +291,7 @@ function WorkerRow({ worker }) {
                     <p className="text-xs text-gray-400">{worker.user_email}</p>
                     <p className="text-xs text-gray-500 mt-1">
                         Empresa: <span className="font-medium">{worker.company_name}</span>
-                        {worker.position && <> · {worker.position}</>}
+                        {worker.position && <> Ã‚Â· {worker.position}</>}
                     </p>
                 </div>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200 flex-shrink-0">
@@ -315,7 +315,7 @@ function WorkerRow({ worker }) {
     );
 }
 
-// ── Company application row ───────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ Company application row Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function ApplicationRow({ app }) {
     const approve = useForm({ admin_notes: '' });
     const reject  = useForm({ admin_notes: '' });
@@ -363,7 +363,7 @@ function ApplicationRow({ app }) {
     );
 }
 
-// ── Section wrapper ───────────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ Section wrapper Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function Section({ title, count, children, emptyText }) {
     return (
         <div>
@@ -387,7 +387,7 @@ function Section({ title, count, children, emptyText }) {
 }
 
 
-// ── Company email row ─────────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ Company email row Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 function CompanyEmailRow({ company }) {
     const [local, domain0] = (company.applications_email ?? '@').split('@');
     const { data, setData, patch, processing, recentlySuccessful } = useForm({
@@ -414,7 +414,7 @@ function CompanyEmailRow({ company }) {
                     {company.city && <p className="text-xs text-gray-400">{company.city}</p>}
                 </div>
                 {recentlySuccessful && (
-                    <span className="text-xs text-emerald-600 font-semibold">✓ Guardado</span>
+                    <span className="text-xs text-emerald-600 font-semibold">Ã¢Å“â€œ Guardado</span>
                 )}
             </div>
             <form onSubmit={submit} className="flex items-center gap-0">
@@ -442,12 +442,12 @@ function CompanyEmailRow({ company }) {
                 </button>
             </form>
             {data.applications_email && (
-                <p className="mt-1.5 text-xs text-gray-400">→ <span className="font-medium text-gray-600">{data.applications_email}</span></p>
+                <p className="mt-1.5 text-xs text-gray-400">Ã¢â€ â€™ <span className="font-medium text-gray-600">{data.applications_email}</span></p>
             )}
         </div>
     );
 }
-// ── Main page ─────────────────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ Main page Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 export default function AdminDashboard({ applications = {}, pendingStudents = [], pendingWorkers = [], companies = [], allStudents = [] }) {
     const { auth } = usePage().props;
     const appList = applications.data ?? [];
@@ -458,7 +458,7 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
 
     return (
         <>
-            <Head title="Panel Admin — IntLinker" />
+            <Head title="Panel Admin Ã¢â‚¬â€ IntLinker" />
 
             <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
@@ -496,6 +496,11 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
                     </div>
 
                     <div className="space-y-10">
+                        <Section title="Cuentas sin verificar email" count={pendingEmailUsers.length}
+                            emptyText="No hay cuentas pendientes de verificacion de email.">
+                            {pendingEmailUsers.map(u => <UnverifiedUserRow key={u.id} user={u} />)}
+                        </Section>
+
                         <Section title="Alumnos pendientes de verificacion" count={pendingStudents.length}
                             emptyText="No hay alumnos pendientes de verificacion.">
                             {pendingStudents.map(s => <StudentRow key={s.id} student={s} />)}

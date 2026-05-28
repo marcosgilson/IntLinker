@@ -17,11 +17,11 @@ Route::get('/', fn () => redirect('/inicio'));
 
 Route::get('/inicio', [HomeController::class, 'index'])->name('home');
 
-// ─── Public routes ───────────────────────────────────────────────────────────
+// â”€â”€â”€ Public routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 Route::get('/empresas', [CompanyController::class, 'index'])->name('companies.index');
 Route::get('/empresas/{company}', [CompanyController::class, 'show'])->name('companies.show');
 
-// ─── Authenticated routes ────────────────────────────────────────────────────
+// â”€â”€â”€ Authenticated routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Profile
@@ -46,14 +46,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/alumno/escuelas', [StudentController::class, 'addSchool'])->name('student.schools.add');
     Route::delete('/alumno/escuelas/{school}', [StudentController::class, 'removeSchool'])->name('student.schools.remove');
 
-    // Enrollments (student perspective – private)
+    // Enrollments (student perspective â€“ private)
     Route::get('/postulaciones', [EnrollmentController::class, 'index'])->name('enrollments.index');
     Route::post('/postulaciones', [EnrollmentController::class, 'store'])->name('enrollments.store');
     Route::delete('/postulaciones/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
 
     // Company membership
 
-    // Worker dashboard — my company
+    // Worker dashboard â€” my company
     Route::get('/mi-empresa', [CompanyController::class, 'myCompany'])->name('companies.mine');
     Route::delete('/empresas/{company}/salir', [WorkerController::class, 'leaveCompany'])->name('companies.leave');
     Route::post('/empresas/{company}/logo', [CompanyController::class, 'updateLogo'])->name('companies.logo.update');
@@ -68,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Request creation of a new company
     Route::post('/solicitudes-empresa', [CompanyApplicationController::class, 'store'])->name('company-applications.store');
 
-    // ─── Admin routes ────────────────────────────────────────────────────────
+    // â”€â”€â”€ Admin routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::post('/empresas', [AdminController::class, 'storeCompany'])->name('companies.store');
@@ -95,6 +95,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Worker verification
         Route::patch('/workers/verify', [AdminController::class, 'verifyWorker'])->name('workers.verify');
         Route::delete('/workers/reject', [AdminController::class, 'rejectWorker'])->name('workers.reject');
+        Route::delete('/usuarios-sin-verificar/{user}', [AdminController::class, 'deleteUnverifiedUser'])->name('unverified-users.delete');
         Route::patch('/companies/{company}/email', [AdminController::class, 'updateCompanyEmail'])->name('companies.email.update');
     });
 });
