@@ -15,7 +15,6 @@
     "laravel/tinker": "^2.10.1",
     "php": "^8.2",
     "symfony/brevo-mailer": "^7.0",
-    "symfony/http-client": "^7.0",
     "tightenco/ziggy": "^2.0"
   },
   "require-dev": {
