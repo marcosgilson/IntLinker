@@ -13,7 +13,7 @@ function initials(name) {
     return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
-function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCompanies, onChangeCities, onChangeCompanies }) {
+function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCompanies, onChangeCities, onChangeCompanies, onClearAll }) {
     const [query, setQuery] = useState('');
     const [open, setOpen] = useState(false);
     const inputRef = useRef(null);
@@ -144,7 +144,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                             </button>
                         </span>
                     ))}
-                    <button onClick={() => { onChangeCities([]); onChangeCompanies([]); }}
+                    <button onClick={onClearAll}
                         className="text-xs text-gray-400 hover:text-gray-600 px-2 py-1 rounded-full border border-gray-200 hover:border-gray-300 transition">
                         Limpiar todo
                     </button>
@@ -225,6 +225,7 @@ export default function CompaniesIndex({
 
     const handleCitiesChange = (cities) => { setSelectedCities(cities); applyFilters(cities, selectedCompanies); };
     const handleCompaniesChange = (comps) => { setSelectedCompanies(comps); applyFilters(selectedCities, comps); };
+    const handleClearAll = () => { setSelectedCities([]); setSelectedCompanies([]); applyFilters([], []); };
 
     return (
         <>
@@ -262,6 +263,7 @@ export default function CompaniesIndex({
                             selectedCompanies={selectedCompanies}
                             onChangeCities={handleCitiesChange}
                             onChangeCompanies={handleCompaniesChange}
+                            onClearAll={handleClearAll}
                         />
                     </div>
 
