@@ -7,10 +7,10 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class VerifyEmailNotification extends VerifyEmail
 {
-    protected function buildMailMessage(\): MailMessage
+    protected function buildMailMessage($url): MailMessage
     {
         return (new MailMessage)
             ->subject('Verifica tu cuenta en IntLinker')
-            ->view('emails.verify', ['url' => \]);
+            ->view('emails.verify', ['url' => $url]);
     }
 }
