@@ -118,15 +118,15 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                 {/* Navbar */}
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                        <Link href="/IntLinker" className="flex items-center gap-2">
+                        <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-20 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3">
-                            <Link href="/profile" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">
+                            <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">
                                 {auth.user?.name}
                             </Link>
                             <Link
-                                href="/IntLinker"
+                                href="/inicio"
                                 className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2"
                             >
                                 ← Inicio
@@ -162,7 +162,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                             </p>
                         </div>
                         <Link
-                            href="/companies"
+                            href="/empresas"
                             className="ml-auto text-sm font-semibold text-indigo-600 hover:underline"
                         >
                             + Explorar empresas
@@ -186,7 +186,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                             </svg>
                             <p className="text-lg font-medium">Sin postulaciones activas</p>
                             <p className="text-sm mt-1">Explora las empresas y postúlate a las que te interesen.</p>
-                            <Link href="/companies" className="mt-4 inline-block text-sm font-semibold text-indigo-600 hover:underline">
+                            <Link href="/empresas" className="mt-4 inline-block text-sm font-semibold text-indigo-600 hover:underline">
                                 Ver empresas →
                             </Link>
                         </div>

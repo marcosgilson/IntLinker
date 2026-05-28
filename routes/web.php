@@ -13,65 +13,65 @@ use App\Http\Controllers\StudentProfileController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => redirect('/IntLinker'));
+Route::get('/', fn () => redirect('/inicio'));
 
-Route::get('/IntLinker', [HomeController::class, 'index'])->name('home');
+Route::get('/inicio', [HomeController::class, 'index'])->name('home');
 
 // ─── Public routes ───────────────────────────────────────────────────────────
-Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
-Route::get('/companies/{company}', [CompanyController::class, 'show'])->name('companies.show');
+Route::get('/empresas', [CompanyController::class, 'index'])->name('companies.index');
+Route::get('/empresas/{company}', [CompanyController::class, 'show'])->name('companies.show');
 
 // ─── Authenticated routes ────────────────────────────────────────────────────
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Profile
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('profile/photo', [ProfilePhotoController::class, 'update'])->name('profile.photo.update');
-    Route::post('profile/banner', [ProfileController::class, 'updateBanner'])->name('profile.banner.update');
-    Route::delete('profile/photo', [ProfilePhotoController::class, 'destroy'])->name('profile.photo.destroy');
-    Route::patch('profile/portfolio', [ProfileController::class, 'updatePortfolio'])->name('profile.portfolio.update');
-    Route::get('/users/{user}', [ProfileController::class, 'showUser'])->name('profile.user');
+    Route::get('/perfil', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/perfil/editar', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/perfil', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('perfil/foto', [ProfilePhotoController::class, 'update'])->name('profile.photo.update');
+    Route::post('perfil/banner', [ProfileController::class, 'updateBanner'])->name('profile.banner.update');
+    Route::delete('perfil/foto', [ProfilePhotoController::class, 'destroy'])->name('profile.photo.destroy');
+    Route::patch('perfil/portafolio', [ProfileController::class, 'updatePortfolio'])->name('profile.portfolio.update');
+    Route::get('/usuarios/{user}', [ProfileController::class, 'showUser'])->name('profile.user');
 
     // Student role
-    Route::get('/student/status', [StudentController::class, 'status'])->name('student.status');
-    Route::post('/student', [StudentController::class, 'store'])->name('student.store');
-    Route::post('/student/renew', [StudentController::class, 'renew'])->name('student.renew');
+    Route::get('/alumno/estado', [StudentController::class, 'status'])->name('student.status');
+    Route::post('/alumno', [StudentController::class, 'store'])->name('student.store');
+    Route::post('/alumno/renovar', [StudentController::class, 'renew'])->name('student.renew');
 
     // Worker role
-    Route::post('/worker', [WorkerController::class, 'store'])->name('worker.store');
-    Route::delete('/worker/leave', [WorkerController::class, 'leave'])->name('worker.leave');
-    Route::post('/student/schools', [StudentController::class, 'addSchool'])->name('student.schools.add');
-    Route::delete('/student/schools/{school}', [StudentController::class, 'removeSchool'])->name('student.schools.remove');
+    Route::post('/trabajador', [WorkerController::class, 'store'])->name('worker.store');
+    Route::delete('/trabajador/salir', [WorkerController::class, 'leave'])->name('worker.leave');
+    Route::post('/alumno/escuelas', [StudentController::class, 'addSchool'])->name('student.schools.add');
+    Route::delete('/alumno/escuelas/{school}', [StudentController::class, 'removeSchool'])->name('student.schools.remove');
 
     // Enrollments (student perspective – private)
-    Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
-    Route::post('/enrollments', [EnrollmentController::class, 'store'])->name('enrollments.store');
-    Route::delete('/enrollments/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+    Route::get('/postulaciones', [EnrollmentController::class, 'index'])->name('enrollments.index');
+    Route::post('/postulaciones', [EnrollmentController::class, 'store'])->name('enrollments.store');
+    Route::delete('/postulaciones/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
 
     // Company membership
 
     // Worker dashboard — my company
-    Route::get('/my-company', [CompanyController::class, 'myCompany'])->name('companies.mine');
-    Route::post('/companies/{company}/logo', [CompanyController::class, 'updateLogo'])->name('companies.logo.update');
-    Route::patch('/companies/{company}/portfolio', [CompanyController::class, 'updatePortfolio'])->name('companies.portfolio.update');
+    Route::get('/mi-empresa', [CompanyController::class, 'myCompany'])->name('companies.mine');
+    Route::post('/empresas/{company}/logo', [CompanyController::class, 'updateLogo'])->name('companies.logo.update');
+    Route::patch('/empresas/{company}/portafolio', [CompanyController::class, 'updatePortfolio'])->name('companies.portfolio.update');
 
     // Company enrollment management (employee/admin perspective)
-    Route::get('/companies/{company}/enrollments', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');
-    Route::patch('/companies/{company}/enrollments/{enrollment}/accept', [CompanyEnrollmentController::class, 'accept'])->name('companies.enrollments.accept');
-    Route::delete('/companies/{company}/enrollments/{enrollment}', [CompanyEnrollmentController::class, 'remove'])->name('companies.enrollments.remove');
-    Route::get('/students/{student}/profile', [StudentProfileController::class, 'show'])->name('students.profile');
+    Route::get('/empresas/{company}/postulaciones', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');
+    Route::patch('/empresas/{company}/postulaciones/{enrollment}/aceptar', [CompanyEnrollmentController::class, 'accept'])->name('companies.enrollments.accept');
+    Route::delete('/empresas/{company}/postulaciones/{enrollment}', [CompanyEnrollmentController::class, 'remove'])->name('companies.enrollments.remove');
+    Route::get('/alumnos/{student}/perfil', [StudentProfileController::class, 'show'])->name('students.profile');
 
     // Request creation of a new company
-    Route::post('/company-applications', [CompanyApplicationController::class, 'store'])->name('company-applications.store');
+    Route::post('/solicitudes-empresa', [CompanyApplicationController::class, 'store'])->name('company-applications.store');
 
     // ─── Admin routes ────────────────────────────────────────────────────────
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::post('/companies', [AdminController::class, 'storeCompany'])->name('companies.store');
-        Route::get('/company-applications', [AdminController::class, 'companyApplications'])->name('company-applications.index');
+        Route::post('/empresas', [AdminController::class, 'storeCompany'])->name('companies.store');
+        Route::get('/solicitudes-empresa', [AdminController::class, 'companyApplications'])->name('company-applications.index');
         Route::patch('/company-applications/{application}/approve', [AdminController::class, 'approveApplication'])->name('company-applications.approve');
         Route::patch('/company-applications/{application}/reject', [AdminController::class, 'rejectApplication'])->name('company-applications.reject');
         // DocuPipe test (temporary)

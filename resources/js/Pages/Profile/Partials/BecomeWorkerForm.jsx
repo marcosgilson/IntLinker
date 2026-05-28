@@ -66,7 +66,7 @@ export default function BecomeWorkerForm({ companies, status }) {
                         )}
                     </div>
                     {isVerifiedWorker && (
-                        <Link href="/my-company" className="text-xs font-semibold text-violet-600 hover:underline whitespace-nowrap">
+                        <Link href="/mi-empresa" className="text-xs font-semibold text-violet-600 hover:underline whitespace-nowrap">
                             Mi empresa →
                         </Link>
                     )}

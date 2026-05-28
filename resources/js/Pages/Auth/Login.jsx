@@ -27,7 +27,7 @@ export default function Login({ status, canResetPassword }) {
                         <h1 className="text-2xl font-bold text-gray-900">Iniciar sesión</h1>
                         <p className="text-gray-500 text-sm mt-1">
                             ¿No tienes cuenta?{' '}
-                            <Link href="/register" className="text-indigo-600 hover:underline font-medium">
+                            <Link href="/registro" className="text-indigo-600 hover:underline font-medium">
                                 Regístrate gratis
                             </Link>
                         </p>

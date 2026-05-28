@@ -54,7 +54,7 @@ export default function RolesSection() {
                             </div>
                         </div>
                         <Link
-                            href="/enrollments"
+                            href="/postulaciones"
                             className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline"
                         >
                             Mis postulaciones →
@@ -92,7 +92,7 @@ export default function RolesSection() {
                             </div>
                         </div>
                         <Link
-                            href="/my-company"
+                            href="/mi-empresa"
                             className="text-xs font-semibold text-violet-600 hover:text-violet-700 hover:underline"
                         >
                             Mi empresa →
@@ -112,7 +112,7 @@ export default function RolesSection() {
                             </div>
                         </div>
                         <Link
-                            href="/companies"
+                            href="/empresas"
                             className="text-xs font-semibold text-gray-500 hover:text-indigo-600 hover:underline"
                         >
                             Ver empresas →

@@ -463,7 +463,7 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
             <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                        <Link href="/IntLinker" className="flex items-center gap-2">
+                        <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-20 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3">
@@ -473,7 +473,7 @@ export default function AdminDashboard({ applications = {}, pendingStudents = []
                                     {totalPending} pendiente{totalPending !== 1 ? 's' : ''}
                                 </span>
                             )}
-                            <Link href="/profile" className="flex items-center hover:opacity-80 transition">
+                            <Link href="/perfil" className="flex items-center hover:opacity-80 transition">
                                 {auth.user?.photo_url ? (
                                     <img src={auth.user.photo_url} alt={auth.user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200" />
                                 ) : (

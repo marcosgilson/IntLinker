@@ -50,7 +50,7 @@ export default function ForgotPassword({ status }) {
             </form>
 
             <p className="mt-5 text-center text-sm text-gray-500">
-                <Link href="/login" className="text-indigo-600 hover:underline font-medium">Volver al inicio de sesión</Link>
+                <Link href="/iniciar-sesion" className="text-indigo-600 hover:underline font-medium">Volver al inicio de sesión</Link>
             </p>
         </GuestLayout>
     );

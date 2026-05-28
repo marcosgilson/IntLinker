@@ -95,21 +95,21 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
 
                         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
                             <a href="#como-funciona" className="hover:text-indigo-600 transition-colors">Cómo funciona</a>
-                            <Link href="/companies" className="hover:text-indigo-600 transition-colors">Empresas</Link>
+                            <Link href="/empresas" className="hover:text-indigo-600 transition-colors">Empresas</Link>
                         </div>
 
                         <div className="flex items-center gap-3">
                             {user ? (
                                 <>
                                     <Link
-                                        href="/profile"
+                                        href="/perfil"
                                         className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2"
                                     >
                                         {user.name}
                                     </Link>
                                     {roles.is_student && (
                                         <Link
-                                            href="/enrollments"
+                                            href="/postulaciones"
                                             className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors"
                                         >
                                             Mis postulaciones
@@ -117,7 +117,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                     )}
                                     {roles.is_worker && (
                                         <Link
-                                            href="/my-company"
+                                            href="/mi-empresa"
                                             className="text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg transition-colors"
                                         >
                                             Mi empresa
@@ -180,7 +180,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             {user ? (
-                                <Link href="/companies" className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-lg shadow-indigo-900/30 text-base">
+                                <Link href="/empresas" className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-lg shadow-indigo-900/30 text-base">
                                     Explorar empresas
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -249,7 +249,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                 <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Empresas</span>
                                 <h2 className="text-4xl font-bold text-gray-900 mt-2">Empresas colaboradoras</h2>
                             </div>
-                            <Link href="/companies" className="hidden md:flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline">
+                            <Link href="/empresas" className="hidden md:flex items-center gap-1 text-indigo-600 font-semibold text-sm hover:underline">
                                 Ver todas
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -327,7 +327,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         </p>
                         {user ? (
                             <Link
-                                href="/companies"
+                                href="/empresas"
                                 className="inline-flex items-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-xl text-base"
                             >
                                 Explorar empresas

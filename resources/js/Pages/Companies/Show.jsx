@@ -19,7 +19,7 @@ function NavAvatar({ user }) {
     if (!user) return null;
     const ini = initials(user.name);
     return (
-        <Link href="/profile" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 py-1.5 rounded-lg hover:bg-gray-50">
+        <Link href="/perfil" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 py-1.5 rounded-lg hover:bg-gray-50">
             {user.profile_photo_url ? (
                 <img src={user.profile_photo_url} alt={user.name} className="w-8 h-8 rounded-xl object-cover ring-2 ring-gray-200" />
             ) : (
@@ -100,11 +100,11 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
             <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                        <Link href="/IntLinker" className="flex items-center gap-2">
+                        <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-20 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3">
-                            <Link href="/companies" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">
+                            <Link href="/empresas" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">
                                 Empresas
                             </Link>
                             <NavAvatar user={user} />
@@ -154,7 +154,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                             {user && !roles.is_student && !isEmployee && (
                                 <div className="mt-5 bg-amber-50 border border-amber-200 rounded-xl px-5 py-4 text-sm text-amber-800">
                                     Para unirte a esta empresa como trabajador, completa el proceso de verificación en tu{' '}
-                                    <Link href="/profile" className="font-semibold underline hover:text-amber-900">perfil</Link>.
+                                    <Link href="/perfil" className="font-semibold underline hover:text-amber-900">perfil</Link>.
                                 </div>
                             )}
                         </div>

@@ -90,7 +90,7 @@ export default function BecomeStudentForm({ student, status }) {
                             {student.verified ? '' : ' · Pendiente de verificación'}
                         </p>
                     </div>
-                    <Link href="/enrollments" className="ml-auto text-xs font-semibold text-emerald-600 hover:underline whitespace-nowrap">
+                    <Link href="/postulaciones" className="ml-auto text-xs font-semibold text-emerald-600 hover:underline whitespace-nowrap">
                         Ver postulaciones →
                     </Link>
                 </div>

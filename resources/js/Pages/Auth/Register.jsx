@@ -30,7 +30,7 @@ export default function Register() {
                         <h1 className="text-2xl font-bold text-gray-900">Crear cuenta</h1>
                         <p className="text-gray-500 text-sm mt-1">
                             ¿Ya tienes cuenta?{' '}
-                            <Link href="/login" className="text-indigo-600 hover:underline font-medium">
+                            <Link href="/iniciar-sesion" className="text-indigo-600 hover:underline font-medium">
                                 Inicia sesión
                             </Link>
                         </p>

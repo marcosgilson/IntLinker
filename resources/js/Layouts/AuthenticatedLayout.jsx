@@ -20,12 +20,12 @@ export default function AuthenticatedLayout({ children }) {
                     </Link>
 
                     <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-                        <Link href="/companies" className="hover:text-indigo-600 transition-colors">Empresas</Link>
+                        <Link href="/empresas" className="hover:text-indigo-600 transition-colors">Empresas</Link>
                         {roles.is_student && (
-                            <Link href="/enrollments" className="hover:text-indigo-600 transition-colors">Mis postulaciones</Link>
+                            <Link href="/postulaciones" className="hover:text-indigo-600 transition-colors">Mis postulaciones</Link>
                         )}
                         {roles.is_worker && (
-                            <Link href="/my-company" className="hover:text-indigo-600 transition-colors">Mi empresa</Link>
+                            <Link href="/mi-empresa" className="hover:text-indigo-600 transition-colors">Mi empresa</Link>
                         )}
                         {roles.is_admin && (
                             <Link href="/admin" className="hover:text-indigo-600 transition-colors">Panel Admin</Link>
@@ -33,7 +33,7 @@ export default function AuthenticatedLayout({ children }) {
                     </div>
 
                     <div className="hidden md:flex items-center gap-3">
-                        <Link href="/profile" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2">
+                        <Link href="/perfil" className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-3 py-2">
                             {user?.photo_url ? (
                                 <img src={user.photo_url} alt={user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200"/>
                             ) : (
@@ -68,12 +68,12 @@ export default function AuthenticatedLayout({ children }) {
 
                 {open && (
                     <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
-                        <Link href="/companies" className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Empresas</Link>
-                        {roles.is_student && <Link href="/enrollments" className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mis postulaciones</Link>}
-                        {roles.is_worker  && <Link href="/my-company"  className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mi empresa</Link>}
+                        <Link href="/empresas" className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Empresas</Link>
+                        {roles.is_student && <Link href="/postulaciones" className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mis postulaciones</Link>}
+                        {roles.is_worker  && <Link href="/mi-empresa"  className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mi empresa</Link>}
                         {roles.is_admin   && <Link href="/admin"        className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Panel Admin</Link>}
                         <div className="border-t border-gray-100 pt-3 mt-2 flex flex-col gap-1">
-                            <Link href="/profile" className="flex items-center gap-2 py-1">
+                            <Link href="/perfil" className="flex items-center gap-2 py-1">
                                 {user?.photo_url ? (
                                     <img src={user.photo_url} alt={user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-200" />
                                 ) : (
