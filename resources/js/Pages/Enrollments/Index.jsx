@@ -78,7 +78,7 @@ function EnrollmentCard({ enrollment }) {
             )}
             {enrollment.status === 'accepted' && (
                 <p className="text-sm text-emerald-700 bg-emerald-50 rounded-lg px-3 py-2">
-                    🎉 La empresa ha mostrado interés en tu perfil. Espera su contacto.
+                    La empresa ha mostrado interés en tu perfil. Espera su contacto.
                 </p>
             )}
             {enrollment.status === 'cancelled' && (
