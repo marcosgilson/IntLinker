@@ -353,9 +353,6 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                 <footer className="bg-gray-950 text-gray-400 py-12">
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                            <div className="flex items-center gap-2">
-                                <IntLinkerLogo className="h-10 w-auto" />
-                            </div>
                             <p className="text-sm">© 2026 IntLinker. Todos los derechos reservados.</p>
                             <div className="flex gap-6 text-sm">
                                 <a href="#" className="hover:text-white transition-colors">Privacidad</a>
