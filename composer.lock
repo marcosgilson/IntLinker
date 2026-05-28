@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acbd1f4a94692dffd9e30c214ecc3331",
+    "content-hash": "4b3438c99e341aea5ae4ff056160cba2",
     "packages": [
         {
             "name": "brick/math",
@@ -3433,25 +3433,28 @@
         },
         {
             "name": "symfony/brevo-mailer",
-            "version": "v8.0.13",
+            "version": "v7.4.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/brevo-mailer.git",
-                "reference": "59bca94cc34eaabe657d9f517415a85286917166"
+                "reference": "2f7aaebc500b06862865e5b4ec227e35573bda44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/brevo-mailer/zipball/59bca94cc34eaabe657d9f517415a85286917166",
-                "reference": "59bca94cc34eaabe657d9f517415a85286917166",
+                "url": "https://api.github.com/repos/symfony/brevo-mailer/zipball/2f7aaebc500b06862865e5b4ec227e35573bda44",
+                "reference": "2f7aaebc500b06862865e5b4ec227e35573bda44",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.4",
-                "symfony/mailer": "^7.4|^8.0"
+                "php": ">=8.2",
+                "symfony/mailer": "^7.2|^8.0"
+            },
+            "conflict": {
+                "symfony/mime": "<6.2"
             },
             "require-dev": {
-                "symfony/http-client": "^7.4|^8.0",
-                "symfony/webhook": "^7.4|^8.0"
+                "symfony/http-client": "^6.3|^7.0|^8.0",
+                "symfony/webhook": "^6.3|^7.0|^8.0"
             },
             "type": "symfony-mailer-bridge",
             "autoload": {
@@ -3479,7 +3482,7 @@
             "description": "Symfony Brevo Mailer Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/brevo-mailer/tree/v8.0.13"
+                "source": "https://github.com/symfony/brevo-mailer/tree/v7.4.13"
             },
             "funding": [
                 {
@@ -3499,7 +3502,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-23T18:05:53+00:00"
+            "time": "2026-05-23T16:05:06+00:00"
         },
         {
             "name": "symfony/clock",
