@@ -94,7 +94,7 @@ class CompanyController extends Controller
 
     public function join(Request $request, Company $company): RedirectResponse
     {
-        return back()->withErrors(['company' => 'Para unirte como trabajador, completa la verificacion en tu perfil.']);
+        return back()->withErrors(['company' => 'Para unirte como trabajador, completa la verificación en tu perfil.']);
     }
 
     public function leave(Request $request, Company $company): RedirectResponse

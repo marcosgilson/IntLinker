@@ -193,8 +193,8 @@ function CreateCompanyForm() {
                         error={errors.city}
                     />
                 </Field>
-                <Field label="Descripcion" error={errors.description}>
-                    <textarea rows={3} placeholder="Breve descripcion..."
+                <Field label="Descripción" error={errors.description}>
+                    <textarea rows={3} placeholder="Breve descripción..."
                         value={data.description} onChange={e => setData('description', e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400
                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
@@ -517,17 +517,17 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
                     <div className="space-y-10">
                         <Section title="Cuentas sin verificar email" count={pendingEmailUsers.length}
-                            emptyText="No hay cuentas pendientes de verificacion de email.">
+                            emptyText="No hay cuentas pendientes de verificación de email.">
                             {pendingEmailUsers.map(u => <UnverifiedUserRow key={u.id} user={u} />)}
                         </Section>
 
-                        <Section title="Alumnos pendientes de verificacion" count={pendingStudents.length}
-                            emptyText="No hay alumnos pendientes de verificacion.">
+                        <Section title="Alumnos pendientes de verificación" count={pendingStudents.length}
+                            emptyText="No hay alumnos pendientes de verificación.">
                             {pendingStudents.map(s => <StudentRow key={s.id} student={s} />)}
                         </Section>
 
-                        <Section title="Trabajadores pendientes de verificacion" count={pendingWorkers.length}
-                            emptyText="No hay trabajadores pendientes de verificacion.">
+                        <Section title="Trabajadores pendientes de verificación" count={pendingWorkers.length}
+                            emptyText="No hay trabajadores pendientes de verificación.">
                             {pendingWorkers.map(w => <WorkerRow key={`${w.user_id}-${w.company_id}`} worker={w} />)}
                         </Section>
 

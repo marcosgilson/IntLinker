@@ -26,7 +26,7 @@ class WorkerController extends Controller
         $hasPendingApp   = CompanyApplication::where('user_id', $user->id)->where('status', 'pending')->exists();
 
         if ($hasPendingPivot || $hasPendingApp) {
-            return back()->withErrors(['company_name' => 'Ya tienes una solicitud pendiente de verificacion. Espera a que el administrador la revise o cancela la actual.']);
+            return back()->withErrors(['company_name' => 'Ya tienes una solicitud pendiente de verificación. Espera a que el administrador la revise o cancela la actual.']);
         }
 
         $companyName  = $request->validated('company_name');
@@ -46,7 +46,7 @@ class WorkerController extends Controller
                 'id_trabajador'   => $idTrabajador,
                 'verified'        => false,
             ]);
-            return back()->with('status', 'Solicitud enviada. Pendiente de verificacion por el administrador.');
+            return back()->with('status', 'Solicitud enviada. Pendiente de verificación por el administrador.');
         }
 
         CompanyApplication::create([

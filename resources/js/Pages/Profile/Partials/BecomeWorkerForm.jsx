@@ -54,7 +54,7 @@ export default function BecomeWorkerForm({ companies, status }) {
                     </div>
                     <div className="flex-1">
                         <h3 className="font-bold text-violet-900 text-sm">
-                            {isVerifiedWorker ? 'Trabajador verificado' : 'Verificacion pendiente'}
+                            {isVerifiedWorker ? 'Trabajador verificado' : 'Verificación pendiente'}
                         </h3>
                         {currentCompany ? (
                             <p className="text-xs text-violet-700 mt-1">

@@ -57,11 +57,11 @@ class EnrollmentController extends Controller
                 return back()->withErrors(['enrollment' => 'No puedes volver a postularte a esta empresa.']);
             }
 
-            return back()->withErrors(['enrollment' => 'Ya tienes una postulacion activa en esta empresa.']);
+            return back()->withErrors(['enrollment' => 'Ya tienes una postulación activa en esta empresa.']);
         }
 
         if (! $student->hasActiveEnrollmentSlots()) {
-            return back()->withErrors(['enrollment' => 'Has alcanzado el limite de 5 postulaciones activas.']);
+            return back()->withErrors(['enrollment' => 'Has alcanzado el límite de 5 postulaciónes activas.']);
         }
 
         Enrollment::create([
@@ -70,7 +70,7 @@ class EnrollmentController extends Controller
             'status'     => 'waiting',
         ]);
 
-        return back()->with('status', 'Postulacion enviada correctamente.');
+        return back()->with('status', 'Postulación enviada correctamente.');
     }
 
     /**
@@ -81,7 +81,7 @@ class EnrollmentController extends Controller
         $this->authorize('delete', $enrollment);
 
         if ($enrollment->isCancelled()) {
-            return back()->withErrors(['enrollment' => 'Esta postulacion ya estaba cancelada.']);
+            return back()->withErrors(['enrollment' => 'Esta postulación ya estaba cancelada.']);
         }
 
         $enrollment->update([
@@ -89,6 +89,6 @@ class EnrollmentController extends Controller
             'cancelled_by' => 'student',
         ]);
 
-        return back()->with('status', 'Postulacion cancelada. Se ha liberado un cupo.');
+        return back()->with('status', 'Postulación cancelada. Se ha liberado un cupo.');
     }
 }
