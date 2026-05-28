@@ -17,6 +17,10 @@ return [
         ],
     ],
 
+    'brevo' => [
+        'key' => env('BREVO_KEY'),
+    ],
+
     'docupipe' => [
         'key'               => env('DOCUPIPE_API_KEY'),
         'student_schema_id' => env('DOCUPIPE_STUDENT_SCHEMA_ID'),
