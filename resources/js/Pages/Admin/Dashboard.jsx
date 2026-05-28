@@ -478,7 +478,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
     return (
         <>
-            <Head title="Panel Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â IntLinker" />
+            <Head title="Panel Admin — IntLinker" />
 
             <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
