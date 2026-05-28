@@ -48,7 +48,7 @@ class Company extends Model
 
     public function hasEmployee(int $userId): bool
     {
-        return $this->employees()->where('user_id', $userId)->exists();
+        return $this->employees()->wherePivot('verified', true)->where('user_id', $userId)->exists();
     }
 }
 

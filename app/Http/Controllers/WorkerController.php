@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ImageHelper;
 use App\Http\Requests\BecomeWorkerRequest;
 use App\Models\Company;
 use App\Models\CompanyApplication;
@@ -33,7 +34,7 @@ class WorkerController extends Controller
 
         $user->update(['name' => $request->validated('name')]);
 
-        $imagePath    = $request->file('work_card_image')->store('work_cards', 'public');
+        $imagePath    = ImageHelper::compressToBase64($request->file('work_card_image'), 800, 85);
         $idTrabajador = 'TRB-' . strtoupper(Str::random(8));
 
         $company = Company::where('name', $companyName)->first();

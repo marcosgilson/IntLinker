@@ -78,7 +78,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // DocuPipe test (temporary)
         Route::get('/test-docupipe', function () {
             return inertia('Admin/TestDocuPipe');
-        })->name('admin.test-docupipe');
+        })->name('test-docupipe');
         Route::post('/test-docupipe', function (\Illuminate\Http\Request $request, \App\Services\DocuPipeService $docuPipe) {
             $request->validate(['image' => ['required', 'image', 'max:10240']]);
             try {
@@ -88,7 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             } catch (\Throwable $e) {
                 return back()->withErrors(['image' => 'DocuPipe error: ' . $e->getMessage()]);
             }
-        })->name('admin.test-docupipe.post');
+        })->name('test-docupipe.post');
         // Student verification
         Route::patch('/students/{student}/verify', [AdminController::class, 'verifyStudent'])->name('students.verify');
         Route::delete('/students/{student}/reject', [AdminController::class, 'rejectStudent'])->name('students.reject');
