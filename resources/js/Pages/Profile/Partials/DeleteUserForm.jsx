@@ -53,7 +53,7 @@ export default function DeleteUserForm({ className = '' }) {
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Una vez eliminada, todos tus datos seran borrados permanentemente. Descarga cualquier informacion que quieras conservar antes de continuar.
+                    Una vez eliminada, todos tus datos seran borrados permanentemente. Descarga cualquier información que quieras conservar antes de continuar.
                 </p>
             </header>
 
@@ -64,7 +64,7 @@ export default function DeleteUserForm({ className = '' }) {
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900">
-                        ?Seguro que quieres eliminar tu cuenta?
+                        ¿Seguro que quieres eliminar tu cuenta?
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-600">

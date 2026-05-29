@@ -15,7 +15,7 @@
             <h1 style="margin:0 0 12px;font-size:24px;color:#111827;">Bienvenido/a</h1>
             <p style="margin:0 0 24px;font-size:15px;color:#6b7280;line-height:1.6;">
               Gracias por registrarte en <strong style="color:#4f46e5;">IntLinker</strong>.
-              Para activar tu cuenta confirma tu correo electronico.
+              Para activar tu cuenta confirma tu correo electrónico.
             </p>
             <table cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
               <tr>

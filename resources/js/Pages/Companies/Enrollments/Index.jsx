@@ -125,13 +125,13 @@ export default function CompanyEnrollmentsIndex({ company, enrollments = [] }) {
                 <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
                     <div className="mb-8">
                         <h1 className="text-3xl font-extrabold text-white">Candidatos</h1>
-                        <p className="text-gray-300 mt-1">{company.name} · {enrollments.length} postulacion{enrollments.length !== 1 ? 'es' : ''} en total</p>
+                        <p className="text-gray-300 mt-1">{company.name} · {enrollments.length} postulación{enrollments.length !== 1 ? 'es' : ''} en total</p>
                     </div>
 
                     {enrollments.length === 0 ? (
                         <div className="bg-white rounded-2xl border border-gray-200 py-16 text-center text-gray-400">
-                            <p className="text-lg font-medium">Sin postulaciones todavia.</p>
-                            <p className="text-sm mt-1">Las postulaciones de estudiantes apareceran aqui.</p>
+                            <p className="text-lg font-medium">Sin postulaciónes todavia.</p>
+                            <p className="text-sm mt-1">Las postulaciónes de estudiantes apareceran aqui.</p>
                         </div>
                     ) : (
                         <div className="space-y-8">

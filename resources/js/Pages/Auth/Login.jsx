@@ -10,12 +10,12 @@ export default function Login({ status }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('iniciar-sesion'), { onFinish: () => reset('password') });
+        post(route('iniciar-sesión'), { onFinish: () => reset('password') });
     };
 
     return (
         <>
-            <Head title="Iniciar sesion — IntLinker" />
+            <Head title="Iniciar sesión — IntLinker" />
 
             <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 flex items-center justify-center p-4">
                 <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -24,11 +24,11 @@ export default function Login({ status }) {
                         <Link href="/" className="flex items-center gap-2 mb-6">
                             <IntLinkerLogo className="h-20 w-auto" />
                         </Link>
-                        <h1 className="text-2xl font-bold text-gray-900">Iniciar sesion</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">Iniciar sesión</h1>
                         <p className="text-gray-500 text-sm mt-1">
                             ¿No tienes cuenta?{' '}
                             <Link href="/registro" className="text-indigo-600 hover:underline font-medium">
-                                Registrate gratis
+                                Regístrate gratis
                             </Link>
                         </p>
                     </div>
@@ -43,7 +43,7 @@ export default function Login({ status }) {
                         <form onSubmit={submit} className="space-y-4">
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Correo electronico
+                                    Correo electrónico
                                 </label>
                                 <input
                                     id="email"
@@ -93,7 +93,7 @@ export default function Login({ status }) {
                                 disabled={processing}
                                 className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition text-sm"
                             >
-                                {processing ? 'Entrando…' : 'Iniciar sesion'}
+                                {processing ? 'Entrando…' : 'Iniciar sesión'}
                             </button>
                         </form>
                     </div>

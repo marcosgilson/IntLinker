@@ -59,7 +59,7 @@ function ApplicationCard({ app }) {
                         onClick={() => setNotesOpen(v => !v)}
                         className="text-sm text-gray-500 hover:text-gray-700 transition text-left"
                     >
-                        {notesOpen ? '▲ Ocultar notas' : '▼ Anadir notas de admin (opcional)'}
+                        {notesOpen ? '▲ Ocultar notas' : '▼ Añadir notas de admin (opcional)'}
                     </button>
 
                     {notesOpen && (
@@ -132,7 +132,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
                     <div className="mb-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Solicitudes de empresa</h1>
-                            <p className="text-gray-300 mt-1">Revisa y procesa las solicitudes de creacion de empresa.</p>
+                            <p className="text-gray-300 mt-1">Revisa y procesa las solicitudes de creación de empresa.</p>
                         </div>
                         {pending.length > 0 && (
                             <span className="text-xs font-bold bg-amber-100 text-amber-700 px-3 py-1.5 rounded-full sm:ml-auto">
@@ -171,7 +171,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
                         </div>
                     )}
 
-                    {/* Pagination */}
+                    {/* Págination */}
                     {applications.links && applications.links.length > 3 && (
                         <div className="mt-10 flex justify-center gap-2 flex-wrap">
                             {applications.links.map((link, i) => (

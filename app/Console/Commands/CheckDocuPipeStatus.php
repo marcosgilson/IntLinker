@@ -54,7 +54,7 @@ class CheckDocuPipeStatus extends Command
                 Log::info("docupipe:check std result for student {$student->id}", $data);
                 $this->processResult($student, $data);
             } elseif ($status === 'failed') {
-                $this->failStudent($student, 'Error en la estandarizacion del documento.');
+                $this->failStudent($student, 'Error en la estandarización del documento.');
             }
             return;
         }
@@ -132,7 +132,7 @@ class CheckDocuPipeStatus extends Command
         }
 
         if (! $yearEnd) {
-            $this->failStudent($student, 'No se pudo determinar el periodo academico del carnet.');
+            $this->failStudent($student, 'No se pudo determinar el periodo académico del carnet.');
             return;
         }
 

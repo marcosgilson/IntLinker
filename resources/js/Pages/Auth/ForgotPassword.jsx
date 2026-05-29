@@ -26,7 +26,7 @@ export default function ForgotPassword({ status }) {
             <form onSubmit={submit} className="space-y-4">
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                        Correo electronico
+                        Correo electrónico
                     </label>
                     <input
                         id="email"
@@ -50,7 +50,7 @@ export default function ForgotPassword({ status }) {
             </form>
 
             <p className="mt-5 text-center text-sm text-gray-500">
-                <Link href="/iniciar-sesion" className="text-indigo-600 hover:underline font-medium">Volver al inicio de sesion</Link>
+                <Link href="/iniciar-sesión" className="text-indigo-600 hover:underline font-medium">Volver al inicio de sesión</Link>
             </p>
         </GuestLayout>
     );

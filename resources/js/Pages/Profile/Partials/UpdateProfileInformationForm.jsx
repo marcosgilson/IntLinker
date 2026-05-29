@@ -24,7 +24,7 @@ export default function UpdateProfileInformation({
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">
-                    Informacion de perfil
+                    Información de perfil
                 </h2>
                 <p className="mt-1 text-sm text-gray-600">
                     Actualiza el nombre de tu cuenta.
@@ -47,7 +47,7 @@ export default function UpdateProfileInformation({
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Correo electronico" />
+                    <InputLabel htmlFor="email" value="Correo electrónico" />
                     <p
                         id="email"
                         className="mt-1 block w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
@@ -55,7 +55,7 @@ export default function UpdateProfileInformation({
                         {user.email}
                     </p>
                     <p className="mt-1 text-xs text-gray-400">
-                        El correo electronico no se puede cambiar.
+                        El correo electrónico no se puede cambiar.
                     </p>
                 </div>
 

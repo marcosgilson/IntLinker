@@ -52,7 +52,7 @@ class AdminController extends Controller
         $applications = CompanyApplication::with('user:id,name,email')
             ->orderByRaw("CASE status WHEN 'pending' THEN 1 WHEN 'approved' THEN 2 WHEN 'rejected' THEN 3 ELSE 4 END")
             ->latest()
-            ->paginate(20);
+            ->páginate(20);
 
         return Inertia::render('Admin/Dashboard', [
             'pendingEmailUsers' => $pendingEmailUsers,
@@ -86,7 +86,7 @@ class AdminController extends Controller
         $applications = CompanyApplication::with('user:id,name,email')
             ->orderByRaw("CASE status WHEN 'pending' THEN 1 WHEN 'approved' THEN 2 WHEN 'rejected' THEN 3 ELSE 4 END")
             ->latest()
-            ->paginate(20);
+            ->páginate(20);
 
         return Inertia::render('Admin/CompanyApplications', [
             'applications' => $applications,

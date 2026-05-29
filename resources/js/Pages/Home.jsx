@@ -31,7 +31,7 @@ const steps = [
     {
         number: '01',
         title: 'Crea tu perfil',
-        desc: 'Registrate y verifica tu identidad con tu carnet de estudiante mediante OCR.',
+        desc: 'Regístrate y verifica tu identidad con tu carnet de estudiante mediante OCR.',
         icon: (
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -116,10 +116,10 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                     </Link>
                                     {roles.is_student && (
                                         <Link
-                                            href="/postulaciones"
+                                            href="/postulaciónes"
                                             className="inline-flex min-h-10 items-center justify-center text-sm sm:text-base font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors"
                                         >
-                                            Mis postulaciones
+                                            Mis postulaciónes
                                         </Link>
                                     )}
                                     {roles.is_worker && (
@@ -145,7 +145,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                         onClick={openLogin}
                                         className="inline-flex min-h-10 items-center justify-center text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-4 py-2 rounded-lg"
                                     >
-                                        Iniciar sesion
+                                        Iniciar sesión
                                     </button>
                                     <button
                                         onClick={openRegister}
@@ -165,13 +165,13 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                             {user ? (
                                 <>
                                     <Link href="/perfil" className="block rounded-lg text-sm font-semibold text-gray-900 py-2 hover:text-indigo-600 transition"><UserAvatar user={user} /></Link>
-                                    {roles.is_student && <Link href="/postulaciones" className="block text-sm font-medium text-indigo-600 py-2 transition">Mis postulaciones</Link>}
+                                    {roles.is_student && <Link href="/postulaciónes" className="block text-sm font-medium text-indigo-600 py-2 transition">Mis postulaciónes</Link>}
                                     {roles.is_worker && <Link href="/mi-empresa" className="block text-sm font-medium text-violet-600 py-2 transition">Mi empresa</Link>}
                                     {roles.is_admin && <Link href="/admin" className="block text-sm font-medium text-gray-700 py-2 transition">Panel Admin</Link>}
                                 </>
                             ) : (
                                 <div className="flex gap-3 pt-1">
-                                    <button onClick={() => { setNavOpen(false); openLogin(); }} className="flex-1 min-h-10 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg px-4 py-2 transition hover:border-indigo-400 hover:text-indigo-600">Iniciar sesion</button>
+                                    <button onClick={() => { setNavOpen(false); openLogin(); }} className="flex-1 min-h-10 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg px-4 py-2 transition hover:border-indigo-400 hover:text-indigo-600">Iniciar sesión</button>
                                     <button onClick={() => { setNavOpen(false); openRegister(); }} className="flex-1 min-h-10 text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-2 transition">Registrarse</button>
                                 </div>
                             )}
@@ -350,7 +350,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         </h2>
                         <p className="text-indigo-200 text-base sm:text-lg mb-8">
                             {user
-                                ? 'Explora las empresas disponibles y gestiona tus postulaciones.'
+                                ? 'Explora las empresas disponibles y gestióna tus postulaciónes.'
                                 : 'Unete a la plataforma que conecta estudiantes con las mejores empresas.'}
                         </p>
                         {user ? (

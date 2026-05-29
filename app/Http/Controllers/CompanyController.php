@@ -34,12 +34,12 @@ class CompanyController extends Controller
 
         $query->orderBy('name');
 
-        $paginated       = $query->paginate(20)->withQueryString();
+        $páginated       = $query->páginate(20)->withQueryString();
         $allCities       = Company::select('city')->whereNotNull('city')->where('city', '!=', '')->distinct()->orderBy('city')->pluck('city');
         $allCompanyNames = Company::select('id', 'name')->orderBy('name')->get();
 
         return Inertia::render('Companies/Index', [
-            'companies'         => $paginated,
+            'companies'         => $páginated,
             'allCities'         => $allCities,
             'allCompanyNames'   => $allCompanyNames,
             'selectedCities'    => $cities,
@@ -94,12 +94,12 @@ class CompanyController extends Controller
 
     public function join(Request $request, Company $company): RedirectResponse
     {
-        return back()->withErrors(['company' => 'Para unirte como trabajador, completa la verificacion en tu perfil.']);
+        return back()->withErrors(['company' => 'Para unirte como trabajador, completa la verificación en tu perfil.']);
     }
 
     public function leave(Request $request, Company $company): RedirectResponse
     {
-        return back()->withErrors(['company' => 'Accion no disponible.']);
+        return back()->withErrors(['company' => 'Acción no disponible.']);
     }
 
     public function updateLogo(Request $request, Company $company): RedirectResponse

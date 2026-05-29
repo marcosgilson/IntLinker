@@ -17,10 +17,10 @@ Route::middleware('guest')->group(function () {
 
     Route::post('registro', [RegisteredUserController::class, 'store']);
 
-    Route::get('iniciar-sesion', [AuthenticatedSessionController::class, 'create'])
-        ->name('iniciar-sesion');
+    Route::get('iniciar-sesión', [AuthenticatedSessionController::class, 'create'])
+        ->name('iniciar-sesión');
 
-    Route::post('iniciar-sesion', [AuthenticatedSessionController::class, 'store']);
+    Route::post('iniciar-sesión', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('recuperar-contraseña', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
         ->middleware(['signed', 'throttle:6,1'])
         ->name('verification.verify');
 
-    Route::post('email/notificacion-verificacion', [EmailVerificationNotificationController::class, 'store'])
+    Route::post('email/notificación-verificación', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
@@ -54,6 +54,6 @@ Route::middleware('auth')->group(function () {
 
     Route::put('contraseña', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::post('cerrar-sesion', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('cerrar-sesion');
+    Route::post('cerrar-sesión', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('cerrar-sesión');
 });

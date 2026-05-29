@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // Verificacion manual por administrador - no se envia email
+        // Verificación manual por administrador - no se envia email
         return redirect(route('verification.notice'));
     }
 }

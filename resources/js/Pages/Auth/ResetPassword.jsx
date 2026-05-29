@@ -22,7 +22,7 @@ export default function ResetPassword({ token, email }) {
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electronico</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
                     <input
                         id="email"
                         type="email"

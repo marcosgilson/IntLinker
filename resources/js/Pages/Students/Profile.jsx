@@ -91,7 +91,7 @@ export default function StudentProfile({ student, enrollments = [], portfolio = 
                     {activeEnrollments.length > 0 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
                             <h2 className="text-base font-bold text-gray-900 mb-4">
-                                Postulaciones a tu empresa
+                                Postulaciónes a tu empresa
                             </h2>
                             <div className="space-y-3">
                                 {activeEnrollments.map(e => {

@@ -74,14 +74,14 @@ class ProcessStudentCard implements ShouldQueue
             }
 
             if (! $yearEnd) {
-                $this->reject($user, 'No se pudo determinar el periodo academico del carnet.');
+                $this->reject($user, 'No se pudo determinar el periodo académico del carnet.');
                 return;
             }
 
             $expiresAt = Carbon::create($yearEnd, 12, 31, 23, 59, 59);
 
             if ($expiresAt->isPast()) {
-                $this->reject($user, "El carnet ha caducado (ano academico {$yearStart}-{$yearEnd}).");
+                $this->reject($user, "El carnet ha caducado (ano académico {$yearStart}-{$yearEnd}).");
                 return;
             }
 

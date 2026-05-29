@@ -194,7 +194,7 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
 
                     {/* Account settings */}
                     <div>
-                        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">Configuracion de cuenta</h2>
+                        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">Configuración de cuenta</h2>
                         <div className="space-y-4">
                             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
                                 <UpdateProfileInformationForm status={status} className="max-w-xl" />

@@ -186,7 +186,7 @@ function CompanyCard({ company }) {
             {open && (
                 <div className="border-t border-gray-100">
                     {enrollments.length === 0 ? (
-                        <p className="text-sm text-gray-400 text-center py-8">Sin postulaciones activas.</p>
+                        <p className="text-sm text-gray-400 text-center py-8">Sin postulaciónes activas.</p>
                     ) : (
                         <div className="overflow-hidden">
                             <table className="w-full text-sm">
@@ -195,7 +195,7 @@ function CompanyCard({ company }) {
                                         <th className="px-4 py-2.5 text-left font-semibold">Alumno</th>
                                         <th className="px-4 py-2.5 text-left font-semibold">Estado</th>
                                         <th className="px-4 py-2.5 text-left font-semibold">Fecha</th>
-                                        <th className="px-4 py-2.5 text-right font-semibold">Acciones</th>
+                                        <th className="px-4 py-2.5 text-right font-semibold">Acciónes</th>
                                     </tr>
                                 </thead>
                                 <tbody className="block sm:table-row-group">
@@ -266,7 +266,7 @@ export default function MyCompany({ companies = [] }) {
                     <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mi empresa</h1>
-                            <p className="text-sm sm:text-base text-gray-300 mt-1">Gestiona las postulaciones de tus candidatos.</p>
+                            <p className="text-sm sm:text-base text-gray-300 mt-1">Gestióna las postulaciónes de tus candidatos.</p>
                         </div>
 
                     </div>

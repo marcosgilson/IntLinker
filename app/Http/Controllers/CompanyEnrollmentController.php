@@ -41,7 +41,7 @@ class CompanyEnrollmentController extends Controller
         $this->checkEnrollmentBelongsToCompany($enrollment, $company);
 
         if ($enrollment->status !== 'waiting') {
-            return back()->withErrors(['enrollment' => 'Solo se pueden aceptar postulaciones en espera.']);
+            return back()->withErrors(['enrollment' => 'Solo se pueden aceptar postulaciónes en espera.']);
         }
 
         $enrollment->update(['status' => 'accepted']);
@@ -55,7 +55,7 @@ class CompanyEnrollmentController extends Controller
         $this->checkEnrollmentBelongsToCompany($enrollment, $company);
 
         if ($enrollment->isCancelled()) {
-            return back()->withErrors(['enrollment' => 'Esta postulacion ya estaba cancelada.']);
+            return back()->withErrors(['enrollment' => 'Esta postulación ya estaba cancelada.']);
         }
 
         $enrollment->update([

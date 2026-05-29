@@ -10,7 +10,7 @@ export default function AuthenticatedLayout({ children }) {
     const roles = auth?.roles ?? {};
     const [open, setOpen] = useState(false);
 
-    const logout = () => router.post(route('cerrar-sesion'));
+    const logout = () => router.post(route('cerrar-sesión'));
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
@@ -23,7 +23,7 @@ export default function AuthenticatedLayout({ children }) {
                     <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
                         <Link href="/empresas" className="hover:text-indigo-600 transition-colors">Empresas</Link>
                         {roles.is_student && (
-                            <Link href="/postulaciones" className="hover:text-indigo-600 transition-colors">Mis postulaciones</Link>
+                            <Link href="/postulaciónes" className="hover:text-indigo-600 transition-colors">Mis postulaciónes</Link>
                         )}
                         {roles.is_worker && (
                             <Link href="/mi-empresa" className="hover:text-indigo-600 transition-colors">Mi empresa</Link>
@@ -64,7 +64,7 @@ export default function AuthenticatedLayout({ children }) {
                 {open && (
                     <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
                         <Link href="/empresas" className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Empresas</Link>
-                        {roles.is_student && <Link href="/postulaciones" className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mis postulaciones</Link>}
+                        {roles.is_student && <Link href="/postulaciónes" className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mis postulaciónes</Link>}
                         {roles.is_worker  && <Link href="/mi-empresa"  className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Mi empresa</Link>}
                         {roles.is_admin   && <Link href="/admin"        className="block text-sm font-medium text-gray-600 hover:text-indigo-600 py-2 transition">Panel Admin</Link>}
                         <div className="border-t border-gray-100 pt-3 mt-2 flex flex-col gap-1">
@@ -72,7 +72,7 @@ export default function AuthenticatedLayout({ children }) {
                                 <UserAvatar user={user} />
                                 <span className="text-sm font-semibold text-gray-900">{user?.name}</span>
                             </Link>
-                            <button onClick={logout} className="text-left text-sm text-red-500 hover:text-red-600 py-1 transition">Cerrar sesion</button>
+                            <button onClick={logout} className="text-left text-sm text-red-500 hover:text-red-600 py-1 transition">Cerrar sesión</button>
                         </div>
                     </div>
                 )}

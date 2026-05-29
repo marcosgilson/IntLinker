@@ -68,9 +68,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/alumno/escuelas/{school}', [StudentController::class, 'removeSchool'])->name('student.schools.remove');
 
     // Enrollments (student perspective ------ private)
-    Route::get('/postulaciones', [EnrollmentController::class, 'index'])->name('enrollments.index');
-    Route::post('/postulaciones', [EnrollmentController::class, 'store'])->name('enrollments.store');
-    Route::delete('/postulaciones/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+    Route::get('/postulaciónes', [EnrollmentController::class, 'index'])->name('enrollments.index');
+    Route::post('/postulaciónes', [EnrollmentController::class, 'store'])->name('enrollments.store');
+    Route::delete('/postulaciónes/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
 
     // Company membership
 
@@ -81,9 +81,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/empresas/{company}/portafolio', [CompanyController::class, 'updatePortfolio'])->name('companies.portfolio.update');
 
     // Company enrollment management (employee/admin perspective)
-    Route::get('/empresas/{company}/postulaciones', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');
-    Route::patch('/empresas/{company}/postulaciones/{enrollment}/aceptar', [CompanyEnrollmentController::class, 'accept'])->name('companies.enrollments.accept');
-    Route::delete('/empresas/{company}/postulaciones/{enrollment}', [CompanyEnrollmentController::class, 'remove'])->name('companies.enrollments.remove');
+    Route::get('/empresas/{company}/postulaciónes', [CompanyEnrollmentController::class, 'index'])->name('companies.enrollments.index');
+    Route::patch('/empresas/{company}/postulaciónes/{enrollment}/aceptar', [CompanyEnrollmentController::class, 'accept'])->name('companies.enrollments.accept');
+    Route::delete('/empresas/{company}/postulaciónes/{enrollment}', [CompanyEnrollmentController::class, 'remove'])->name('companies.enrollments.remove');
     Route::get('/alumnos/{student}/perfil', [StudentProfileController::class, 'show'])->name('students.profile');
 
     // Request creation of a new company

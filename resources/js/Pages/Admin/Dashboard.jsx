@@ -39,7 +39,7 @@ const SPANISH_CITIES = [
 
 const EMAIL_DOMAINS = [
     'indra.es','telefonica.com','iberdrola.es','santander.com','repsol.com',
-    'gmv.com','mapfre.com','acciona.com','amadeus.com','ferrovial.com',
+    'gmv.com','mapfre.com','accióna.com','amadeus.com','ferrovial.com',
     'bbva.com','prosegur.com','endesa.es','ohl.es','seat.es','naturgy.com',
     'caixabank.com','vueling.com','grifols.com','cellnex.com','abertis.com',
     'mango.com','almirall.com','mercadona.es','ford.com','porcelanosa.com',
@@ -98,7 +98,7 @@ function CitySelect({ value, onChange, error }) {
                     ${value ? 'text-gray-900' : 'text-gray-400'}
                     focus:outline-none focus:ring-2 bg-white`}
             >
-                <span>{value || 'Selecciona una ciudad...'}</span>
+                <span>{value || 'Seleccióna una ciudad...'}</span>
                 <div className="flex items-center gap-1">
                     {value && (
                         <span onClick={clear} className="text-gray-400 hover:text-gray-600 px-1 text-base leading-none">-</span>
@@ -193,13 +193,13 @@ function CreateCompanyForm() {
                         error={errors.city}
                     />
                 </Field>
-                <Field label="Descripcion" error={errors.description}>
-                    <textarea rows={3} placeholder="Breve descripcion..."
+                <Field label="Descripción" error={errors.description}>
+                    <textarea rows={3} placeholder="Breve descripción..."
                         value={data.description} onChange={e => setData('description', e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400
                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
                 </Field>
-                <Field label="Correo de postulaciones" error={errors.applications_email}>
+                <Field label="Correo de postulaciónes" error={errors.applications_email}>
                     <div className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0">
                         <input
                             type="text"
@@ -548,23 +548,23 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
                 <div className="pt-20 sm:pt-24 pb-12 max-w-5xl mx-auto px-4 sm:px-6">
                     <div className="mb-8">
-                        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Panel de administracion</h1>
-                        <p className="text-gray-300 mt-1">Verifica identidades y gestiona empresas.</p>
+                        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Panel de administración</h1>
+                        <p className="text-gray-300 mt-1">Verifica identidades y gestióna empresas.</p>
                     </div>
 
                     <div className="space-y-10">
                         <Section title="Cuentas sin verificar email" count={pendingEmailUsers.length}
-                            emptyText="No hay cuentas pendientes de verificacion de email.">
+                            emptyText="No hay cuentas pendientes de verificación de email.">
                             {pendingEmailUsers.map(u => <UnverifiedUserRow key={u.id} user={u} />)}
                         </Section>
 
-                        <Section title="Alumnos pendientes de verificacion" count={pendingStudents.length}
-                            emptyText="No hay alumnos pendientes de verificacion.">
+                        <Section title="Alumnos pendientes de verificación" count={pendingStudents.length}
+                            emptyText="No hay alumnos pendientes de verificación.">
                             {pendingStudents.map(s => <StudentRow key={s.id} student={s} />)}
                         </Section>
 
-                        <Section title="Trabajadores pendientes de verificacion" count={pendingWorkers.length}
-                            emptyText="No hay trabajadores pendientes de verificacion.">
+                        <Section title="Trabajadores pendientes de verificación" count={pendingWorkers.length}
+                            emptyText="No hay trabajadores pendientes de verificación.">
                             {pendingWorkers.map(w => <WorkerRow key={`${w.user_id}-${w.company_id}`} worker={w} />)}
                         </Section>
 
@@ -582,7 +582,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                         {companies.length > 0 && (
                             <div>
                                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
-                                    <h2 className="text-lg font-bold text-white">Correos de postulaciones</h2>
+                                    <h2 className="text-lg font-bold text-white">Correos de postulaciónes</h2>
                                     <span className="text-xs text-gray-300 break-all">{companies.length} empresa{companies.length !== 1 ? 's' : ''}</span>
                                 </div>
                                 <div className="space-y-3">

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { router } from '@inertiajs/react';
 
 const SECTORS = [
-    'Tecnologia', 'Salud', 'Educacion', 'Finanzas', 'Retail', 'Logistica',
+    'Tecnologia', 'Salud', 'Educación', 'Finanzas', 'Retail', 'Logistica',
     'Hosteleria', 'Construccion', 'Consultoria', 'Marketing', 'Industria', 'Otro',
 ];
 
@@ -108,7 +108,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
 
             {editing ? (
                 <div className="px-6 py-5 space-y-4">
-                    <EditField label="Descripcion">
+                    <EditField label="Descripción">
                         <textarea value={draft.about} onChange={e => setDraft(d => ({ ...d, about: e.target.value }))}
                             rows={4} maxLength={1500} placeholder="Cuentanos quienes sois..."
                             className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none" />
@@ -118,14 +118,14 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                         <EditField label="Sector">
                             <select value={draft.sector} onChange={e => setDraft(d => ({ ...d, sector: e.target.value }))}
                                 className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300">
-                                <option value="">Seleccionar sector</option>
+                                <option value="">Selecciónar sector</option>
                                 {SECTORS.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </EditField>
                         <EditField label="Tamano de empresa">
                             <select value={draft.size} onChange={e => setDraft(d => ({ ...d, size: e.target.value }))}
                                 className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300">
-                                <option value="">Seleccionar tamano</option>
+                                <option value="">Selecciónar tamano</option>
                                 {['1-10', '11-50', '51-200', '201-500', '500+'].map(s => <option key={s} value={s}>{s} empleados</option>)}
                             </select>
                         </EditField>
@@ -135,11 +135,11 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                         <div className="flex gap-2">
                             <input value={benefitInput} onChange={e => setBenefitInput(e.target.value)}
                                 onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addBenefit(benefitInput); }}}
-                                placeholder="Anadir beneficio..." maxLength={60}
+                                placeholder="Añadir beneficio..." maxLength={60}
                                 className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" />
                             <button onClick={() => addBenefit(benefitInput)}
                                 className="px-3 py-2 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl text-sm font-medium transition-colors">
-                                Anadir
+                                Añadir
                             </button>
                         </div>
                         <div className="flex flex-wrap gap-1.5 mt-2">
@@ -187,7 +187,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                     <p className="text-sm text-gray-400 mb-3">Aun no habeis rellenado el portfolio de la empresa.</p>
                     <button onClick={openEdit}
                         className="text-sm font-semibold text-indigo-600 hover:text-indigo-700 hover:underline">
-                        + Anadir informacion
+                        + Añadir información
                     </button>
                 </div>
             ) : (

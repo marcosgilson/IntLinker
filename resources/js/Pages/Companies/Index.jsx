@@ -22,15 +22,15 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
 
     const q = query.trim().toLowerCase();
 
-    const citySuggestions = q.length > 0
+    const citySuggestións = q.length > 0
         ? allCities.filter(c => c.toLowerCase().includes(q) && !selectedCities.includes(c)).slice(0, 5)
         : [];
 
-    const companySuggestions = q.length > 0
+    const companySuggestións = q.length > 0
         ? allCompanyNames.filter(c => c.name.toLowerCase().includes(q) && !selectedCompanies.includes(c.name)).slice(0, 5)
         : [];
 
-    const hasResults = citySuggestions.length > 0 || companySuggestions.length > 0;
+    const hasResults = citySuggestións.length > 0 || companySuggestións.length > 0;
 
     const addCity = (city) => {
         if (!selectedCities.includes(city)) onChangeCities([...selectedCities, city]);
@@ -74,8 +74,8 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                         onKeyDown={e => {
                             if (e.key === 'Escape') setOpen(false);
                             if (e.key === 'Enter') {
-                                if (citySuggestions.length > 0) addCity(citySuggestions[0]);
-                                else if (companySuggestions.length > 0) addCompany(companySuggestions[0].name);
+                                if (citySuggestións.length > 0) addCity(citySuggestións[0]);
+                                else if (companySuggestións.length > 0) addCompany(companySuggestións[0].name);
                             }
                         }}
                         className="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none"
@@ -92,12 +92,12 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                 {/* Dropdown */}
                 {open && hasResults && (
                     <div ref={dropdownRef} className="absolute z-20 mt-1 left-0 right-0 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden">
-                        {citySuggestions.length > 0 && (
+                        {citySuggestións.length > 0 && (
                             <>
                                 <div className="px-4 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wide bg-gray-50">
                                     Localidades
                                 </div>
-                                {citySuggestions.map(city => (
+                                {citySuggestións.map(city => (
                                     <button key={city} onMouseDown={() => addCity(city)}
                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2 transition">
                                         {city}
@@ -105,12 +105,12 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                                 ))}
                             </>
                         )}
-                        {companySuggestions.length > 0 && (
+                        {companySuggestións.length > 0 && (
                             <>
                                 <div className="px-4 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wide bg-gray-50">
                                     Empresas
                                 </div>
-                                {companySuggestions.map(c => (
+                                {companySuggestións.map(c => (
                                     <button key={c.id} onMouseDown={() => addCompany(c.name)}
                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-violet-50 hover:text-violet-700 flex items-center gap-2 transition">
                                         <span className="text-violet-400">🏢</span> {c.name}

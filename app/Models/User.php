@@ -97,7 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification(): void
     {
-        // Email deshabilitado - verificacion manual por administrador
+        // Email deshabilitado - verificación manual por administrador
     }
 
 }

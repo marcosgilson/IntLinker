@@ -153,7 +153,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                             )}
                             {user && !roles.is_student && !roles.is_worker && !roles.is_pending_worker && !isEmployee && (
                                 <div className="mt-5 bg-amber-50 border border-amber-200 rounded-xl px-4 sm:px-5 py-4 text-sm text-amber-800 break-words">
-                                    Para unirte a esta empresa como trabajador, completa el proceso de verificacion en tu{' '}
+                                    Para unirte a esta empresa como trabajador, completa el proceso de verificación en tu{' '}
                                     <Link href="/perfil" className="font-semibold underline hover:text-amber-900">perfil</Link>.
                                 </div>
                             )}

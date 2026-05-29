@@ -83,7 +83,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
                     </div>
                     {portfolio.bio
                         ? <p className="text-sm text-gray-600 whitespace-pre-line">{portfolio.bio}</p>
-                        : <button onClick={() => setEditing(true)} className="text-sm text-indigo-500 hover:text-indigo-700">+ Anadir descripcion sobre ti</button>
+                        : <button onClick={() => setEditing(true)} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir descripción sobre ti</button>
                     }
                 </div>
             );
@@ -111,7 +111,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
         const items = portfolio.education ?? [];
         const empty = <div className="p-5 bg-white rounded-2xl shadow-sm border border-gray-100">
             <SectionHeader title="Estudios" onAdd={() => setModal({ type: 'education', data: null })} isOwner={isOwner} />
-            {isOwner && <button onClick={() => setModal({ type: 'education', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Anadir estudios</button>}
+            {isOwner && <button onClick={() => setModal({ type: 'education', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir estudios</button>}
         </div>;
 
         if (!items.length && !isOwner) return null;
@@ -153,7 +153,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
         if (!items.length) return (
             <div className="p-5 bg-white rounded-2xl shadow-sm border border-gray-100">
                 <SectionHeader title="Proyectos" onAdd={() => setModal({ type: 'project', data: null })} isOwner={isOwner} />
-                {isOwner && <button onClick={() => setModal({ type: 'project', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Anadir proyecto</button>}
+                {isOwner && <button onClick={() => setModal({ type: 'project', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir proyecto</button>}
             </div>
         );
 
@@ -265,7 +265,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
                         ) : null)}
                     </div>
                 ) : isOwner && (
-                    <button onClick={() => setEditing(true)} className="text-sm text-indigo-500 hover:text-indigo-700">+ Anadir links</button>
+                    <button onClick={() => setEditing(true)} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir links</button>
                 )}
             </div>
         );
@@ -340,7 +340,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
             {/* Education modal */}
             <Modal show={modal?.type === 'education'} onClose={() => setModal(null)} maxWidth="md">
                 <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{modal?.data ? 'Editar estudios' : 'Anadir estudios'}</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{modal?.data ? 'Editar estudios' : 'Añadir estudios'}</h3>
                     <div className="space-y-3">
                         <input value={eduForm.institution} onChange={e => setEduForm(f => ({ ...f, institution: e.target.value }))} placeholder="Institucion *" className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
                         <input value={eduForm.degree} onChange={e => setEduForm(f => ({ ...f, degree: e.target.value }))} placeholder="Titulo / Grado" className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
@@ -353,7 +353,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
                             <input type="checkbox" checked={eduForm.current} onChange={e => setEduForm(f => ({ ...f, current: e.target.checked, end_year: '' }))} className="rounded"/>
                             En curso actualmente
                         </label>
-                        <textarea value={eduForm.description} onChange={e => setEduForm(f => ({ ...f, description: e.target.value }))} placeholder="Descripcion (opcional)" rows={2} className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none"/>
+                        <textarea value={eduForm.description} onChange={e => setEduForm(f => ({ ...f, description: e.target.value }))} placeholder="Descripción (opcional)" rows={2} className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none"/>
                     </div>
                     <div className="flex gap-2 justify-end mt-5">
                         <button onClick={() => setModal(null)} className="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100">Cancelar</button>
@@ -365,7 +365,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
             {/* Project modal */}
             <Modal show={modal?.type === 'project'} onClose={() => setModal(null)} maxWidth="md">
                 <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{modal?.data ? 'Editar proyecto' : 'Anadir proyecto'}</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{modal?.data ? 'Editar proyecto' : 'Añadir proyecto'}</h3>
                     <div className="space-y-3">
                         {projForm.image_url ? (
                             <div className="relative">
@@ -377,12 +377,12 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
                             </div>
                         ) : (
                             <button onClick={() => projImageRef.current?.click()} className="w-full h-20 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-sm text-gray-400 hover:border-indigo-300 hover:text-indigo-500 transition-colors">
-                                + Anadir imagen del proyecto
+                                + Añadir imagen del proyecto
                             </button>
                         )}
                         <input ref={projImageRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleProjImage}/>
                         <input value={projForm.title} onChange={e => setProjForm(f => ({ ...f, title: e.target.value }))} placeholder="Nombre del proyecto *" className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
-                        <textarea value={projForm.description} onChange={e => setProjForm(f => ({ ...f, description: e.target.value }))} placeholder="Descripcion" rows={2} className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none"/>
+                        <textarea value={projForm.description} onChange={e => setProjForm(f => ({ ...f, description: e.target.value }))} placeholder="Descripción" rows={2} className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none"/>
                         <input value={projForm.url} onChange={e => setProjForm(f => ({ ...f, url: e.target.value }))} placeholder="URL del proyecto (opcional)" className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
                     </div>
                     <div className="flex gap-2 justify-end mt-5">

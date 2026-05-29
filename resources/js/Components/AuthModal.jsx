@@ -36,12 +36,12 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('iniciar-sesion'), { onSuccess: () => onClose(), onFinish: () => reset('password') });
+        post(route('iniciar-sesión'), { onSuccess: () => onClose(), onFinish: () => reset('password') });
     };
 
     return (
         <form onSubmit={submit} className="space-y-4">
-            <Field label="Correo electronico" id="login-email" error={errors.email}>
+            <Field label="Correo electrónico" id="login-email" error={errors.email}>
                 <Input
                     id="login-email"
                     type="email"
@@ -81,7 +81,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                         href={route('password.request')}
                         className="text-indigo-600 hover:text-indigo-700 font-medium"
                     >
-                        ?Olvidaste tu contraseña?
+                        ¿Olvidaste tu contraseña?
                     </Link>
                 )}
             </div>
@@ -91,13 +91,13 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                 disabled={processing}
                 className="w-full min-h-10 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition text-sm"
             >
-                {processing ? 'Entrando…' : 'Iniciar sesion'}
+                {processing ? 'Entrando…' : 'Iniciar sesión'}
             </button>
 
             <p className="text-center text-sm text-gray-500">
-                ?No tienes cuenta?{' '}
+                ¿No tienes cuenta?{' '}
                 <button type="button" onClick={onSwitch} className="text-indigo-600 hover:underline font-medium">
-                    Registrate gratis
+                    Regístrate gratis
                 </button>
             </p>
         </form>
@@ -135,7 +135,7 @@ function RegisterForm({ onSwitch, onClose }) {
                 />
             </Field>
 
-            <Field label="Correo electronico" id="reg-email" error={errors.email}>
+            <Field label="Correo electrónico" id="reg-email" error={errors.email}>
                 <Input
                     id="reg-email"
                     type="email"
@@ -181,9 +181,9 @@ function RegisterForm({ onSwitch, onClose }) {
             </button>
 
             <p className="text-center text-sm text-gray-500">
-                ?Ya tienes cuenta?{' '}
+                ¿Ya tienes cuenta?{' '}
                 <button type="button" onClick={onSwitch} className="text-indigo-600 hover:underline font-medium">
-                    Inicia sesion
+                    Inicia sesión
                 </button>
             </p>
         </form>
@@ -246,7 +246,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
                     {/* Tabs */}
                     <div className="flex gap-1 bg-gray-100 p-1 rounded-lg">
                         {[
-                            { key: 'login',    label: 'Iniciar sesion' },
+                            { key: 'login',    label: 'Iniciar sesión' },
                             { key: 'register', label: 'Registrarse' },
                         ].map(({ key, label }) => (
                             <button

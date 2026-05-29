@@ -54,10 +54,10 @@ export default function RolesSection() {
                             </div>
                         </div>
                         <Link
-                            href="/postulaciones"
+                            href="/postulaciónes"
                             className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline"
                         >
-                            Mis postulaciones →
+                            Mis postulaciónes →
                         </Link>
                     </div>
                 ) : (
