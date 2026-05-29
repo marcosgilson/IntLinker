@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use App\Models\Company;
@@ -18,15 +17,16 @@ class CreateTestWorker extends Command
         $company = Company::whereRaw('LOWER(name) LIKE ?', ['%prosegur%'])->first();
 
         if (! $company) {
-            $this->error('No se encontró ninguna empresa con nombre Prosegur.');
+            $this->error('No se encontro ninguna empresa con nombre Prosegur.');
             return;
         }
 
         $user = User::updateOrCreate(
             ['email' => 'trabajador@trabajador.com'],
             [
-                'name'     => 'Trabajador Test',
-                'password' => Hash::make('trabajador'),
+                'name'              => 'Trabajador Test',
+                'password'          => Hash::make('trabajador'),
+                'email_verified_at' => now(),
             ]
         );
 
@@ -35,7 +35,7 @@ class CreateTestWorker extends Command
             ['verified' => true, 'updated_at' => now(), 'created_at' => now()]
         );
 
-        $this->info("Usuario creado: {$user->email} (ID {$user->id})");
-        $this->info("Vinculado como trabajador verificado en: {$company->name} (ID {$company->id})");
+        $this->info('Usuario creado: ' . $user->email . ' (ID ' . $user->id . ')');
+        $this->info('Vinculado en: ' . $company->name . ' (ID ' . $company->id . ')');
     }
 }
