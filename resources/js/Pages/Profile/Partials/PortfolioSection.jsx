@@ -3,6 +3,7 @@ import { router } from '@inertiajs/react';
 import Modal from '@/Components/Modal';
 
 const uid = () => Math.random().toString(36).slice(2, 9);
+const LIMITS = { education: 10, projects: 8, gallery: 12 };
 
 const LINK_ICONS = {
     github:   { label: 'GitHub',   icon: 'M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z' },
@@ -11,12 +12,22 @@ const LINK_ICONS = {
     twitter:  { label: 'Twitter',  icon: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z' },
 };
 
-function SectionHeader({ title, onAdd, isOwner }) {
+function SectionHeader({ title, onAdd, isOwner, count, max }) {
+    const atMax = max != null && count >= max;
     return (
         <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-semibold text-gray-800">{title}</h3>
+            <div className="flex items-center gap-2">
+                <h3 className="text-base font-semibold text-gray-800">{title}</h3>
+                {isOwner && max != null && (
+                    <span className={	ext-xs font-medium px-2 py-0.5 rounded-full }>
+                        {count}/{max}
+                    </span>
+                )}
+            </div>
             {isOwner && (
-                <button onClick={onAdd} className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                <button onClick={onAdd} disabled={atMax}
+                    title={atMax ? Limite de  alcanzado : undefined}
+                    className={w-8 h-8 flex items-center justify-center rounded-full transition-colors }>
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -110,8 +121,8 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
     const EducationSection = () => {
         const items = portfolio.education ?? [];
         const empty = <div className="p-5 bg-white rounded-2xl shadow-sm border border-gray-100">
-            <SectionHeader title="Estudios" onAdd={() => setModal({ type: 'education', data: null })} isOwner={isOwner} />
-            {isOwner && <button onClick={() => setModal({ type: 'education', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir estudios</button>}
+            <SectionHeader title="Estudios" onAdd={() => setModal({ type: 'education', data: null })} isOwner={isOwner} count={items.length} max={LIMITS.education} />
+            {isOwner && items.length < LIMITS.education && <button onClick={() => setModal({ type: 'education', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir estudios</button>}
         </div>;
 
         if (!items.length && !isOwner) return null;
@@ -119,7 +130,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
 
         return (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                <SectionHeader title="Estudios" onAdd={() => setModal({ type: 'education', data: null })} isOwner={isOwner} />
+                <SectionHeader title="Estudios" onAdd={() => setModal({ type: 'education', data: null })} isOwner={isOwner} count={items.length} max={LIMITS.education} />
                 <div className="space-y-4">
                     {items.map((edu, i) => (
                         <div key={edu.id} className="group flex gap-3">
@@ -152,14 +163,14 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
         if (!items.length && !isOwner) return null;
         if (!items.length) return (
             <div className="p-5 bg-white rounded-2xl shadow-sm border border-gray-100">
-                <SectionHeader title="Proyectos" onAdd={() => setModal({ type: 'project', data: null })} isOwner={isOwner} />
-                {isOwner && <button onClick={() => setModal({ type: 'project', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir proyecto</button>}
+                <SectionHeader title="Proyectos" onAdd={() => setModal({ type: 'project', data: null })} isOwner={isOwner} count={items.length} max={LIMITS.projects} />
+                {isOwner && items.length < LIMITS.projects && <button onClick={() => setModal({ type: 'project', data: null })} className="text-sm text-indigo-500 hover:text-indigo-700">+ Añadir proyecto</button>}
             </div>
         );
 
         return (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                <SectionHeader title="Proyectos" onAdd={() => setModal({ type: 'project', data: null })} isOwner={isOwner} />
+                <SectionHeader title="Proyectos" onAdd={() => setModal({ type: 'project', data: null })} isOwner={isOwner} count={items.length} max={LIMITS.projects} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {items.map((proj, i) => (
                         <div key={proj.id} className="group relative rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
@@ -189,6 +200,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
         const handleUpload = (e) => {
             const file = e.target.files[0];
             if (!file) return;
+            if (imgs.length >= LIMITS.gallery) return;
             setUploading(true);
             const reader = new FileReader();
             reader.onload = () => {
@@ -208,7 +220,7 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
 
         return (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                <SectionHeader title="Galeria" onAdd={() => galleryRef.current?.click()} isOwner={isOwner} />
+                <SectionHeader title="Galeria" onAdd={() => galleryRef.current?.click()} isOwner={isOwner} count={imgs.length} max={LIMITS.gallery} />
                 {!imgs.length
                     ? isOwner && <button onClick={() => galleryRef.current?.click()} className="text-sm text-indigo-500 hover:text-indigo-700">+ Subir imagenes</button>
                     : (
@@ -346,8 +358,12 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
                         <input value={eduForm.degree} onChange={e => setEduForm(f => ({ ...f, degree: e.target.value }))} placeholder="Titulo / Grado" className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
                         <input value={eduForm.field} onChange={e => setEduForm(f => ({ ...f, field: e.target.value }))} placeholder="Campo de estudio" className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
                         <div className="flex gap-3">
-                            <input type="number" min="1900" max="2100" value={eduForm.start_year} onChange={e => setEduForm(f => ({ ...f, start_year: e.target.value.replace(/[^0-9]/g, '') }))} placeholder="Año inicio" className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
-                            <input type="number" min="1900" max="2100" value={eduForm.end_year} onChange={e => setEduForm(f => ({ ...f, end_year: e.target.value.replace(/[^0-9]/g, '') }))} placeholder="Año fin" disabled={eduForm.current} className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 disabled:bg-gray-50 disabled:text-gray-400"/>
+                            <input type="number" min="1900" max="2100" value={eduForm.start_year} onChange={e => setEduForm(f => ({ ...f, start_year: e.target.value.replace(/[^0-9]/g, '') }))}
+                            onKeyDown={e => { if (!/[0-9]/.test(e.key) && !['Backspace','Delete','ArrowLeft','ArrowRight','Tab'].includes(e.key)) e.preventDefault(); }}
+                            placeholder="Año inicio" className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"/>
+                            <input type="number" min="1900" max="2100" value={eduForm.end_year} onChange={e => setEduForm(f => ({ ...f, end_year: e.target.value.replace(/[^0-9]/g, '') }))}
+                            onKeyDown={e => { if (!/[0-9]/.test(e.key) && !['Backspace','Delete','ArrowLeft','ArrowRight','Tab'].includes(e.key)) e.preventDefault(); }}
+                            placeholder="Año fin" disabled={eduForm.current} className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 disabled:bg-gray-50 disabled:text-gray-400"/>
                         </div>
                         <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
                             <input type="checkbox" checked={eduForm.current} onChange={e => setEduForm(f => ({ ...f, current: e.target.checked, end_year: '' }))} className="rounded"/>
