@@ -163,12 +163,12 @@ function CompanyCard({ company, highlightedCity }) {
     const doEnroll = () => enrollForm.post(route('enrollments.store'));
 
     return (
-        <div className={`bg-white rounded-2xl shadow-sm border p-6 flex flex-col gap-4 hover:shadow-md transition ${highlightedCity ? 'border-indigo-200 ring-1 ring-indigo-100' : 'border-gray-100'}`}>
+        <div className={`bg-white rounded-2xl shadow-sm border p-4 sm:p-6 flex flex-col gap-4 hover:shadow-md transition ${highlightedCity ? 'border-indigo-200 ring-1 ring-indigo-100' : 'border-gray-100'}`}>
             <div className="flex items-center gap-3">
                 {company.logo_url ? (
-                    <img src={company.logo_url} alt={company.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0"/>
+                    <img src={company.logo_url} alt={company.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover flex-shrink-0"/>
                 ) : (
-                    <div className={`w-12 h-12 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold flex-shrink-0`}>
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold flex-shrink-0`}>
                         {initials(company.name)}
                     </div>
                 )}
@@ -233,24 +233,24 @@ export default function CompaniesIndex({
             <Head title="Empresas — IntLinker"/>
             <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-20 w-auto" />
+                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3">
                             {user ? (
                                 <>
                                     <Link href="/perfil" className="flex items-center hover:opacity-80 transition px-2 py-1"><UserAvatar user={user} /></Link>
-                                    <Link href="/inicio" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">← Inicio</Link>
+                                    <Link href="/inicio" className="flex items-center gap-1 text-sm text-gray-500 hover:text-indigo-600 transition px-2 sm:px-3 py-2"><span>←</span><span className="hidden sm:inline">Inicio</span></Link>
                                 </>
                             ) : (
-                                <Link href="/inicio" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">← Inicio</Link>
+                                <Link href="/inicio" className="flex items-center gap-1 text-sm text-gray-500 hover:text-indigo-600 transition px-2 sm:px-3 py-2"><span>←</span><span className="hidden sm:inline">Inicio</span></Link>
                             )}
                         </div>
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-6xl mx-auto px-4 sm:px-6">
                     <div className="mb-6">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Empresas colaboradoras</h1>
                         <p className="text-gray-300 mt-1">Busca por empresa o localidad.</p>
