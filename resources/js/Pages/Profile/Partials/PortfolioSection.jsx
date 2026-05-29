@@ -19,7 +19,7 @@ function SectionHeader({ title, onAdd, isOwner, count, max }) {
             <div className="flex items-center gap-2">
                 <h3 className="text-base font-semibold text-gray-800">{title}</h3>
                 {isOwner && max != null && (
-                    <span className={	ext-xs font-medium px-2 py-0.5 rounded-full }>
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${atMax ? 'bg-red-50 text-red-500' : 'bg-gray-100 text-gray-500'}`}>
                         {count}/{max}
                     </span>
                 )}
