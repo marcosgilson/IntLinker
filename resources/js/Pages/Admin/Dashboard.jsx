@@ -423,6 +423,11 @@ function ApplicationRow({ app }) {
 
 // â”€ Section wrapper â”€
 function Section({ title, count, children, emptyText }) {
+    const items = Array.isArray(children) ? children : (children ? [children] : []);
+    const collapsible = items.length > 5;
+    const [expanded, setExpanded] = useState(false);
+    const visible = collapsible && !expanded ? items.slice(0, 5) : items;
+    const hidden = items.length - 5;
     return (
         <div>
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
@@ -438,14 +443,21 @@ function Section({ title, count, children, emptyText }) {
                     <p className="font-medium text-sm">{emptyText}</p>
                 </div>
             ) : (
-                <div className="space-y-3">{children}</div>
+                <div className="space-y-3">
+                    {visible}
+                    {collapsible && (
+                        <button
+                            onClick={() => setExpanded(e => !e)}
+                            className="mt-1 w-full py-2 text-sm font-semibold text-indigo-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition"
+                        >
+                            {expanded ? 'Ver menos ▲' : 'Ver ' + hidden + ' más ▼'}
+                        </button>
+                    )}
+                </div>
             )}
         </div>
     );
 }
-
-
-// â”€ Company email row â”€
 function CompanyEmailRow({ company }) {
     const [local, domain0] = (company.applications_email ?? '@').split('@');
     const { data, setData, patch, processing, recentlySuccessful } = useForm({
