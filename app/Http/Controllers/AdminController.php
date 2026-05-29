@@ -6,8 +6,6 @@ use App\Models\Company;
 use App\Models\CompanyApplication;
 use App\Models\Student;
 use App\Models\User;
-use App\Notifications\StudentVerifiedNotification;
-use App\Notifications\WorkerVerifiedNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

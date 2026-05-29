@@ -5,8 +5,6 @@ namespace App\Jobs;
 use App\Helpers\ImageHelper;
 use App\Models\Student;
 use App\Models\User;
-use App\Notifications\StudentRejectedNotification;
-use App\Notifications\StudentVerifiedNotification;
 use App\Services\DocuPipeService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

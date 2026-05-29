@@ -3,8 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Student;
-use App\Notifications\StudentRejectedNotification;
-use App\Notifications\StudentVerifiedNotification;
 use App\Services\DocuPipeService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
