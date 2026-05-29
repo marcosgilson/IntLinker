@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Jobs;
 
@@ -109,15 +109,13 @@ class ProcessStudentCard implements ShouldQueue
             }
 
             Log::info("ProcessStudentCard: user {$this->userId} verified successfully");
-            $user->notify(new StudentVerifiedNotification());
+            // Email deshabilitado: $user->notify(new StudentVerifiedNotification());
 
         } catch (\Throwable $e) {
             Log::error("ProcessStudentCard failed for user {$this->userId}: " . $e->getMessage(), [
                 'exception' => $e->getTraceAsString(),
             ]);
-            $user->notify(new StudentRejectedNotification(
-                'No se pudo procesar el documento. Por favor, intentalo de nuevo.'
-            ));
+            // Email deshabilitado: $user->notify(new StudentRejectedNotification(...));
         } finally {
             if (file_exists($tmpPath)) {
                 @unlink($tmpPath);
@@ -127,11 +125,11 @@ class ProcessStudentCard implements ShouldQueue
 
     private function reject(User $user, string $reason): void
     {
-        Log::warning("ProcessStudentCard: rejected user {$user->id} — {$reason}");
+        Log::warning("ProcessStudentCard: rejected user {$user->id} â€” {$reason}");
         if (! $this->isRenewal) {
             $user->student?->delete();
         }
-        $user->notify(new StudentRejectedNotification($reason));
+        // Email deshabilitado: $user->notify(new StudentRejectedNotification($reason));
     }
 
     private function normalize(string $name): string

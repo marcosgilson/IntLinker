@@ -1,38 +1,38 @@
-import IntLinkerLogo from '@/Components/IntLinkerLogo';
+﻿import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 import { useState, useRef, useEffect } from 'react';
 
 const SPANISH_CITIES = [
-    // Madrid y área metropolitana
+    // Madrid y Ã¡rea metropolitana
     'Madrid','Alcobendas','Tres Cantos','Majadahonda','Boadilla del Monte',
-    'Las Rozas de Madrid','Alcalá de Henares','Leganés','Getafe','Móstoles',
-    'Fuenlabrada','Alcorcón','Pozuelo de Alarcón','Torrejón de Ardoz',
-    // Cataluña
-    'Barcelona','Martorell','El Prat de Llobregat','Sant Cugat del Vallès',
-    'Palau-solità i Plegamans','Sabadell','Terrassa','Badalona','Lleida',
-    'Tarragona','Girona','Mataró','Hospitalet de Llobregat',
+    'Las Rozas de Madrid','AlcalÃ¡ de Henares','LeganÃ©s','Getafe','MÃ³stoles',
+    'Fuenlabrada','AlcorcÃ³n','Pozuelo de AlarcÃ³n','TorrejÃ³n de Ardoz',
+    // CataluÃ±a
+    'Barcelona','Martorell','El Prat de Llobregat','Sant Cugat del VallÃ¨s',
+    'Palau-solitÃ  i Plegamans','Sabadell','Terrassa','Badalona','Lleida',
+    'Tarragona','Girona','MatarÃ³','Hospitalet de Llobregat',
     // Comunitat Valenciana
-    'Valencia','Tavernes Blanques','Almussafes','Alicante','Castellón de la Plana',
+    'Valencia','Tavernes Blanques','Almussafes','Alicante','CastellÃ³n de la Plana',
     'Vila-real','Elche','Torrent','Sagunto',
-    // Andalucía
-    'Sevilla','Málaga','Granada','Córdoba','Almería','Cantoria','Huelva',
-    'Jerez de la Frontera','Cádiz','Los Barrios','San Fernando','Algeciras',
+    // AndalucÃ­a
+    'Sevilla','MÃ¡laga','Granada','CÃ³rdoba','AlmerÃ­a','Cantoria','Huelva',
+    'Jerez de la Frontera','CÃ¡diz','Los Barrios','San Fernando','Algeciras',
     'Dos Hermanas','Marbella',
-    // País Vasco y Navarra
-    'Bilbao','San Sebastián','Vitoria-Gasteiz','Beasain','Hernani',
-    'Arrasate-Mondragón','Donostia','Pamplona','Cizur Menor',
-    // Aragón y La Rioja
-    'Zaragoza','Figueruelas','Haro','Logroño',
+    // PaÃ­s Vasco y Navarra
+    'Bilbao','San SebastiÃ¡n','Vitoria-Gasteiz','Beasain','Hernani',
+    'Arrasate-MondragÃ³n','Donostia','Pamplona','Cizur Menor',
+    // AragÃ³n y La Rioja
+    'Zaragoza','Figueruelas','Haro','LogroÃ±o',
     // Galicia
-    'A Coruña','Arteixo','Vigo','Santiago de Compostela','Lugo','Ourense',
+    'A CoruÃ±a','Arteixo','Vigo','Santiago de Compostela','Lugo','Ourense',
     // Asturias y Cantabria
-    'Oviedo','Gijón','Avilés','Santander','Torrelavega',
-    // Castilla y León
-    'Valladolid','Burgos','Salamanca','León','Palencia','Segovia',
+    'Oviedo','GijÃ³n','AvilÃ©s','Santander','Torrelavega',
+    // Castilla y LeÃ³n
+    'Valladolid','Burgos','Salamanca','LeÃ³n','Palencia','Segovia',
     // Otras capitales y ciudades
     'Palma','Las Palmas de Gran Canaria','Santa Cruz de Tenerife',
-    'San Cristóbal de La Laguna','Murcia','Cartagena','Badajoz','Toledo',
+    'San CristÃ³bal de La Laguna','Murcia','Cartagena','Badajoz','Toledo',
     'Guadalajara','Ciudad Real',
 ];
 
@@ -101,7 +101,7 @@ function CitySelect({ value, onChange, error }) {
                 <span>{value || 'Selecciona una ciudad...'}</span>
                 <div className="flex items-center gap-1">
                     {value && (
-                        <span onClick={clear} className="text-gray-400 hover:text-gray-600 px-1 text-base leading-none">×</span>
+                        <span onClick={clear} className="text-gray-400 hover:text-gray-600 px-1 text-base leading-none">Ã—</span>
                     )}
                     <svg className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -149,7 +149,7 @@ function CitySelect({ value, onChange, error }) {
 }
 
 
-// ─ Create company form ─
+// â”€ Create company form â”€
 function CreateCompanyForm() {
     const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
         name: '',
@@ -193,8 +193,8 @@ function CreateCompanyForm() {
                         error={errors.city}
                     />
                 </Field>
-                <Field label="Descripción" error={errors.description}>
-                    <textarea rows={3} placeholder="Breve descripción..."
+                <Field label="DescripciÃ³n" error={errors.description}>
+                    <textarea rows={3} placeholder="Breve descripciÃ³n..."
                         value={data.description} onChange={e => setData('description', e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400
                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
@@ -232,9 +232,10 @@ function CreateCompanyForm() {
     );
 }
 
-// ─ Pending student row ─
+// â”€ Pending student row â”€
 function UnverifiedUserRow({ user }) {
     const del = useForm({});
+    const verify = useForm({});
     return (
         <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -242,13 +243,22 @@ function UnverifiedUserRow({ user }) {
                 <p className="text-xs text-gray-500">{user.email}</p>
                 <p className="text-xs text-gray-400 mt-0.5">Registrado: {new Date(user.created_at).toLocaleDateString('es-ES')}</p>
             </div>
-            <button
-                onClick={() => { if (window.confirm('Eliminar la cuenta de ' + user.name + '?')) { del.delete(route('admin.unverified-users.delete', user.id)); } }}
-                disabled={del.processing}
-                className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 transition disabled:opacity-50"
-            >
-                Eliminar
-            </button>
+            <div className="flex gap-2 w-full sm:w-auto">
+                <button
+                    onClick={() => { if (window.confirm('Verificar la cuenta de ' + user.name + '? El usuario podrá acceder a la plataforma.')) { verify.patch(route('admin.unverified-users.verify', user.id)); } }}
+                    disabled={verify.processing}
+                    className="inline-flex min-h-10 flex-1 sm:flex-none items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition disabled:opacity-50"
+                >
+                    Verificar
+                </button>
+                <button
+                    onClick={() => { if (window.confirm('Eliminar la cuenta de ' + user.name + '?')) { del.delete(route('admin.unverified-users.delete', user.id)); } }}
+                    disabled={del.processing}
+                    className="inline-flex min-h-10 flex-1 sm:flex-none items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 transition disabled:opacity-50"
+                >
+                    Eliminar
+                </button>
+            </div>
         </div>
     );
 }
@@ -264,8 +274,8 @@ function StudentRow({ student }) {
                     <p className="font-bold text-gray-900">{student.user?.name}</p>
                     <p className="text-xs text-gray-400">{student.user?.email}</p>
                     <p className="text-xs text-gray-500 mt-1">
-                        Escuela: <span className="font-medium">{student.school_name || '—'}</span>
-                        {student.school_email && <> · {student.school_email}</>}
+                        Escuela: <span className="font-medium">{student.school_name || 'â€”'}</span>
+                        {student.school_email && <> Â· {student.school_email}</>}
                     </p>
                 </div>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200 flex-shrink-0">
@@ -298,7 +308,7 @@ function StudentRow({ student }) {
     );
 }
 
-// ─ Pending worker row ─
+// â”€ Pending worker row â”€
 function WorkerRow({ worker }) {
     const verify = useForm({ user_id: worker.user_id, company_id: worker.company_id });
     const reject = useForm({ user_id: worker.user_id, company_id: worker.company_id });
@@ -311,7 +321,7 @@ function WorkerRow({ worker }) {
                     <p className="text-xs text-gray-400">{worker.user_email}</p>
                     <p className="text-xs text-gray-500 mt-1">
                         Empresa: <span className="font-medium">{worker.company_name}</span>
-                        {worker.position && <> · {worker.position}</>}
+                        {worker.position && <> Â· {worker.position}</>}
                     </p>
                 </div>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200 flex-shrink-0">
@@ -335,7 +345,7 @@ function WorkerRow({ worker }) {
     );
 }
 
-// ─ Company application row ─
+// â”€ Company application row â”€
 function ApplicationRow({ app }) {
     const approve = useForm({ admin_notes: '' });
     const reject  = useForm({ admin_notes: '' });
@@ -383,7 +393,7 @@ function ApplicationRow({ app }) {
     );
 }
 
-// ─ Section wrapper ─
+// â”€ Section wrapper â”€
 function Section({ title, count, children, emptyText }) {
     return (
         <div>
@@ -407,7 +417,7 @@ function Section({ title, count, children, emptyText }) {
 }
 
 
-// ─ Company email row ─
+// â”€ Company email row â”€
 function CompanyEmailRow({ company }) {
     const [local, domain0] = (company.applications_email ?? '@').split('@');
     const { data, setData, patch, processing, recentlySuccessful } = useForm({
@@ -434,7 +444,7 @@ function CompanyEmailRow({ company }) {
                     {company.city && <p className="text-xs text-gray-400">{company.city}</p>}
                 </div>
                 {recentlySuccessful && (
-                    <span className="text-xs text-emerald-600 font-semibold">✓ Guardado</span>
+                    <span className="text-xs text-emerald-600 font-semibold">âœ“ Guardado</span>
                 )}
             </div>
             <form onSubmit={submit} className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0">
@@ -462,12 +472,12 @@ function CompanyEmailRow({ company }) {
                 </button>
             </form>
             {data.applications_email && (
-                <p className="mt-1.5 text-xs text-gray-400">→ <span className="font-medium text-gray-600">{data.applications_email}</span></p>
+                <p className="mt-1.5 text-xs text-gray-400">â†’ <span className="font-medium text-gray-600">{data.applications_email}</span></p>
             )}
         </div>
     );
 }
-// ─ Main page ─
+// â”€ Main page â”€
 export default function AdminDashboard({ applications = {}, pendingEmailUsers = [], pendingStudents = [], pendingWorkers = [], companies = [], allStudents = [] }) {
     const { auth } = usePage().props;
     const appList = applications.data ?? [];
@@ -478,7 +488,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
     return (
         <>
-            <Head title="Panel Admin — IntLinker" />
+            <Head title="Panel Admin â€” IntLinker" />
 
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
@@ -517,17 +527,17 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
                     <div className="space-y-10">
                         <Section title="Cuentas sin verificar email" count={pendingEmailUsers.length}
-                            emptyText="No hay cuentas pendientes de verificación de email.">
+                            emptyText="No hay cuentas pendientes de verificaciÃ³n de email.">
                             {pendingEmailUsers.map(u => <UnverifiedUserRow key={u.id} user={u} />)}
                         </Section>
 
-                        <Section title="Alumnos pendientes de verificación" count={pendingStudents.length}
-                            emptyText="No hay alumnos pendientes de verificación.">
+                        <Section title="Alumnos pendientes de verificaciÃ³n" count={pendingStudents.length}
+                            emptyText="No hay alumnos pendientes de verificaciÃ³n.">
                             {pendingStudents.map(s => <StudentRow key={s.id} student={s} />)}
                         </Section>
 
-                        <Section title="Trabajadores pendientes de verificación" count={pendingWorkers.length}
-                            emptyText="No hay trabajadores pendientes de verificación.">
+                        <Section title="Trabajadores pendientes de verificaciÃ³n" count={pendingWorkers.length}
+                            emptyText="No hay trabajadores pendientes de verificaciÃ³n.">
                             {pendingWorkers.map(w => <WorkerRow key={`${w.user_id}-${w.company_id}`} worker={w} />)}
                         </Section>
 

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -103,7 +103,7 @@ class AdminController extends Controller
                 'description' => $application->description,
             ]);
 
-            // Add requester as first employee ─ already verified since admin approved
+            // Add requester as first employee â”€ already verified since admin approved
             $company->employees()->attach($application->user_id, [
                 'position'  => $application->position,
                 'verified'  => true,
@@ -144,12 +144,12 @@ class AdminController extends Controller
         return back()->with('status', "Correo de '{$company->name}' actualizado.");
     }
 
-    // ─ Student verification ─
+    // â”€ Student verification â”€
 
         public function verifyStudent(Student $student): RedirectResponse
     {
         $student->update(['verified' => true]);
-        $student->user->notify(new StudentVerifiedNotification());
+        // Email deshabilitado: $student->user->notify(new StudentVerifiedNotification());
         return back()->with('status', "Alumno '{$student->user->name}' verificado correctamente.");
     }
 
@@ -161,7 +161,7 @@ class AdminController extends Controller
         return back()->with('status', 'Registro de alumno rechazado y eliminado. El usuario puede volver a solicitarlo.');
     }
 
-    // ─ Worker (company_employees pivot) verification ─
+    // â”€ Worker (company_employees pivot) verification â”€
 
     public function verifyWorker(Request $request): RedirectResponse
     {
@@ -178,7 +178,7 @@ class AdminController extends Controller
         $user    = User::find($request->user_id);
         $company = Company::find($request->company_id);
 
-        $user->notify(new WorkerVerifiedNotification($company->name));
+        // Email deshabilitado: $user->notify(new WorkerVerifiedNotification($company->name));
 
         return back()->with('status', "Trabajador '{$user->name}' verificado en '{$company->name}'.");
     }
@@ -192,6 +192,12 @@ class AdminController extends Controller
         $name = $user->name;
         $user->delete();
         return back()->with('status', "Cuenta de \"{$name}\" eliminada correctamente.");
+    }
+
+    public function verifyUser(User $user): RedirectResponse
+    {
+        $user->update(['email_verified_at' => now()]);
+        return back()->with('status', "Usuario \"{$user->name}\" verificado correctamente. Ya puede acceder a la plataforma.");
     }
     public function rejectWorker(Request $request): RedirectResponse
     {

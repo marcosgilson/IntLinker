@@ -117,6 +117,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/workers/verify', [AdminController::class, 'verifyWorker'])->name('workers.verify');
         Route::delete('/workers/reject', [AdminController::class, 'rejectWorker'])->name('workers.reject');
         Route::delete('/usuarios-sin-verificar/{user}', [AdminController::class, 'deleteUnverifiedUser'])->name('unverified-users.delete');
+        Route::patch('/usuarios-sin-verificar/{user}/verificar', [AdminController::class, 'verifyUser'])->name('unverified-users.verify');
         Route::patch('/companies/{company}/email', [AdminController::class, 'updateCompanyEmail'])->name('companies.email.update');
     });
 });

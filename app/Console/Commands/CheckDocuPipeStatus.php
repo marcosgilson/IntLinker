@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Console\Commands;
 
@@ -47,7 +47,7 @@ class CheckDocuPipeStatus extends Command
 
     private function processStudent(Student $student, DocuPipeService $docuPipe, string $schemaId): void
     {
-        // Phase: have standardization result → verify
+        // Phase: have standardization result â†’ verify
         if ($student->docupipe_standardization_id && $student->docupipe_status === 'parsed') {
             $status = $docuPipe->checkJob($student->docupipe_job_id);
             Log::info("docupipe:check std job status for student {$student->id}: {$status}");
@@ -56,12 +56,12 @@ class CheckDocuPipeStatus extends Command
                 Log::info("docupipe:check std result for student {$student->id}", $data);
                 $this->processResult($student, $data);
             } elseif ($status === 'failed') {
-                $this->failStudent($student, 'Error en la estandarización del documento.');
+                $this->failStudent($student, 'Error en la estandarizaciÃ³n del documento.');
             }
             return;
         }
 
-        // Phase: have document but no standardization yet → start it
+        // Phase: have document but no standardization yet â†’ start it
         // (covers: status='uploaded' with or without jobId, and status=null with documentId)
         if ($student->docupipe_document_id) {
             // If we have a parsing jobId, check it first
@@ -77,7 +77,7 @@ class CheckDocuPipeStatus extends Command
                 }
             }
 
-            // Parsing done (or we don't have jobId — try standardize anyway)
+            // Parsing done (or we don't have jobId â€” try standardize anyway)
             Log::info("docupipe:check starting standardization for student {$student->id}");
             try {
                 $std = $docuPipe->startStandardize($student->docupipe_document_id, $schemaId);
@@ -88,7 +88,7 @@ class CheckDocuPipeStatus extends Command
                 ]);
                 Log::info("docupipe:check standardization started for student {$student->id}, stdId={$std['standardizationId']}");
             } catch (\Throwable $e) {
-                Log::warning("docupipe:check standardize failed for student {$student->id}: " . $e->getMessage() . " — will retry next minute");
+                Log::warning("docupipe:check standardize failed for student {$student->id}: " . $e->getMessage() . " â€” will retry next minute");
             }
         }
     }
@@ -156,7 +156,7 @@ class CheckDocuPipeStatus extends Command
         ]);
 
         Log::info("docupipe:check student {$student->id} (user {$user->id}) VERIFIED");
-        $user->notify(new StudentVerifiedNotification());
+        // Email deshabilitado: $user->notify(new StudentVerifiedNotification());
     }
 
     private function failStudent(Student $student, string $reason): void
@@ -167,15 +167,15 @@ class CheckDocuPipeStatus extends Command
             'docupipe_failure_reason' => $reason,
             'verified'                => false,
         ]);
-        $student->user->notify(new StudentRejectedNotification($reason));
+        // Email deshabilitado: $student->user->notify(new StudentRejectedNotification($reason));
         // No se borra el registro para que el usuario pueda ver el motivo del rechazo en la UI
     }
 
     private function normalize(string $name): string
     {
         $name = mb_strtolower(trim($name));
-        $map  = ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ü'=>'u','ñ'=>'n',
-                 'à'=>'a','è'=>'e','ì'=>'i','ò'=>'o','ù'=>'u'];
+        $map  = ['Ã¡'=>'a','Ã©'=>'e','Ã­'=>'i','Ã³'=>'o','Ãº'=>'u','Ã¼'=>'u','Ã±'=>'n',
+                 'Ã '=>'a','Ã¨'=>'e','Ã¬'=>'i','Ã²'=>'o','Ã¹'=>'u'];
         return preg_replace('/\s+/', ' ', strtr($name, $map));
     }
 }

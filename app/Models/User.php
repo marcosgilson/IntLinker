@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Models;
 
@@ -28,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if (! $this->profile_photo) return null;
 
-        // Base64 data URL — return directly
+        // Base64 data URL â€” return directly
         if (ImageHelper::isBase64($this->profile_photo)) {
             return $this->profile_photo;
         }
@@ -98,7 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification(): void
     {
-        $this->notify(new VerifyEmailNotification());
+        // Email deshabilitado - verificacion manual por administrador
     }
 
 }
