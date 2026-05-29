@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/alumno/estado', [StudentController::class, 'status'])->name('student.status');
     Route::post('/alumno', [StudentController::class, 'store'])->name('student.store');
     Route::post('/alumno/renovar', [StudentController::class, 'renew'])->name('student.renew');
+    Route::delete('/alumno/fallido', [StudentController::class, 'resetFailed'])->name('student.cancelar');
 
     // Worker role
     Route::post('/trabajador', [WorkerController::class, 'store'])->name('worker.store');
