@@ -2,6 +2,7 @@ import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import AuthModal from '@/Components/AuthModal';
+import UserAvatar from '@/Components/UserAvatar';
 
 // Generate a consistent colour from a string (company name)
 function stringToColor(str) {
