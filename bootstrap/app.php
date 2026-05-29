@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        $middleware->redirectGuestsTo(fn () => route('iniciar-sesion'));
+        $middleware->redirectGuestsTo(fn () => route('iniciar-sesión'));
 
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,

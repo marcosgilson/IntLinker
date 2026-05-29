@@ -422,6 +422,44 @@ function ApplicationRow({ app }) {
     );
 }
 
+// — ErrorLogRow —
+function ErrorLogRow({ error }) {
+    const [open, setOpen] = React.useState(false);
+    const statusColor = (error.status_code >= 500)
+        ? 'bg-red-100 text-red-700'
+        : (error.status_code === 0)
+            ? 'bg-purple-100 text-purple-700'
+            : 'bg-amber-100 text-amber-700';
+    const label = error.status_code === 0 ? 'JS' : error.status_code;
+    return (
+        <div className={`rounded-xl border border-gray-700 bg-gray-800/50 p-3 sm:p-4${error.resolved ? ' opacity-50' : ''}`}>
+            <div className="flex flex-wrap items-start gap-2 justify-between">
+                <div className="flex items-center gap-2 flex-wrap">
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${statusColor}`}>{label}</span>
+                    <span className="text-xs text-gray-400 font-mono">{error.method} {error.url}</span>
+                    {error.resolved && <span className="text-xs text-green-400 font-semibold">Resuelto</span>}
+                </div>
+                <div className="flex items-center gap-2">
+                    <button onClick={() => setOpen(x => !x)} className="text-xs text-indigo-400 hover:text-white transition-colors">
+                        {open ? 'Ocultar' : 'Ver detalle'}
+                    </button>
+                    {!error.resolved && (
+                        <button onClick={() => router.patch(route('admin.errors.resolve', error.id), {}, { preserveScroll: true })}
+                            className="text-xs text-green-400 hover:text-white transition-colors">Resolver</button>
+                    )}
+                    <button onClick={() => router.delete(route('admin.errors.delete', error.id), {}, { preserveScroll: true })}
+                        className="text-xs text-red-400 hover:text-white transition-colors">Eliminar</button>
+                </div>
+            </div>
+            <p className="text-sm font-semibold text-white mt-1">{error.message}</p>
+            <p className="text-xs text-gray-400 mt-0.5">{new Date(error.created_at).toLocaleString('es-ES')}</p>
+            {open && (
+                <pre className="mt-3 bg-gray-900 rounded-lg p-3 text-xs text-gray-300 overflow-auto max-h-64 whitespace-pre-wrap">{error.trace}</pre>
+            )}
+        </div>
+    );
+}
+
 // â”€ Section wrapper â”€
 function Section({ title, count, children, emptyText }) {
     const items = Array.isArray(children) ? children : (children ? [children] : []);
