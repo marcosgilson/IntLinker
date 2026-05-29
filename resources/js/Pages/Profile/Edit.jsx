@@ -29,8 +29,8 @@ function BannerUpload({ bannerColor, userName }) {
 <button
                 type="button"
                 onClick={() => setShowPicker(v => !v)}
-                className="absolute top-3 right-3 bg-black/30 hover:bg-black/50 text-white rounded-lg px-2 py-1
-                    text-xs flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-3 right-3 bg-black/30 hover:bg-black/50 text-white rounded-lg px-3 py-2
+                    text-xs flex min-h-10 items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
             >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3z"/>
@@ -38,7 +38,7 @@ function BannerUpload({ bannerColor, userName }) {
                 Color
             </button>
             {showPicker && (
-                <div className="absolute top-10 right-3 bg-white rounded-xl shadow-xl p-3 z-20 flex flex-wrap gap-2 w-52">
+                <div className="absolute top-12 left-3 right-3 sm:left-auto sm:right-3 bg-white rounded-xl shadow-xl p-3 z-20 flex flex-wrap gap-2 sm:w-52">
                     {BANNER_COLORS.map(c => (
                         <button key={c} type="button" onClick={() => handleColorSelect(c)}
                             className="w-8 h-8 rounded-lg border-2 transition-transform hover:scale-110"
@@ -75,19 +75,19 @@ function AvatarUpload({ photoUrl, initials }) {
     };
 
     return (
-        <div className="relative w-20 h-20 flex-shrink-0 group">
+        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 group">
             {preview ? (
                 <img src={preview} alt="Foto de perfil"
-                    className="w-20 h-20 rounded-2xl object-cover ring-4 ring-white shadow-lg" />
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-4 ring-white shadow-lg" />
             ) : (
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600
                     flex items-center justify-center ring-4 ring-white shadow-lg">
-                    <span className="text-white font-bold text-2xl">{initials}</span>
+                    <span className="text-white font-bold text-xl sm:text-2xl">{initials}</span>
                 </div>
             )}
             <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading}
                 title="Cambiar foto"
-                className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100
+                className="absolute inset-0 rounded-2xl bg-black/40 opacity-100 sm:opacity-0 sm:group-hover:opacity-100
                     transition-opacity flex items-center justify-center cursor-pointer">
                 {uploading ? (
                     <svg className="animate-spin w-6 h-6 text-white" fill="none" viewBox="0 0 24 24">
@@ -104,8 +104,8 @@ function AvatarUpload({ photoUrl, initials }) {
             </button>
             {preview && (
                 <button type="button" onClick={handleDelete} title="Eliminar foto"
-                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 hover:bg-red-600 text-white
-                        rounded-full flex items-center justify-center shadow opacity-0 group-hover:opacity-100 transition-opacity">
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white
+                        rounded-full flex items-center justify-center shadow opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -129,8 +129,8 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
         <AuthenticatedLayout>
             <Head title="Perfil — IntLinker" />
 
-            <div className="py-6 sm:py-8">
-                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-5">
+            <div className="py-4 sm:py-8">
+                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-5">
 
                     {/* Back link */}
                     <div className="flex items-center gap-2 mb-1">
@@ -151,10 +151,10 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
                         {/* Avatar + info row — avatar floats up with negative margin, but name is BELOW avatar */}
                         <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                             {/* Avatar overlapping banner */}
-                            <div className="flex items-start justify-between -mt-10 mb-3">
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between -mt-8 sm:-mt-10 mb-3">
                                 <AvatarUpload photoUrl={profile_photo_url} initials={initials} />
                                 {/* Roles badges top-right */}
-                                <div className="flex gap-2 flex-wrap justify-end mt-12 sm:mt-12">
+                                <div className="flex gap-2 flex-wrap justify-start sm:justify-end mt-0 sm:mt-12">
                                     {roles.is_admin && (
                                         <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">Admin</span>
                                     )}
@@ -177,8 +177,8 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
                             </div>
                             {/* Name + email below avatar */}
                             <div>
-                                <h1 className="text-lg sm:text-xl font-bold text-gray-900">{user.name}</h1>
-                                <p className="text-sm text-gray-500">{user.email}</p>
+                                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 break-words">{user.name}</h1>
+                                <p className="text-sm text-gray-500 break-all">{user.email}</p>
                             </div>
                         </div>
                     </div>

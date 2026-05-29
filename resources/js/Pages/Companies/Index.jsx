@@ -57,10 +57,10 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
     const hasFilters = selectedCities.length > 0 || selectedCompanies.length > 0;
 
     return (
-        <div className="w-full max-w-full sm:max-w-xl">
+        <div className="w-full max-w-2xl">
             {/* Input */}
             <div className="relative">
-                <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-400 focus-within:border-indigo-400 transition">
+                <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-400 focus-within:border-indigo-400 transition">
                     <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
@@ -146,7 +146,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                         </span>
                     ))}
                     <button onClick={onClearAll}
-                        className="text-xs text-gray-400 hover:text-gray-600 px-2 py-1 rounded-full border border-gray-200 hover:border-gray-300 transition">
+                        className="text-xs text-gray-500 hover:text-gray-700 px-3 py-1.5 rounded-full border border-gray-200 hover:border-gray-300 transition">
                         Limpiar todo
                     </button>
                 </div>
@@ -164,7 +164,7 @@ function CompanyCard({ company, highlightedCity }) {
 
     return (
         <div className={`bg-white rounded-2xl shadow-sm border p-4 sm:p-6 flex flex-col gap-4 hover:shadow-md transition ${highlightedCity ? 'border-indigo-200 ring-1 ring-indigo-100' : 'border-gray-100'}`}>
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
                 {company.logo_url ? (
                     <img src={company.logo_url} alt={company.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover flex-shrink-0"/>
                 ) : (
@@ -173,7 +173,7 @@ function CompanyCard({ company, highlightedCity }) {
                     </div>
                 )}
                 <div className="flex-1 min-w-0">
-                    <h2 className="font-bold text-gray-900 truncate">{company.name}</h2>
+                    <h2 className="font-bold text-gray-900 break-words">{company.name}</h2>
                     {company.city && (
                         <p className={`text-xs mt-0.5 flex items-center gap-1 ${highlightedCity ? 'text-indigo-500 font-medium' : 'text-gray-400'}`}>
                             {company.city}
@@ -186,15 +186,15 @@ function CompanyCard({ company, highlightedCity }) {
                     )}
                 </div>
             </div>
-            {company.description && <p className="text-sm text-gray-600 line-clamp-2">{company.description}</p>}
-            <div className="mt-auto flex flex-wrap gap-2">
+            {company.description && <p className="text-sm text-gray-600 line-clamp-3 break-words">{company.description}</p>}
+            <div className="mt-auto flex flex-col sm:flex-row gap-2">
                 <Link href={route('companies.show', company.id)}
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-800 border border-indigo-200 hover:border-indigo-400 px-4 py-2 rounded-lg transition">
+                    className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-800 border border-indigo-200 hover:border-indigo-400 px-4 py-2 rounded-lg transition">
                     Ver empresa
                 </Link>
                 {user && roles.is_student && (
                     <button onClick={doEnroll} disabled={enrollForm.processing}
-                        className="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-4 py-2 rounded-lg transition">
+                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-4 py-2 rounded-lg transition">
                         {enrollForm.processing ? 'Enviando...' : 'Postularse'}
                     </button>
                 )}
@@ -237,7 +237,7 @@ export default function CompaniesIndex({
                         <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
                         </Link>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-start gap-3">
                             {user ? (
                                 <>
                                     <Link href="/perfil" className="flex items-center hover:opacity-80 transition px-2 py-1"><UserAvatar user={user} /></Link>
@@ -269,7 +269,7 @@ export default function CompaniesIndex({
                     </div>
 
                     {(selectedCities.length > 0 || selectedCompanies.length > 0) && (
-                        <p className="text-sm text-gray-300 mb-4">
+                        <p className="text-sm text-gray-300 mb-4 break-words">
                             {selectedCities.length > 0 && <>Priorizando <span className="font-medium text-indigo-600">{selectedCities.join(', ')}</span>. </>}
                             {selectedCompanies.length > 0 && <>Filtrando por <span className="font-medium text-violet-600">{selectedCompanies.join(', ')}</span>.</>}
                         </p>
@@ -280,7 +280,7 @@ export default function CompaniesIndex({
                             <p className="text-lg font-medium">No se encontraron empresas.</p>
                         </div>
                     ) : (
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                             {list.map(company => (
                                 <CompanyCard key={company.id} company={company}
                                     highlightedCity={selectedCities.includes(company.city)}/>

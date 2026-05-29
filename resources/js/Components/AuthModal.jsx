@@ -66,7 +66,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                 />
             </Field>
 
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm">
                 <label className="flex items-center gap-2 cursor-pointer select-none">
                     <input
                         type="checkbox"
@@ -89,7 +89,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
             <button
                 type="submit"
                 disabled={processing}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition text-sm"
+                className="w-full min-h-10 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition text-sm"
             >
                 {processing ? 'Entrando…' : 'Iniciar sesión'}
             </button>
@@ -147,7 +147,7 @@ function RegisterForm({ onSwitch, onClose }) {
                 />
             </Field>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Field label="Contraseña" id="reg-password" error={errors.password}>
                     <Input
                         id="reg-password"
@@ -175,7 +175,7 @@ function RegisterForm({ onSwitch, onClose }) {
             <button
                 type="submit"
                 disabled={processing}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition text-sm"
+                className="w-full min-h-10 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition text-sm"
             >
                 {processing ? 'Creando cuenta…' : 'Crear cuenta'}
             </button>
@@ -219,18 +219,18 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
         <div
             ref={overlayRef}
             onClick={(e) => e.target === overlayRef.current && onClose()}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm"
             style={{ animation: 'fadeIn .15s ease' }}
         >
             <div
-                className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+                className="relative w-full max-w-md bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden max-h-[95vh]"
                 style={{ animation: 'slideUp .2s ease' }}
             >
                 {/* Header */}
-                <div className="px-6 pt-6 pb-4 border-b border-gray-100">
+                <div className="px-4 sm:px-6 pt-5 sm:pt-6 pb-4 border-b border-gray-100">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-20 w-auto" />
+                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
                         </div>
                         <button
                             onClick={onClose}
@@ -252,7 +252,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
                             <button
                                 key={key}
                                 onClick={() => setTab(key)}
-                                className={`flex-1 py-2 text-sm font-semibold rounded-md transition ${
+                                className={`flex-1 min-h-10 px-2 py-2 text-xs sm:text-sm font-semibold rounded-md transition ${
                                     tab === key
                                         ? 'bg-white text-indigo-600 shadow-sm'
                                         : 'text-gray-500 hover:text-gray-700'
@@ -265,7 +265,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
                 </div>
 
                 {/* Body */}
-                <div className="px-6 py-5">
+                <div className="px-4 sm:px-6 py-5 overflow-y-auto">
                     {tab === 'login' ? (
                         <LoginForm
                             onSwitch={() => setTab('register')}

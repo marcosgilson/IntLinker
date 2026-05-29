@@ -59,7 +59,7 @@ export default function BecomeStudentForm({ student, status }) {
 
     if (isFailed) {
         return (
-            <div className="bg-red-50 border border-red-200 rounded-2xl p-5">
+            <div className="bg-red-50 border border-red-200 rounded-2xl p-4 sm:p-5">
                 <div className="flex items-start gap-3 mb-3">
                     <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center flex-shrink-0">
                         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@ export default function BecomeStudentForm({ student, status }) {
                 </div>
                 <button
                     onClick={() => router.reload({ only: ['student'] })}
-                    className="w-full text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
+                    className="w-full min-h-10 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
                 >
                     Intentar de nuevo
                 </button>
@@ -85,8 +85,8 @@ export default function BecomeStudentForm({ student, status }) {
 
     if (isPending && !isActive) {
         return (
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
-                <div className="flex items-center gap-3">
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5">
+                <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center flex-shrink-0">
                         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -103,7 +103,7 @@ export default function BecomeStudentForm({ student, status }) {
 
     if (isActive) {
         return (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 sm:p-5">
                 <div className="flex items-start gap-3 mb-3">
                     <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
                         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,14 +118,14 @@ export default function BecomeStudentForm({ student, status }) {
                             {student.verified ? '' : ' · Pendiente de verificación'}
                         </p>
                     </div>
-                    <Link href="/postulaciones" className="ml-auto text-xs font-semibold text-emerald-600 hover:underline whitespace-nowrap">
+                    <Link href="/postulaciones" className="text-sm font-semibold text-emerald-600 hover:underline w-full sm:w-auto sm:ml-auto sm:whitespace-nowrap">
                         Ver postulaciones →
                     </Link>
                 </div>
                 <button
                     type="button"
                     onClick={() => setOpen(!open)}
-                    className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline"
+                    className="text-sm font-semibold text-emerald-700 hover:text-emerald-800 underline"
                 >
                     {open ? 'Cancelar renovación' : 'Renovar carnet'}
                 </button>
@@ -133,7 +133,7 @@ export default function BecomeStudentForm({ student, status }) {
                     <form onSubmit={submit} className="mt-4 space-y-3">
                         <FormFields data={data} setData={setData} errors={errors} preview={preview} handleFile={handleFile} fileRef={fileRef} isRenew />
                         <button type="submit" disabled={processing}
-                            className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white text-sm font-semibold py-2 rounded-lg transition">
+                            className="w-full min-h-10 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white text-sm font-semibold py-2 rounded-lg transition">
                             {processing ? 'Renovando…' : 'Renovar carnet'}
                         </button>
                     </form>
@@ -147,7 +147,7 @@ export default function BecomeStudentForm({ student, status }) {
             <button
                 type="button"
                 onClick={() => setOpen(!open)}
-                className="w-full flex items-center gap-3 p-5 text-left"
+                className="w-full flex items-start gap-3 p-4 sm:p-5 text-left"
             >
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition ${open ? 'bg-emerald-500' : 'bg-gray-100'}`}>
                     <svg className={`w-5 h-5 ${open ? 'text-white' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,9 +155,9 @@ export default function BecomeStudentForm({ student, status }) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                     </svg>
                 </div>
-                <div>
-                    <p className="font-bold text-gray-900 text-sm">Alta como Alumno</p>
-                    <p className="text-xs text-gray-500 mt-0.5">Accede a oportunidades laborales</p>
+                <div className="min-w-0">
+                    <p className="font-bold text-gray-900 text-sm break-words">Alta como Alumno</p>
+                    <p className="text-xs text-gray-500 mt-0.5 break-words">Accede a oportunidades laborales</p>
                 </div>
                 <svg className={`w-4 h-4 text-gray-400 ml-auto transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -165,10 +165,10 @@ export default function BecomeStudentForm({ student, status }) {
             </button>
 
             {open && (
-                <form onSubmit={submit} className="px-5 pb-5 space-y-3 border-t border-gray-100 pt-4">
+                <form onSubmit={submit} className="px-4 sm:px-5 pb-4 sm:pb-5 space-y-3 border-t border-gray-100 pt-4">
                     <FormFields data={data} setData={setData} errors={errors} preview={preview} handleFile={handleFile} fileRef={fileRef} />
                     <button type="submit" disabled={processing}
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white text-sm font-semibold py-2.5 rounded-lg transition">
+                        className="w-full min-h-10 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white text-sm font-semibold py-2.5 rounded-lg transition">
                         {processing ? 'Enviando…' : 'Solicitar alta como alumno'}
                     </button>
                 </form>
@@ -187,7 +187,7 @@ function FormFields({ data, setData, errors, preview, handleFile, fileRef, isRen
                     value={data.name}
                     onChange={e => setData('name', e.target.value)}
                     placeholder="Tu nombre completo"
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none"
                     required
                 />
                 {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
@@ -200,7 +200,7 @@ function FormFields({ data, setData, errors, preview, handleFile, fileRef, isRen
                         value={data.school_name}
                         onChange={e => setData('school_name', e.target.value)}
                         placeholder="Ej: IES La Encina"
-                        className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none"
                         required
                     />
                     {errors.school_name && <p className="mt-1 text-xs text-red-500">{errors.school_name}</p>}
@@ -214,7 +214,7 @@ function FormFields({ data, setData, errors, preview, handleFile, fileRef, isRen
                         value={data.school_email}
                         onChange={e => setData('school_email', e.target.value)}
                         placeholder="alumno@escuela.edu"
-                        className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none"
                         required
                     />
                     {errors.school_email && <p className="mt-1 text-xs text-red-500">{errors.school_email}</p>}
@@ -224,7 +224,7 @@ function FormFields({ data, setData, errors, preview, handleFile, fileRef, isRen
                 <label className="block text-xs font-medium text-gray-700 mb-1">Carnet escolar (imagen)</label>
                 <div
                     onClick={() => fileRef.current?.click()}
-                    className="border-2 border-dashed border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-emerald-300 transition"
+                    className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-emerald-300 transition"
                 >
                     {preview ? (
                         <img src={preview} alt="vista previa" className="h-20 object-contain mx-auto rounded" />

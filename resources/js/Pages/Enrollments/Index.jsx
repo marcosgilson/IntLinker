@@ -48,9 +48,9 @@ function EnrollmentCard({ enrollment }) {
     };
 
     return (
-        <div className={`bg-white rounded-2xl border-2 ${cfg.ring} p-5 flex flex-col gap-4 transition-shadow hover:shadow-md`}>
+        <div className={`bg-white rounded-2xl border-2 ${cfg.ring} p-4 sm:p-5 flex flex-col gap-4 transition-shadow hover:shadow-md`}>
             {/* Company header */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 {company.logo_url ? (
                     <img src={company.logo_url} alt={company.name}
                         className="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
@@ -60,7 +60,7 @@ function EnrollmentCard({ enrollment }) {
                     </div>
                 )}
                 <div className="flex-1 min-w-0">
-                    <p className="font-bold text-gray-900 truncate">{company.name}</p>
+                    <p className="font-bold text-gray-900 break-words">{company.name}</p>
                     <p className="text-xs text-gray-400">
                         {new Date(enrollment.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
                     </p>
@@ -95,7 +95,7 @@ function EnrollmentCard({ enrollment }) {
                 <button
                     onClick={cancel}
                     disabled={processing}
-                    className="mt-auto text-sm text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 hover:border-red-300 rounded-lg px-4 py-2 transition disabled:opacity-50"
+                    className="mt-auto inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 hover:border-red-300 rounded-lg px-4 py-2 transition disabled:opacity-50"
                 >
                     {processing ? 'Cancelando…' : 'Cancelar postulación'}
                 </button>
@@ -121,7 +121,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                         <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
                         </Link>
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                             <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 sm:px-3 py-2 truncate max-w-[100px] sm:max-w-none">
                                 {auth.user?.name}
                             </Link>
@@ -138,7 +138,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                     </div>
 
                     {/* Slots counter */}
-                    <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 mb-8 flex flex-wrap items-center gap-4">
+                    <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                         <div className="flex gap-1.5">
                             {Array.from({ length: maxSlots }).map((_, i) => (
                                 <div key={i} className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
@@ -158,7 +158,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                         </div>
                         <Link
                             href="/empresas"
-                            className="ml-auto text-sm font-semibold text-indigo-600 hover:underline"
+                            className="text-sm font-semibold text-indigo-600 hover:underline w-full sm:w-auto sm:ml-auto text-left sm:text-right"
                         >
                             + Explorar empresas
                         </Link>
@@ -170,7 +170,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                             <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-4">
                                 Activas ({active.length})
                             </h2>
-                            <div className="grid sm:grid-cols-2 gap-4 mb-10">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
                                 {active.map(e => <EnrollmentCard key={e.id} enrollment={e} />)}
                             </div>
                         </>
@@ -193,7 +193,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">
                                 Canceladas ({cancelled.length})
                             </h2>
-                            <div className="grid sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {cancelled.map(e => <EnrollmentCard key={e.id} enrollment={e} />)}
                             </div>
                         </>

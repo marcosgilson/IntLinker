@@ -171,9 +171,9 @@ function CreateCompanyForm() {
     };
 
     return (
-        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-1">Crear empresa</h2>
-            <p className="text-sm text-gray-500 mb-6">Las empresas creadas aqui estan disponibles de inmediato.</p>
+            <p className="text-sm sm:text-base text-gray-500 mb-5 sm:mb-6">Las empresas creadas aqui estan disponibles de inmediato.</p>
 
             {recentlySuccessful && (
                 <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium rounded-lg px-4 py-2.5">
@@ -200,21 +200,21 @@ function CreateCompanyForm() {
                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
                 </Field>
                 <Field label="Correo de postulaciones" error={errors.applications_email}>
-                    <div className="flex items-center gap-0">
+                    <div className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0">
                         <input
                             type="text"
                             placeholder="info"
                             value={data.email_local}
                             onChange={e => updateEmail(e.target.value, data.email_domain)}
-                            className="flex-1 min-w-0 px-3.5 py-2.5 rounded-l-lg border border-r-0 border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                            className="flex-1 min-w-0 px-3.5 py-2.5 rounded-lg sm:rounded-l-lg sm:rounded-r-none border border-gray-300 sm:border-r-0 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
                         />
-                        <span className="px-2 py-2.5 bg-gray-50 border-t border-b border-gray-300 text-gray-500 text-sm font-medium select-none">@</span>
+                        <span className="hidden sm:flex px-2 py-2.5 bg-gray-50 border-t border-b border-gray-300 text-gray-500 text-sm font-medium select-none">@</span>
                         <input
                             type="text"
                             placeholder="educa.madrid.org"
                             value={data.email_domain}
                             onChange={e => updateEmail(data.email_local, e.target.value)}
-                            className="flex-1 min-w-0 px-3.5 py-2.5 rounded-r-lg border border-l-0 border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                            className="flex-1 min-w-0 px-3.5 py-2.5 rounded-lg sm:rounded-r-lg sm:rounded-l-none border border-gray-300 sm:border-l-0 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
                         />
                     </div>
                     {data.applications_email && (
@@ -223,7 +223,7 @@ function CreateCompanyForm() {
                 </Field>
                 <div className="pt-2">
                     <button type="submit" disabled={processing}
-                        className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm">
                         {processing ? 'Creando...' : 'Crear empresa'}
                     </button>
                 </div>
@@ -236,7 +236,7 @@ function CreateCompanyForm() {
 function UnverifiedUserRow({ user }) {
     const del = useForm({});
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between gap-4">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p className="font-semibold text-gray-900 text-sm">{user.name}</p>
                 <p className="text-xs text-gray-500">{user.email}</p>
@@ -245,7 +245,7 @@ function UnverifiedUserRow({ user }) {
             <button
                 onClick={() => { if (window.confirm('Eliminar la cuenta de ' + user.name + '?')) { del.delete(route('admin.unverified-users.delete', user.id)); } }}
                 disabled={del.processing}
-                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 transition disabled:opacity-50"
+                className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 transition disabled:opacity-50"
             >
                 Eliminar
             </button>
@@ -258,8 +258,8 @@ function StudentRow({ student }) {
     const reject = useForm({});
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <div className="flex items-start justify-between gap-4 mb-2">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-3">
                 <div>
                     <p className="font-bold text-gray-900">{student.user?.name}</p>
                     <p className="text-xs text-gray-400">{student.user?.email}</p>
@@ -282,15 +282,15 @@ function StudentRow({ student }) {
                 </details>
             )}
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
                 <button onClick={() => verify.patch(route('admin.students.verify', student.id))}
                     disabled={verify.processing || reject.processing}
-                    className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg transition disabled:opacity-50">
                     {verify.processing ? 'Verificando...' : 'Verificar alumno'}
                 </button>
                 <button onClick={() => reject.delete(route('admin.students.reject', student.id))}
                     disabled={verify.processing || reject.processing}
-                    className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-4 py-2 rounded-lg transition disabled:opacity-50">
                     {reject.processing ? 'Rechazando...' : 'Rechazar'}
                 </button>
             </div>
@@ -304,8 +304,8 @@ function WorkerRow({ worker }) {
     const reject = useForm({ user_id: worker.user_id, company_id: worker.company_id });
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <div className="flex items-start justify-between gap-4 mb-2">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-3">
                 <div>
                     <p className="font-bold text-gray-900">{worker.user_name}</p>
                     <p className="text-xs text-gray-400">{worker.user_email}</p>
@@ -319,15 +319,15 @@ function WorkerRow({ worker }) {
                 </span>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
                 <button onClick={() => verify.patch(route('admin.workers.verify'))}
                     disabled={verify.processing || reject.processing}
-                    className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg transition disabled:opacity-50">
                     {verify.processing ? 'Verificando...' : 'Verificar trabajador'}
                 </button>
                 <button onClick={() => reject.delete(route('admin.workers.reject'))}
                     disabled={verify.processing || reject.processing}
-                    className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                    className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-4 py-2 rounded-lg transition disabled:opacity-50">
                     {reject.processing ? 'Rechazando...' : 'Rechazar'}
                 </button>
             </div>
@@ -347,8 +347,8 @@ function ApplicationRow({ app }) {
     }[app.status] ?? { label: app.status, cls: 'bg-gray-100 text-gray-500 border-gray-200' };
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <div className="flex items-start justify-between gap-4 mb-2">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-3">
                 <div>
                     <p className="font-bold text-gray-900">{app.company_name}</p>
                     <p className="text-xs text-gray-400">
@@ -366,15 +366,15 @@ function ApplicationRow({ app }) {
             )}
 
             {app.status === 'pending' && (
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                     <button onClick={() => approve.patch(route('admin.company-applications.approve', app.id))}
                         disabled={approve.processing || reject.processing}
-                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg transition disabled:opacity-50">
                         {approve.processing ? 'Aprobando...' : 'Aprobar empresa'}
                     </button>
                     <button onClick={() => reject.patch(route('admin.company-applications.reject', app.id))}
                         disabled={approve.processing || reject.processing}
-                        className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50">
+                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-4 py-2 rounded-lg transition disabled:opacity-50">
                         {reject.processing ? 'Rechazando...' : 'Rechazar'}
                     </button>
                 </div>
@@ -387,7 +387,7 @@ function ApplicationRow({ app }) {
 function Section({ title, count, children, emptyText }) {
     return (
         <div>
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
                 <h2 className="text-lg font-bold text-white">{title}</h2>
                 {count > 0 && (
                     <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
@@ -396,7 +396,7 @@ function Section({ title, count, children, emptyText }) {
                 )}
             </div>
             {count === 0 ? (
-                <div className="bg-white rounded-2xl border border-gray-200 py-8 text-center text-gray-400">
+                <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-8 text-center text-gray-400">
                     <p className="font-medium text-sm">{emptyText}</p>
                 </div>
             ) : (
@@ -427,8 +427,8 @@ function CompanyEmailRow({ company }) {
     };
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <div className="flex items-center justify-between gap-4 mb-3 flex-wrap">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
+            <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                 <div>
                     <p className="font-semibold text-gray-900 text-sm">{company.name}</p>
                     {company.city && <p className="text-xs text-gray-400">{company.city}</p>}
@@ -437,26 +437,26 @@ function CompanyEmailRow({ company }) {
                     <span className="text-xs text-emerald-600 font-semibold">✓ Guardado</span>
                 )}
             </div>
-            <form onSubmit={submit} className="flex items-center gap-0">
+            <form onSubmit={submit} className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0">
                 <input
                     type="text"
                     placeholder="empleo"
                     value={data.email_local}
                     onChange={e => updateEmail(e.target.value, data.email_domain)}
-                    className="w-28 px-3 py-2 rounded-l-lg border border-r-0 border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                    className="w-full sm:w-28 px-3 py-2 rounded-lg sm:rounded-l-lg sm:rounded-r-none border border-gray-300 sm:border-r-0 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
                 />
-                <span className="px-2 py-2 bg-gray-50 border-t border-b border-gray-300 text-gray-500 text-sm font-medium select-none">@</span>
+                <span className="hidden sm:flex px-2 py-2 bg-gray-50 border-t border-b border-gray-300 text-gray-500 text-sm font-medium select-none">@</span>
                 <input
                     type="text"
                     placeholder="dominio.com"
                     value={data.email_domain}
                     onChange={e => updateEmail(data.email_local, e.target.value)}
-                    className="flex-1 min-w-0 px-3 py-2 rounded-r-lg border border-l-0 border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                    className="flex-1 min-w-0 px-3 py-2 rounded-lg sm:rounded-r-lg sm:rounded-l-none border border-gray-300 sm:border-l-0 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
                 />
                 <button
                     type="submit"
                     disabled={processing || !data.applications_email}
-                    className="ml-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-xs font-semibold rounded-lg transition"
+                    className="sm:ml-2 inline-flex min-h-10 w-full sm:w-auto items-center justify-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition"
                 >
                     {processing ? '...' : 'Guardar'}
                 </button>
@@ -481,12 +481,12 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
             <Head title="Panel Admin — IntLinker" />
 
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
-                <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-20 w-auto" />
+                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
                         </Link>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 min-w-0">
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">Admin</span>
                             {totalPending > 0 && (
                                 <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
@@ -509,9 +509,9 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-5xl mx-auto px-4 sm:px-6">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-extrabold text-white">Panel de administracion</h1>
+                        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Panel de administracion</h1>
                         <p className="text-gray-300 mt-1">Verifica identidades y gestiona empresas.</p>
                     </div>
 
@@ -544,9 +544,9 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
                         {companies.length > 0 && (
                             <div>
-                                <div className="flex items-center gap-3 mb-4">
+                                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
                                     <h2 className="text-lg font-bold text-white">Correos de postulaciones</h2>
-                                    <span className="text-xs text-gray-300">{companies.length} empresa{companies.length !== 1 ? 's' : ''}</span>
+                                    <span className="text-xs text-gray-300 break-all">{companies.length} empresa{companies.length !== 1 ? 's' : ''}</span>
                                 </div>
                                 <div className="space-y-3">
                                     {companies.map(c => <CompanyEmailRow key={c.id} company={c} />)}
@@ -557,8 +557,8 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                         <Section title="Todos los alumnos verificados" count={allStudents.length}
                             emptyText="No hay alumnos verificados aun.">
                             {allStudents.map(s => (
-                                <div key={s.id} className="bg-white/10 rounded-xl px-4 py-3 flex items-center justify-between gap-3">
-                                    <div className="flex items-center gap-3">
+                                <div key={s.id} className="bg-white/10 rounded-xl px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                    <div className="flex items-center gap-3 min-w-0">
                                         {s.user?.photo_url ? (
                                             <img src={s.user.photo_url} alt={s.user?.name}
                                                 className="w-8 h-8 rounded-full object-cover ring-2 ring-white/20" />
@@ -570,13 +570,13 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                                             </div>
                                         )}
                                         <div>
-                                            <p className="text-sm font-semibold text-white">{s.user?.name}</p>
-                                            <p className="text-xs text-gray-300">{s.user?.email}</p>
+                                            <p className="text-sm font-semibold text-white break-words">{s.user?.name}</p>
+                                            <p className="text-xs text-gray-300 break-all">{s.user?.email}</p>
                                         </div>
                                     </div>
                                     <Link href={route('students.profile', s.id)}
-                                        className="text-xs font-semibold text-indigo-200 hover:text-white bg-indigo-500/30
-                                            hover:bg-indigo-500/50 px-3 py-1.5 rounded-lg transition-colors">
+                                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-indigo-200 hover:text-white bg-indigo-500/30
+                                            hover:bg-indigo-500/50 px-4 py-2 rounded-lg transition-colors">
                                         Ver perfil
                                     </Link>
                                 </div>

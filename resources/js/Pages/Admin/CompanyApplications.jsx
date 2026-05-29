@@ -25,8 +25,8 @@ function ApplicationCard({ app }) {
     const cfg = STATUS_CFG[app.status] ?? { label: app.status, cls: 'bg-gray-100 text-gray-500 border-gray-200' };
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <div className="flex items-start justify-between gap-4 mb-3">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 break-words">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-3">
                 <div>
                     <p className="font-bold text-gray-900">{app.company_name}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
@@ -44,7 +44,7 @@ function ApplicationCard({ app }) {
             </div>
 
             {app.description && (
-                <p className="text-sm text-gray-600 mb-3 line-clamp-3">{app.description}</p>
+                <p className="text-sm text-gray-600 mb-3 line-clamp-3 break-words">{app.description}</p>
             )}
 
             {app.admin_notes && (
@@ -57,7 +57,7 @@ function ApplicationCard({ app }) {
                 <div className="space-y-3">
                     <button
                         onClick={() => setNotesOpen(v => !v)}
-                        className="text-xs text-gray-400 hover:text-gray-600 transition"
+                        className="text-sm text-gray-500 hover:text-gray-700 transition text-left"
                     >
                         {notesOpen ? '▲ Ocultar notas' : '▼ Añadir notas de admin (opcional)'}
                     </button>
@@ -77,18 +77,18 @@ function ApplicationCard({ app }) {
                         </div>
                     )}
 
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                         <button
                             onClick={doApprove}
                             disabled={approveForm.processing || rejectForm.processing}
-                            className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50"
+                            className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg transition disabled:opacity-50"
                         >
                             {approveForm.processing ? 'Aprobando…' : '✓ Aprobar solicitud'}
                         </button>
                         <button
                             onClick={doReject}
                             disabled={approveForm.processing || rejectForm.processing}
-                            className="text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50"
+                            className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 px-4 py-2 rounded-lg transition disabled:opacity-50"
                         >
                             {rejectForm.processing ? 'Rechazando…' : '✗ Rechazar solicitud'}
                         </button>
@@ -111,38 +111,38 @@ export default function AdminCompanyApplications({ applications = {} }) {
 
             <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
-                <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-20 w-auto" />
+                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3">
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">Admin</span>
-                            <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">
+                            <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 sm:px-3 py-2 truncate max-w-[120px] sm:max-w-none">
                                 {auth.user?.name}
                             </Link>
-                            <Link href="/admin" className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2">
+                            <Link href="/admin" className="flex items-center gap-1 text-sm text-gray-500 hover:text-indigo-600 transition px-2 sm:px-3 py-2">
                                 ← Panel admin
                             </Link>
                         </div>
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-4xl mx-auto px-6">
-                    <div className="mb-8 flex items-center gap-4">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-5xl mx-auto px-4 sm:px-6">
+                    <div className="mb-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
                         <div>
-                            <h1 className="text-3xl font-extrabold text-white">Solicitudes de empresa</h1>
+                            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Solicitudes de empresa</h1>
                             <p className="text-gray-300 mt-1">Revisa y procesa las solicitudes de creación de empresa.</p>
                         </div>
                         {pending.length > 0 && (
-                            <span className="ml-auto text-xs font-bold bg-amber-100 text-amber-700 px-3 py-1.5 rounded-full">
+                            <span className="text-xs font-bold bg-amber-100 text-amber-700 px-3 py-1.5 rounded-full sm:ml-auto">
                                 {pending.length} pendiente{pending.length !== 1 ? 's' : ''}
                             </span>
                         )}
                     </div>
 
                     {list.length === 0 ? (
-                        <div className="bg-white rounded-2xl border border-gray-200 py-16 text-center text-gray-400">
+                        <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-16 text-center text-gray-400">
                             <p className="text-lg font-medium">Sin solicitudes todavía.</p>
                         </div>
                     ) : (
