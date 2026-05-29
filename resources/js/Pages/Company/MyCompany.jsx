@@ -19,7 +19,7 @@ function LogoUpload({ company }) {
     const inputRef = useRef(null);
     const { post, processing } = useForm();
     const [preview, setPreview] = useState(
-        company.logo_url ? `/storage/${company.logo}` : null
+        company.logo_url ?? null
     );
 
     const handleChange = (e) => {
