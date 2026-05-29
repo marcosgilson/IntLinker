@@ -68,7 +68,7 @@ export default function Login({ status, canResetPassword }) {
                                 {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password}</p>}
                             </div>
 
-                            <div className="flex items-center justify-between text-sm">
+                            <div className="flex items-center text-sm">
                                 <label className="flex items-center gap-2 cursor-pointer select-none">
                                     <input
                                         type="checkbox"
