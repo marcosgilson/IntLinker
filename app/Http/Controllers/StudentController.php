@@ -140,14 +140,17 @@ class StudentController extends Controller
 
     public function resetFailed(Request $request): RedirectResponse
     {
-        $user = $request->user();
+        $user    = $request->user();
         $student = $user->student;
 
         if (! $student) {
             return back()->withErrors(['student' => 'No tienes ninguna solicitud activa.']);
         }
 
-        // Force delete regardless of status (user wants to start over)
+        if ($student->docupipe_status !== 'failed') {
+            abort(403, 'Solo puedes reiniciar una solicitud rechazada.');
+        }
+
         $student->enrollments()->delete();
         $student->schools()->detach();
         $student->delete();
