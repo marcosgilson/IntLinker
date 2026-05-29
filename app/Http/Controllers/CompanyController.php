@@ -135,7 +135,7 @@ class CompanyController extends Controller
     {
         $this->authorize('update', $company);
 
-        $request->validate([
+        $validated = $request->validate([
             'portfolio'                              => ['required', 'array'],
             'portfolio.education'                    => ['sometimes', 'array', 'max:10'],
             'portfolio.education.*.id'               => ['required', 'string', 'max:64'],
@@ -159,7 +159,7 @@ class CompanyController extends Controller
             'portfolio.gallery.*.caption'            => ['nullable', 'string', 'max:500'],
         ]);
 
-        $portfolio = $request->portfolio;
+        $portfolio = $validated['portfolio'];
         if (isset($portfolio['education'])) {
             foreach ($portfolio['education'] as &$edu) {
                 foreach (['institution', 'degree', 'field', 'description'] as $f) {

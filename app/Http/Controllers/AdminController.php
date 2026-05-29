@@ -76,7 +76,7 @@ class AdminController extends Controller
 
     public function storeCompany(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'name'               => 'required|string|max:255|unique:companies,name',
             'description'        => 'nullable|string|max:2000',
             'city'               => 'nullable|string|max:255',
@@ -84,13 +84,13 @@ class AdminController extends Controller
         ]);
 
         Company::create([
-            'name'               => $request->validated('name'),
-            'description'        => strip_tags($request->validated('description') ?? ''),
-            'city'               => strip_tags($request->validated('city') ?? ''),
-            'applications_email' => $request->validated('applications_email'),
+            'name'               => $validated['name'],
+            'description'        => strip_tags($validated['description'] ?? ''),
+            'city'               => strip_tags($validated['city'] ?? ''),
+            'applications_email' => $validated['applications_email'] ?? null,
         ]);
 
-        return back()->with('status', "Empresa '" . $request->validated('name') . "' creada correctamente.");
+        return back()->with('status', "Empresa '{$validated['name']}' creada correctamente.");
     }
 
     public function companyApplications(Request $request): Response
@@ -157,10 +157,10 @@ class AdminController extends Controller
     
     public function updateCompanyEmail(Request $request, Company $company): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'applications_email' => 'nullable|email|max:255',
         ]);
-        $company->update(['applications_email' => $request->applications_email]);
+        $company->update(['applications_email' => $validated['applications_email'] ?? null]);
         return back()->with('status', "Correo de '{$company->name}' actualizado.");
     }
 

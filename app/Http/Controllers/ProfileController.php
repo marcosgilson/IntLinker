@@ -89,7 +89,7 @@ class ProfileController extends Controller
 
     public function updatePortfolio(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'portfolio'                              => ['required', 'array'],
             'portfolio.education'                    => ['sometimes', 'array', 'max:10'],
             'portfolio.education.*.id'               => ['required', 'string', 'max:64'],
@@ -113,7 +113,7 @@ class ProfileController extends Controller
             'portfolio.gallery.*.caption'            => ['nullable', 'string', 'max:500'],
         ]);
 
-        $portfolio = $request->portfolio;
+        $portfolio = $validated['portfolio'];
         // Strip HTML tags from all text fields
         if (isset($portfolio['education'])) {
             foreach ($portfolio['education'] as &$edu) {

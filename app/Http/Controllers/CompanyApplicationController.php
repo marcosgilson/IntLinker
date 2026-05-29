@@ -35,6 +35,7 @@ class CompanyApplicationController extends Controller
         CompanyApplication::create([
             'user_id'      => $user->id,
             'company_name' => $request->validated('company_name'),
+            'position'     => $request->validated('position'),
             'description'  => $request->validated('description'),
             'status'       => 'pending',
         ]);

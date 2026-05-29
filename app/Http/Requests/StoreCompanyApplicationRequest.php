@@ -15,7 +15,7 @@ class StoreCompanyApplicationRequest extends FormRequest
     {
         return [
             'company_name' => ['required', 'string', 'max:255', 'not_regex:/<[^>]*>/'],
-            'description'  => ['nullable', 'string', 'max:2000', 'not_regex:/<script/i'],
+            'description'  => ['nullable', 'string', 'max:2000', 'not_regex:/<[^>]*>/'],
             'position'     => ['nullable', 'string', 'max:255', 'not_regex:/<[^>]*>/'],
         ];
     }
