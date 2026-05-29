@@ -16,7 +16,17 @@ class AdminController extends Controller
 {
     public function dashboard(): Response
     {
-        $pendingEmailUsers = User::whereNull('email_verified_at')->latest()->get(['id', 'name', 'email', 'created_at']);
+                // Eliminar usuarios expirados (>48h sin verificar)
+        User::whereNull('email_verified_at')
+            ->where('created_at', '<', now()->subHours(48))
+            ->delete();
+
+        $pendingEmailUsers = User::whereNull('email_verified_at')
+            ->latest()
+            ->get(['id', 'name', 'email', 'created_at'])
+            ->map(fn($u) => array_merge($u->toArray(), [
+                'expires_at' => $u->created_at->addHours(48)->toISOString(),
+            ]));
 
         $pendingStudents = Student::with('user:id,name,email')
             ->where('verified', false)

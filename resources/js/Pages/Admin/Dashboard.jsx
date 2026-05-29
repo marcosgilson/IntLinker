@@ -233,15 +233,42 @@ function CreateCompanyForm() {
 }
 
 // â”€ Pending student row â”€
+function useCountdown(expiresAt) {
+    const calc = () => {
+        const diff = Math.max(0, Math.floor((new Date(expiresAt) - Date.now()) / 1000));
+        const h = Math.floor(diff / 3600);
+        const m = Math.floor((diff % 3600) / 60);
+        const s = diff % 60;
+        return { total: diff, h, m, s };
+    };
+    const [time, setTime] = useState(calc);
+    useEffect(() => {
+        if (time.total <= 0) return;
+        const id = setInterval(() => setTime(calc()), 1000);
+        return () => clearInterval(id);
+    }, [expiresAt]);
+    return time;
+}
+
 function UnverifiedUserRow({ user }) {
     const del = useForm({});
     const verify = useForm({});
+    const { total, h, m, s } = useCountdown(user.expires_at);
+    const urgent = total < 3600;
+    const pad = n => String(n).padStart(2, '0');
     return (
         <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p className="font-semibold text-gray-900 text-sm">{user.name}</p>
                 <p className="text-xs text-gray-500">{user.email}</p>
                 <p className="text-xs text-gray-400 mt-0.5">Registrado: {new Date(user.created_at).toLocaleDateString('es-ES')}</p>
+                {total > 0 ? (
+                    <p className={`text-xs font-medium mt-1 ${urgent ? 'text-red-500' : 'text-amber-500'}`}>
+                        {urgent ? '⚠️' : '⏳'} Expira en: {pad(h)}:{pad(m)}:{pad(s)}
+                    </p>
+                ) : (
+                    <p className="text-xs font-medium mt-1 text-red-600">⛔ Expirado — se eliminará pronto</p>
+                )}
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
                 <button
@@ -249,7 +276,7 @@ function UnverifiedUserRow({ user }) {
                     disabled={verify.processing}
                     className="inline-flex min-h-10 flex-1 sm:flex-none items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition disabled:opacity-50"
                 >
-                    Verificar
+                    {verify.processing ? 'Verificando...' : 'Verificar'}
                 </button>
                 <button
                     onClick={() => { if (window.confirm('Eliminar la cuenta de ' + user.name + '?')) { del.delete(route('admin.unverified-users.delete', user.id)); } }}
