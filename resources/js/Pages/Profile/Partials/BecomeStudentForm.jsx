@@ -74,7 +74,7 @@ export default function BecomeStudentForm({ student, status }) {
                     </div>
                 </div>
                 <button
-                    onClick={() => router.delete(route('student.cancelar'), {}, { preserveScroll: true })}
+                    onClick={() => router.delete('/alumno/fallido', {}, { preserveScroll: true })}
                     className="w-full min-h-10 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
                 >
                     Intentar de nuevo

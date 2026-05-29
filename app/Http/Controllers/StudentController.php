@@ -138,6 +138,23 @@ class StudentController extends Controller
         return back()->with('status', 'Escuela eliminada del perfil.');
     }
 
+    public function resetFailed(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+        $student = $user->student;
+
+        if (! $student) {
+            return back()->withErrors(['student' => 'No tienes ninguna solicitud activa.']);
+        }
+
+        // Force delete regardless of status (user wants to start over)
+        $student->enrollments()->delete();
+        $student->schools()->detach();
+        $student->delete();
+
+        return back()->with('status', 'Solicitud eliminada. Puedes enviar un nuevo carnet.');
+    }
+
     public function status(Request $request): JsonResponse
     {
         $student = $request->user()->student;
