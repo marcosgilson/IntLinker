@@ -20,7 +20,7 @@ export default function Register() {
         <>
             <Head title="Crear cuenta — IntLinker" />
 
-            <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 flex items-center justify-center p-4">
+            <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 flex items-center justify-center p-4">
                 <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
 
                     <div className="px-8 pt-8 pb-6 border-b border-gray-100">

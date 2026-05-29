@@ -57,7 +57,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
     const hasFilters = selectedCities.length > 0 || selectedCompanies.length > 0;
 
     return (
-        <div className="w-full max-w-xl">
+        <div className="w-full max-w-full sm:max-w-xl">
             {/* Input */}
             <div className="relative">
                 <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-400 focus-within:border-indigo-400 transition">
@@ -91,7 +91,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
 
                 {/* Dropdown */}
                 {open && hasResults && (
-                    <div ref={dropdownRef} className="absolute z-20 mt-1 w-full bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden">
+                    <div ref={dropdownRef} className="absolute z-20 mt-1 left-0 right-0 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden">
                         {citySuggestions.length > 0 && (
                             <>
                                 <div className="px-4 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wide bg-gray-50">
@@ -231,7 +231,7 @@ export default function CompaniesIndex({
     return (
         <>
             <Head title="Empresas — IntLinker"/>
-            <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
+            <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
                         <Link href="/inicio" className="flex items-center gap-2">
