@@ -1,7 +1,7 @@
 import IntLinkerLogo from '@/Components/IntLinkerLogo';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -26,7 +26,7 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                         <h1 className="text-2xl font-bold text-gray-900">Iniciar sesion</h1>
                         <p className="text-gray-500 text-sm mt-1">
-                            ?No tienes cuenta?{' '}
+                            ¿No tienes cuenta?{' '}
                             <Link href="/registro" className="text-indigo-600 hover:underline font-medium">
                                 Registrate gratis
                             </Link>
@@ -34,11 +34,17 @@ export default function Login({ status, canResetPassword }) {
                     </div>
 
                     <div className="px-8 py-7 space-y-4">
-                        {status && <div className="text-sm font-medium text-green-600 bg-green-50 rounded-lg px-4 py-2">{status}</div>}
+                        {status && (
+                            <div className="text-sm font-medium text-green-600 bg-green-50 rounded-lg px-4 py-2">
+                                {status}
+                            </div>
+                        )}
 
                         <form onSubmit={submit} className="space-y-4">
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electronico</label>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Correo electronico
+                                </label>
                                 <input
                                     id="email"
                                     type="email"
@@ -54,7 +60,9 @@ export default function Login({ status, canResetPassword }) {
                             </div>
 
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contrasena</label>
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Contrasena
+                                </label>
                                 <input
                                     id="password"
                                     type="password"
@@ -78,11 +86,6 @@ export default function Login({ status, canResetPassword }) {
                                     />
                                     <span className="text-gray-600">Recuerdame</span>
                                 </label>
-                                {canResetPassword && (
-                                    <Link href={route('password.request')} className="text-indigo-600 hover:text-indigo-700 font-medium">
-                                        ?Olvidaste tu contrasena?
-                                    </Link>
-                                )}
                             </div>
 
                             <button
@@ -99,9 +102,3 @@ export default function Login({ status, canResetPassword }) {
         </>
     );
 }
-
-
-
-
-
-
