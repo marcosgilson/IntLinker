@@ -593,15 +593,9 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                         </Section>
 
                         {companies.length > 0 && (
-                            <div>
-                                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
-                                    <h2 className="text-lg font-bold text-white">Correos de postulaciónes</h2>
-                                    <span className="text-xs text-gray-300 break-all">{companies.length} empresa{companies.length !== 1 ? 's' : ''}</span>
-                                </div>
-                                <div className="space-y-3">
-                                    {companies.map(c => <CompanyEmailRow key={c.id} company={c} />)}
-                                </div>
-                            </div>
+                            <Section title="Correos de postulaciónes" count={companies.length} emptyText="">
+                                {companies.map(c => <CompanyEmailRow key={c.id} company={c} />)}
+                            </Section>
                         )}
 
                         <Section title="Todos los alumnos verificados" count={allStudents.length}
