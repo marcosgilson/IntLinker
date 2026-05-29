@@ -156,10 +156,10 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
 }
 
 const STATUS_CONFIG = {
-    waiting:   { label: 'En espera',  bg: 'bg-amber-50',  border: 'border-amber-200',  text: 'text-amber-700',  icon: '⏳', modalBg: 'bg-amber-500'  },
-    accepted:  { label: 'Aceptado',   bg: 'bg-green-50',  border: 'border-green-200',  text: 'text-green-700',  icon: '✓',  modalBg: 'bg-green-500'  },
-    rejected:  { label: 'Rechazado',  bg: 'bg-red-50',    border: 'border-red-200',    text: 'text-red-600',    icon: '✕',  modalBg: 'bg-red-500'    },
-    cancelled: { label: 'Cancelado',  bg: 'bg-gray-50',   border: 'border-gray-200',   text: 'text-gray-500',   icon: '—',  modalBg: 'bg-gray-400'   },
+    waiting:   { label: 'En espera',  bg: 'bg-amber-50',  border: 'border-amber-200',  text: 'text-amber-700',  icon: '',   modalBg: 'bg-amber-500'  },
+    accepted:  { label: 'Aceptado',   bg: 'bg-green-50',  border: 'border-green-200',  text: 'text-green-700',  icon: '',   modalBg: 'bg-green-500'  },
+    rejected:  { label: 'Rechazado',  bg: 'bg-red-50',    border: 'border-red-200',    text: 'text-red-600',    icon: '',   modalBg: 'bg-red-500'    },
+    cancelled: { label: 'Cancelado',  bg: 'bg-gray-50',   border: 'border-gray-200',   text: 'text-gray-500',   icon: '',   modalBg: 'bg-gray-400'   },
 };
 
 function EnrollmentModal({ company, status, onClose }) {
@@ -178,7 +178,7 @@ function EnrollmentModal({ company, status, onClose }) {
                     </div>
                 </div>
                 <div className={`rounded-xl border ${cfg.bg} ${cfg.border} px-4 py-3 mb-5`}>
-                    <p className={`text-sm font-semibold ${cfg.text}`}>{cfg.icon} Estado: {cfg.label}</p>
+                    <p className={`text-sm font-semibold ${cfg.text}`}>Estado: {cfg.label}</p>
                     <p className="text-xs text-gray-500 mt-1">
                         {status === 'waiting'   && 'Tu solicitud ha sido enviada y esta siendo revisada por la empresa.'}
                         {status === 'accepted'  && 'Enhorabuena, la empresa ha aceptado tu postulacion.'}
@@ -248,7 +248,7 @@ function CompanyCard({ company, highlightedCity, enrollmentStatus }) {
                         enrollmentStatus ? (
                             <button onClick={() => setShowModal(true)}
                                 className={`inline-flex min-h-10 w-full sm:w-auto items-center justify-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg border transition ${cfg.bg} ${cfg.border} ${cfg.text}`}>
-                                {cfg.icon} {cfg.label}
+                                {cfg.label}
                             </button>
                         ) : (
                             <button onClick={doEnroll} disabled={enrollForm.processing}
