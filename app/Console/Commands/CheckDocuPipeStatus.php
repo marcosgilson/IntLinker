@@ -121,6 +121,18 @@ class CheckDocuPipeStatus extends Command
             return;
         }
 
+        // Anti-fraud: check if another verified student already owns this card name
+        $duplicate = Student::where('verified', true)
+            ->where('user_id', '!=', $student->user_id)
+            ->with('user')
+            ->get()
+            ->first(fn($s) => $this->normalize($s->user->name) === $cardName);
+
+        if ($duplicate) {
+            $this->failStudent($student, 'Este carnet ya ha sido verificado por otro usuario. Si crees que es un error, contacta con soporte.');
+            return;
+        }
+
         if (! $yearEnd) {
             $this->failStudent($student, 'No se pudo determinar el periodo academico del carnet.');
             return;

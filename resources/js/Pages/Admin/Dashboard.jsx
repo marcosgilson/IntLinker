@@ -484,7 +484,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
+                            <IntLinkerLogo className="h-12 sm:h-12 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3 min-w-0">
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">Admin</span>

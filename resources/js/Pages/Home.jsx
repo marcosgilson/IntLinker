@@ -93,7 +93,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
+                            <IntLinkerLogo className="h-12 sm:h-12 w-auto" />
                         </div>
 
                         <div className="hidden md:flex items-center gap-4 lg:gap-8 text-sm font-medium text-gray-600">
