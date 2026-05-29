@@ -512,7 +512,7 @@ function CompanyEmailRow({ company }) {
                 </button>
             </form>
             {data.applications_email && (
-                <p className="mt-1.5 text-xs text-gray-400">â†’ <span className="font-medium text-gray-600">{data.applications_email}</span></p>
+                <p className="mt-1.5 text-xs text-gray-400"><span className="font-medium text-gray-600">{data.applications_email}</span></p>
             )}
         </div>
     );
