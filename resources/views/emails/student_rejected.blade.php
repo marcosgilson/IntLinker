@@ -1,4 +1,4 @@
-<¡DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head><meta charset="UTF-8" /><title>Solicitud rechazada - IntLinker</title></head>
 <body style="margin:0;padding:0;background:#f3f4f6;font-family:Arial,sans-serif;">
