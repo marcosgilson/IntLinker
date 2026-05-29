@@ -15,9 +15,10 @@ export default function BecomeStudentForm({ student, status }) {
     });
 
     const isActive = student && student.verified && (student.expires_at === null || new Date(student.expires_at) > new Date());
-    const isPending = student && !student.verified;
+    const isPending = student && !student.verified && student.docupipe_status !== 'failed';
+    const isFailed  = student && student.docupipe_status === 'failed';
 
-    // Poll every 2 minutes when verification is pending
+    // Poll every 30s when verification is pending
     useEffect(() => {
         if (!isPending) return;
 
@@ -31,7 +32,8 @@ export default function BecomeStudentForm({ student, status }) {
             } catch (_) {}
         };
 
-        const id = setInterval(poll, 2 * 60 * 1000);
+        poll(); // poll immediately on mount
+        const id = setInterval(poll, 30 * 1000);
         return () => clearInterval(id);
     }, [isPending]);
 
@@ -54,6 +56,32 @@ export default function BecomeStudentForm({ student, status }) {
             },
         });
     };
+
+    if (isFailed) {
+        return (
+            <div className="bg-red-50 border border-red-200 rounded-2xl p-5">
+                <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </div>
+                    <div className="flex-1">
+                        <h3 className="font-bold text-red-900 text-sm">Verificación rechazada</h3>
+                        {student.docupipe_failure_reason && (
+                            <p className="text-xs text-red-700 mt-0.5">{student.docupipe_failure_reason}</p>
+                        )}
+                    </div>
+                </div>
+                <button
+                    onClick={() => router.reload({ only: ['student'] })}
+                    className="w-full text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
+                >
+                    Intentar de nuevo
+                </button>
+            </div>
+        );
+    }
 
     if (isPending && !isActive) {
         return (

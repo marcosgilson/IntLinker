@@ -153,9 +153,10 @@ class CheckDocuPipeStatus extends Command
         $student->update([
             'docupipe_status'         => 'failed',
             'docupipe_failure_reason' => $reason,
+            'verified'                => false,
         ]);
         $student->user->notify(new StudentRejectedNotification($reason));
-        $student->delete();
+        // No se borra el registro para que el usuario pueda ver el motivo del rechazo en la UI
     }
 
     private function normalize(string $name): string

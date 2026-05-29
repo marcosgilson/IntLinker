@@ -20,7 +20,12 @@ class StudentController extends Controller
         $user = $request->user();
 
         if ($user->student) {
-            return back()->withErrors(['student' => 'Ya tienes una solicitud de alumno en proceso o activa.']);
+            // Allow re-submission if previous verification failed
+            if ($user->student->docupipe_status === 'failed') {
+                $user->student->delete();
+            } else {
+                return back()->withErrors(['student' => 'Ya tienes una solicitud de alumno en proceso o activa.']);
+            }
         }
 
         $user->update(['name' => $request->validated('name')]);
