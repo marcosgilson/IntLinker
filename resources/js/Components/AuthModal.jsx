@@ -54,7 +54,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                 />
             </Field>
 
-            <Field label="Contrasena" id="login-password" error={errors.password}>
+            <Field label="Contraseña" id="login-password" error={errors.password}>
                 <Input
                     id="login-password"
                     type="password"
@@ -81,7 +81,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                         href={route('password.request')}
                         className="text-indigo-600 hover:text-indigo-700 font-medium"
                     >
-                        ?Olvidaste tu contrasena?
+                        ?Olvidaste tu contraseña?
                     </Link>
                 )}
             </div>
@@ -148,7 +148,7 @@ function RegisterForm({ onSwitch, onClose }) {
             </Field>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Field label="Contrasena" id="reg-password" error={errors.password}>
+                <Field label="Contraseña" id="reg-password" error={errors.password}>
                     <Input
                         id="reg-password"
                         type="password"
@@ -159,7 +159,7 @@ function RegisterForm({ onSwitch, onClose }) {
                         required
                     />
                 </Field>
-                <Field label="Confirmar contrasena" id="reg-confirm" error={errors.password_confirmation}>
+                <Field label="Confirmar contraseña" id="reg-confirm" error={errors.password_confirmation}>
                     <Input
                         id="reg-confirm"
                         type="password"

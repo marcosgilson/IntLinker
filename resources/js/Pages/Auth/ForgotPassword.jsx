@@ -11,10 +11,10 @@ export default function ForgotPassword({ status }) {
 
     return (
         <GuestLayout>
-            <Head title="Recuperar contrasena — IntLinker" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">Recuperar contrasena</h1>
+            <Head title="Recuperar contraseña — IntLinker" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">Recuperar contraseña</h1>
             <p className="text-sm text-gray-500 mb-5">
-                Escribe tu correo y te enviaremos un enlace para restablecer tu contrasena.
+                Escribe tu correo y te enviaremos un enlace para restablecer tu contraseña.
             </p>
 
             {status && (

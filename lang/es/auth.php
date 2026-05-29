@@ -1,6 +1,6 @@
 <?php
 return [
     'failed'   => 'Las credenciales no son correctas.',
-    'password' => 'La contrasena es incorrecta.',
+    'password' => 'La contraseña es incorrecta.',
     'throttle' => 'Demasiados intentos. Por favor espera :seconds segundos.',
 ];

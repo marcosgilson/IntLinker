@@ -68,13 +68,13 @@ export default function DeleteUserForm({ className = '' }) {
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-600">
-                        Todos tus datos seran eliminados permanentemente. Introduce tu contrasena para confirmar.
+                        Todos tus datos seran eliminados permanentemente. Introduce tu contraseña para confirmar.
                     </p>
 
                     <div className="mt-6">
                         <InputLabel
                             htmlFor="password"
-                            value="Contrasena"
+                            value="Contraseña"
                             className="sr-only"
                         />
 
@@ -89,7 +89,7 @@ export default function DeleteUserForm({ className = '' }) {
                             }
                             className="mt-1 block w-3/4"
                             isFocused
-                            placeholder="Contrasena"
+                            placeholder="Contraseña"
                         />
 
                         <InputError

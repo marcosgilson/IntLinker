@@ -69,12 +69,12 @@ class CompanySeeder extends Seeder
             ['name' => 'Grupo Antolin',               'city' => 'Burgos',                     'description' => 'Fabricante mundial de componentes de automocion para interiores.',           'applications_email' => 'rrhh@grupoantolin.com'],
             // ── Murcia / Baleares / Canarias ──────────────────────────────────
             ['name' => 'Cajamar Caja Rural',          'city' => 'Almeria',                    'description' => 'Cooperativa de credito lider en banca agraria en Espana.',                  'applications_email' => 'empleo@cajamar.es'],
-            ['name' => 'Melia Hotels International',  'city' => 'Palma de Mallorca',          'description' => 'Cadena hotelera espanola entre las mayores del mundo.',                     'applications_email' => 'jobs@melia.com'],
+            ['name' => 'Melia Hotels International',  'city' => 'Palma de Mallorca',          'description' => 'Cadena hotelera española entre las mayores del mundo.',                     'applications_email' => 'jobs@melia.com'],
             ['name' => 'Binter Canarias',             'city' => 'Las Palmas de Gran Canaria', 'description' => 'Aerolinea regional con vuelos interinsulares y a destinos europeos.',       'applications_email' => 'empleo@bintercanarias.com'],
             ['name' => 'Disa Corporacion Petrolifera', 'city' => 'Santa Cruz de Tenerife',   'description' => 'Grupo energetico lider en distribucion de carburantes en Canarias.',        'applications_email' => 'rrhh@disa.es'],
             ['name' => 'Estrella de Levante',         'city' => 'Murcia',                     'description' => 'Cervecera regional con mas de un siglo de historia en la Region de Murcia.', 'applications_email' => 'empleo@estrellalevante.es'],
             // ── Talgo ────────────────────────────────────────────────────────
-            ['name' => 'Talgo',                            'city' => 'Las Rozas, Madrid',          'description' => 'Fabricante espanol de trenes de alta velocidad y larga distancia.',        'applications_email' => 'empleo@talgo.com'],
+            ['name' => 'Talgo',                            'city' => 'Las Rozas, Madrid',          'description' => 'Fabricante español de trenes de alta velocidad y larga distancia.',        'applications_email' => 'empleo@talgo.com'],
         ];
 
         foreach ($companies as $data) {

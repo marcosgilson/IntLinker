@@ -71,7 +71,7 @@ export default function Register() {
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contrasena</label>
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
                                     <input
                                         id="password"
                                         type="password"

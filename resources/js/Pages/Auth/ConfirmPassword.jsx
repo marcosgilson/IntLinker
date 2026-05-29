@@ -11,15 +11,15 @@ export default function ConfirmPassword() {
 
     return (
         <GuestLayout>
-            <Head title="Confirmar contrasena — IntLinker" />
+            <Head title="Confirmar contraseña — IntLinker" />
             <h1 className="text-2xl font-bold text-gray-900 mb-1">Area segura</h1>
             <p className="text-sm text-gray-500 mb-5">
-                Confirma tu contrasena para continuar.
+                Confirma tu contraseña para continuar.
             </p>
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contrasena</label>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
                     <input
                         id="password"
                         type="password"

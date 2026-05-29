@@ -22,16 +22,16 @@ Route::middleware('guest')->group(function () {
 
     Route::post('iniciar-sesion', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('recuperar-contrasena', [PasswordResetLinkController::class, 'create'])
+    Route::get('recuperar-contraseña', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
 
-    Route::post('recuperar-contrasena', [PasswordResetLinkController::class, 'store'])
+    Route::post('recuperar-contraseña', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
 
-    Route::get('restablecer-contrasena/{token}', [NewPasswordController::class, 'create'])
+    Route::get('restablecer-contraseña/{token}', [NewPasswordController::class, 'create'])
         ->name('password.reset');
 
-    Route::post('restablecer-contrasena', [NewPasswordController::class, 'store'])
+    Route::post('restablecer-contraseña', [NewPasswordController::class, 'store'])
         ->name('password.store');
 });
 
@@ -47,12 +47,12 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
-    Route::get('confirmar-contrasena', [ConfirmablePasswordController::class, 'show'])
+    Route::get('confirmar-contraseña', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
-    Route::post('confirmar-contrasena', [ConfirmablePasswordController::class, 'store']);
+    Route::post('confirmar-contraseña', [ConfirmablePasswordController::class, 'store']);
 
-    Route::put('contrasena', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('contraseña', [PasswordController::class, 'update'])->name('password.update');
 
     Route::post('cerrar-sesion', [AuthenticatedSessionController::class, 'destroy'])
         ->name('cerrar-sesion');
