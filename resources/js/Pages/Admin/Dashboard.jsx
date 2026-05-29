@@ -265,10 +265,10 @@ function UnverifiedUserRow({ user }) {
                 <p className="text-xs text-gray-400 mt-0.5">Registrado: {new Date(user.created_at).toLocaleDateString('es-ES')}</p>
                 {total > 0 ? (
                     <p className={`text-xs font-medium mt-1 ${urgent ? 'text-red-500' : 'text-amber-500'}`}>
-                        {urgent ? '⚠️' : '⏳'} Expira en: {pad(h)}:{pad(m)}:{pad(s)}
+                        Expira en: {pad(h)}:{pad(m)}:{pad(s)}
                     </p>
                 ) : (
-                    <p className="text-xs font-medium mt-1 text-red-600">⛔ Expirado — se eliminara pronto</p>
+                    <p className="text-xs font-medium mt-1 text-red-600">Expirado — se eliminara pronto</p>
                 )}
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
