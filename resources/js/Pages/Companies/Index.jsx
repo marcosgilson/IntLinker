@@ -233,9 +233,9 @@ export default function CompaniesIndex({
             <Head title="Empresas — IntLinker"/>
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
+                            <IntLinkerLogo className="h-10 sm:h-12 w-auto" />
                         </Link>
                         <div className="flex items-start gap-3">
                             {user ? (
@@ -294,10 +294,10 @@ export default function CompaniesIndex({
                                 link.url ? (
                                     <Link key={i} href={link.url}
                                         className={`px-4 py-2 text-sm rounded-lg border transition ${link.active ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-400'}`}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}/>
+                                        dangerouslySetInnerHTML={{ __html: link.label.replace("Previous", "Anterior").replace("Next", "Siguiente") }}/>
                                 ) : (
                                     <span key={i} className="px-4 py-2 text-sm rounded-lg border bg-gray-50 text-gray-300 border-gray-100"
-                                        dangerouslySetInnerHTML={{ __html: link.label }}/>
+                                        dangerouslySetInnerHTML={{ __html: link.label.replace("Previous", "Anterior").replace("Next", "Siguiente") }}/>
                                 )
                             ))}
                         </div>
