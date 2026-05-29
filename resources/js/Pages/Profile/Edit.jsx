@@ -130,7 +130,7 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
             <Head title="Perfil — IntLinker" />
 
             <div className="py-4 sm:py-8">
-                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-5">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-5">
 
                     {/* Back link */}
                     <div className="flex items-center gap-2 mb-1">
@@ -197,13 +197,13 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
                         <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">Configuración de cuenta</h2>
                         <div className="space-y-4">
                             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
-                                <UpdateProfileInformationForm status={status} className="max-w-xl" />
+                                <UpdateProfileInformationForm status={status} className="max-w-2xl" />
                             </div>
                             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
-                                <UpdatePasswordForm className="max-w-xl" />
+                                <UpdatePasswordForm className="max-w-2xl" />
                             </div>
                             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
-                                <DeleteUserForm className="max-w-xl" />
+                                <DeleteUserForm className="max-w-2xl" />
                             </div>
                         </div>
                     </div>
