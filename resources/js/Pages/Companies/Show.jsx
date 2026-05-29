@@ -91,7 +91,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
     const enrollForm = useForm({ company_id: company.id });
     const isEmployee = user && employees.some(e => e.id === user.id);
 
-    const doEnroll = () => { enrollForm.post(route('enrollments.store')); };
+    const doEnroll = () => { enrollForm.post(route('enrollments.store'), { preserveScroll: true }); };
 
     return (
         <>
