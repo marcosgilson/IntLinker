@@ -74,7 +74,7 @@ export default function BecomeStudentForm({ student, status }) {
                     </div>
                 </div>
                 <button
-                    onClick={() => router.reload({ only: ['student'] })}
+                    onClick={() => router.delete(route('student.reset-failed'))}
                     className="w-full min-h-10 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
                 >
                     Intentar de nuevo
