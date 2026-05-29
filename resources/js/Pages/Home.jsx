@@ -291,7 +291,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
                                 <p className="text-lg font-medium">Todavia no hay empresas registradas.</p>
-                                <p className="text-sm mt-1">Pronto apareceran aqui las primeras colaboraciones.</p>
+                                <p className="text-sm mt-1">Pronto apareceran aquí las primeras colaboraciones.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
@@ -346,7 +346,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                 <section className="py-16 sm:py-20 bg-gradient-to-r from-indigo-600 to-violet-600">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
                         <h2 className="text-2xl sm:text-4xl font-extrabold text-white mb-4">
-                            {user ? '!Bienvenido de nuevo!' : '?Listo para dar el salto?'}
+                            {user ? '¡Bienvenido de nuevo!' : '¿Listo para dar el salto?'}
                         </h2>
                         <p className="text-indigo-200 text-base sm:text-lg mb-8">
                             {user

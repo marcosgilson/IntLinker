@@ -26,7 +26,7 @@ function EnrollmentRow({ enrollment, companyId }) {
     };
 
     const doRemove = () => {
-        if (!confirm('?Eliminar a este candidato del proceso? No podra volver a postularse.')) return;
+        if (!confirm('¿Eliminar a este candidato del proceso? No podrá volver a postularse.')) return;
         removeForm.delete(route('companies.enrollments.remove', { company: companyId, enrollment: enrollment.id }));
     };
 

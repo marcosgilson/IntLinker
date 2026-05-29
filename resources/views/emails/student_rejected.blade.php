@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<¡DOCTYPE html>
 <html lang="es">
 <head><meta charset="UTF-8" /><title>Solicitud rechazada - IntLinker</title></head>
 <body style="margin:0;padding:0;background:#f3f4f6;font-family:Arial,sans-serif;">
@@ -22,7 +22,7 @@
               <p style="margin:0;font-size:15px;color:#991b1b;font-weight:500;">{{ $reason }}</p>
             </div>
             <p style="margin:0 0 24px;font-size:14px;color:#6b7280;line-height:1.6;">
-              Puedes volver a intentarlo desde tu perfil con un carnet valido.
+              Puedes volver a intentarlo desde tu perfil con un carnet válido.
             </p>
             <table cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
               <tr>

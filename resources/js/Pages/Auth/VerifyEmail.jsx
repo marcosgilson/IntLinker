@@ -14,7 +14,7 @@ export default function VerifyEmail({ status }) {
                 <h1 className="text-2xl font-bold text-gray-900 mb-1 text-center">Cuenta pendiente de verificación</h1>
                 <p className="text-sm text-gray-500 text-center">
                     Tu cuenta ha sido creada correctamente. Un administrador la revisara y la activara en breve.
-                    Una vez verificada podras iniciar sesión con normalidad.
+                    Una vez verificada podrás iniciar sesión con normalidad.
                 </p>
             </div>
 

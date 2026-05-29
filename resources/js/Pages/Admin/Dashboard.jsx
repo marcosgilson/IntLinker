@@ -173,7 +173,7 @@ function CreateCompanyForm() {
     return (
         <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-1">Crear empresa</h2>
-            <p className="text-sm sm:text-base text-gray-500 mb-5 sm:mb-6">Las empresas creadas aqui estan disponibles de inmediato.</p>
+            <p className="text-sm sm:text-base text-gray-500 mb-5 sm:mb-6">Las empresas creadas aquí estan disponibles de inmediato.</p>
 
             {recentlySuccessful && (
                 <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium rounded-lg px-4 py-2.5">
@@ -272,7 +272,7 @@ function UnverifiedUserRow({ user }) {
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
                 <button
-                    onClick={() => { if (window.confirm('Verificar la cuenta de ' + user.name + '? El usuario podra acceder a la plataforma.')) { verify.patch(route('admin.unverified-users.verify', user.id)); } }}
+                    onClick={() => { if (window.confirm('Verificar la cuenta de ' + user.name + '? El usuario podrá acceder a la plataforma.')) { verify.patch(route('admin.unverified-users.verify', user.id)); } }}
                     disabled={verify.processing}
                     className="inline-flex min-h-10 flex-1 sm:flex-none items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition disabled:opacity-50"
                 >

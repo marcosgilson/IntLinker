@@ -74,7 +74,7 @@ function EnrollmentRow({ enrollment, companyId }) {
         accept.patch(route('companies.enrollments.accept', { company: companyId, enrollment: enrollment.id }));
     };
     const doRemove = () => {
-        if (!confirm('?Eliminar a este candidato del proceso?')) return;
+        if (!confirm('¿Eliminar a este candidato del proceso?')) return;
         remove.delete(route('companies.enrollments.remove', { company: companyId, enrollment: enrollment.id }));
     };
 

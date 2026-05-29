@@ -153,7 +153,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                         <TagList tags={draft.benefits} onRemove={i => setDraft(d => ({ ...d, benefits: d.benefits.filter((_, idx) => idx !== i) }))} />
                     </EditField>
 
-                    <EditField label="?Por que trabajar con nosotros?">
+                    <EditField label="¿Por qué trabajar con nosotros?">
                         <textarea value={draft.why_us} onChange={e => setDraft(d => ({ ...d, why_us: e.target.value }))}
                             rows={3} maxLength={800} placeholder="Describe que os hace especiales..."
                             className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none" />
@@ -212,7 +212,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                     )}
                     {portfolio.why_us && (
                         <div>
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">?Por que trabajar con nosotros?</h3>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">¿Por qué trabajar con nosotros?</h3>
                             <p className="text-sm text-gray-600 whitespace-pre-line leading-relaxed">{portfolio.why_us}</p>
                         </div>
                     )}
