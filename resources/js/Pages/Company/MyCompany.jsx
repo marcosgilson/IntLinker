@@ -268,12 +268,7 @@ export default function MyCompany({ companies = [] }) {
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mi empresa</h1>
                             <p className="text-gray-300 mt-1">Gestiona las postulaciones de tus candidatos.</p>
                         </div>
-                        <Link
-                            href="/empresas"
-                            className="text-sm font-semibold text-indigo-600 hover:underline"
-                        >
-                            + Unirse a otra empresa
-                        </Link>
+
                     </div>
 
                     <div className="space-y-6">
