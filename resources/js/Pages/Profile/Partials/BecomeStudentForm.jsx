@@ -7,7 +7,7 @@ export default function BecomeStudentForm({ student, status }) {
     const [preview, setPreview] = useState(null);
     const fileRef = useRef(null);
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm('become-student', {
         name: auth.user.name,
         school_name: '',
         school_email: '',

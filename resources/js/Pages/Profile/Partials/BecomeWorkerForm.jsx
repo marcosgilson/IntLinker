@@ -12,7 +12,7 @@ export default function BecomeWorkerForm({ companies, status }) {
     const [preview, setPreview] = useState(null);
     const fileRef = useRef(null);
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm('become-worker', {
         name: auth.user.name,
         company_name: '',
         position: '',
