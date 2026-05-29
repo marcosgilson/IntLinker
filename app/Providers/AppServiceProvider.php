@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 namespace App\Providers;
 
 use App\Observers\CompanyObserver;
