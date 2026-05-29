@@ -135,7 +135,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                                 <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed break-words">{company.description}</p>
                             )}
 
-                            {user && roles.is_student && !isEmployee && (
+                            {user && roles.is_student && !isEmployee && !auth?.user?.is_admin && (
                                 <div className="mt-5">
                                     {enrollmentStatus ? (
                                         <span className={[
