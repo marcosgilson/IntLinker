@@ -112,6 +112,12 @@ Route::post('/api/client-error', function (\Illuminate\Http\Request $request) {
     return response()->noContent();
 })->middleware('web')->name('client-error');
 
+
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    Route::patch('/errors/{error}/resolve', [App\Http\Controllers\AdminController::class, 'resolveError'])->name('admin.errors.resolve');
+    Route::delete('/errors/{error}', [App\Http\Controllers\AdminController::class, 'deleteError'])->name('admin.errors.delete');
+    Route::delete('/errors', [App\Http\Controllers\AdminController::class, 'clearResolvedErrors'])->name('admin.errors.clear-resolved');
+});
 require __DIR__ . '/auth.php';
 
 
