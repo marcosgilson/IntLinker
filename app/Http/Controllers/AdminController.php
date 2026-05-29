@@ -84,13 +84,13 @@ class AdminController extends Controller
         ]);
 
         Company::create([
-            'name'               => $request->name,
-            'description'        => $request->description,
-            'city'               => $request->city,
-            'applications_email' => $request->applications_email,
+            'name'               => $request->validated('name'),
+            'description'        => strip_tags($request->validated('description') ?? ''),
+            'city'               => strip_tags($request->validated('city') ?? ''),
+            'applications_email' => $request->validated('applications_email'),
         ]);
 
-        return back()->with('status', "Empresa '{$request->name}' creada correctamente.");
+        return back()->with('status', "Empresa '" . $request->validated('name') . "' creada correctamente.");
     }
 
     public function companyApplications(Request $request): Response

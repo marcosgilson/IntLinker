@@ -14,8 +14,8 @@ class BecomeStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'               => ['required', 'string', 'max:255'],
-            'school_name'        => ['required', 'string', 'max:255'],
+            'name'               => ['required', 'string', 'max:255', 'not_regex:/<[^>]*>/'],
+            'school_name'        => ['required', 'string', 'max:255', 'not_regex:/<[^>]*>/'],
             'school_email'       => ['required', 'email', 'max:255'],
             'student_card_image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];

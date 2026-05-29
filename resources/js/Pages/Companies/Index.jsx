@@ -354,11 +354,13 @@ export default function CompaniesIndex({
                             {companies.links.map((link, i) => (
                                 link.url ? (
                                     <Link key={i} href={link.url}
-                                        className={`px-4 py-2 text-sm rounded-lg border transition ${link.active ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-400'}`}
-                                        dangerouslySetInnerHTML={{ __html: link.label.replace("Previous", "Anterior").replace("Next", "Siguiente") }}/>
+                                        className={`px-4 py-2 text-sm rounded-lg border transition ${link.active ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-400'}`}>
+                                        {link.label.replace("Previous", "Anterior").replace("Next", "Siguiente")}
+                                    </Link>
                                 ) : (
-                                    <span key={i} className="px-4 py-2 text-sm rounded-lg border bg-gray-50 text-gray-300 border-gray-100"
-                                        dangerouslySetInnerHTML={{ __html: link.label.replace("Previous", "Anterior").replace("Next", "Siguiente") }}/>
+                                    <span key={i} className="px-4 py-2 text-sm rounded-lg border bg-gray-50 text-gray-300 border-gray-100">
+                                        {link.label.replace("Previous", "Anterior").replace("Next", "Siguiente")}
+                                    </span>
                                 )
                             ))}
                         </div>

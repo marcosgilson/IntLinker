@@ -14,9 +14,9 @@ class BecomeWorkerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'            => ['required', 'string', 'max:255'],
-            'company_name'    => ['required', 'string', 'max:255'],
-            'position'        => ['required', 'string', 'max:255'],
+            'name'            => ['required', 'string', 'max:255', 'not_regex:/<[^>]*>/'],
+            'company_name'    => ['required', 'string', 'max:255', 'not_regex:/<[^>]*>/'],
+            'position'        => ['required', 'string', 'max:255', 'not_regex:/<[^>]*>/'],
             'work_card_image' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
         ];
     }
