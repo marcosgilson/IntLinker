@@ -50,7 +50,9 @@ class CompanyController extends Controller
     public function show(Company $company): Response
     {
         $company->load(['employees' => function ($q) {
-            $q->select('users.id', 'users.name', 'users.profile_photo')->where('users.is_admin', false);
+            $q->select('users.id', 'users.name', 'users.profile_photo')
+              ->where('users.is_admin', false)
+              ->wherePivot('verified', true);
         }]);
 
         $user       = Auth::user();
@@ -70,7 +72,7 @@ class CompanyController extends Controller
     public function myCompany(Request $request): Response|RedirectResponse
     {
         $user      = $request->user();
-        $companies = $user->companies()
+        $companies = $user->companies()->wherePivot('verified', true)
             ->withCount([
                 'enrollments as waiting_count'  => fn ($q) => $q->where('status', 'waiting'),
                 'enrollments as accepted_count' => fn ($q) => $q->where('status', 'accepted'),

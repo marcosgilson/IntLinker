@@ -235,6 +235,7 @@ function CreateCompanyForm() {
 // â”€ Pending student row â”€
 function useCountdown(expiresAt) {
     const calc = () => {
+        if (!expiresAt) return { total: 0, h: 0, m: 0, s: 0 };
         const diff = Math.max(0, Math.floor((new Date(expiresAt) - Date.now()) / 1000));
         const h = Math.floor(diff / 3600);
         const m = Math.floor((diff % 3600) / 60);
@@ -243,7 +244,7 @@ function useCountdown(expiresAt) {
     };
     const [time, setTime] = useState(calc);
     useEffect(() => {
-        if (time.total <= 0) return;
+        if (!expiresAt || time.total <= 0) return;
         const id = setInterval(() => setTime(calc()), 1000);
         return () => clearInterval(id);
     }, [expiresAt]);

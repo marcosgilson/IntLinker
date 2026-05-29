@@ -17,7 +17,7 @@ class BecomeStudentRequest extends FormRequest
             'name'               => ['required', 'string', 'max:255'],
             'school_name'        => ['required', 'string', 'max:255'],
             'school_email'       => ['required', 'email', 'max:255'],
-            'student_card_image' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            'student_card_image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }
 }

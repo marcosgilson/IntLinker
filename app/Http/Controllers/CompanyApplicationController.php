@@ -17,6 +17,11 @@ class CompanyApplicationController extends Controller
     {
         $user = $request->user();
 
+        // Block users who are already verified workers at any company
+        if ($user->companies()->wherePivot('verified', true)->exists()) {
+            return back()->withErrors(['company_name' => 'Ya eres trabajador verificado en una empresa.']);
+        }
+
         // Prevent duplicate pending requests for the same company name
         $alreadyPending = CompanyApplication::where('user_id', $user->id)
             ->where('company_name', $request->validated('company_name'))

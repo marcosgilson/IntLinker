@@ -1,24 +1,4 @@
 <?php
-// TEMPORAL - BORRAR DESPUES DE TESTEAR
-Route::get('/test-email', function () {
-    $config = [
-        'MAIL_MAILER'     => env('MAIL_MAILER', 'NO CONFIGURADO'),
-        'MAIL_HOST'       => env('MAIL_HOST', 'NO CONFIGURADO'),
-        'MAIL_PORT'       => env('MAIL_PORT', 'NO CONFIGURADO'),
-        'MAIL_USERNAME'   => env('MAIL_USERNAME', 'NO CONFIGURADO'),
-        'MAIL_FROM'       => env('MAIL_FROM_ADDRESS', 'NO CONFIGURADO'),
-        'MAIL_TO_OVERRIDE'=> env('MAIL_TO_OVERRIDE', 'NO CONFIGURADO'),
-    ];
-    try {
-        \Illuminate\Support\Facades\Mail::raw('Test email IntLinker - Gmail SMTP funcionando correctamente.', function ($m) {
-            $m->to('gilsoncampillo1@gmail.com')->subject('Test Email IntLinker');
-        });
-        return response()->json(['resultado' => 'ENVIADO OK', 'config' => $config]);
-    } catch (\Exception $e) {
-        return response()->json(['resultado' => 'ERROR', 'mensaje' => $e->getMessage(), 'config' => $config]);
-    }
-});
-
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyApplicationController;

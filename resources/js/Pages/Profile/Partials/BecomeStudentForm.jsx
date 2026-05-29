@@ -14,7 +14,8 @@ export default function BecomeStudentForm({ student, status }) {
         student_card_image: null,
     });
 
-    const isActive = student && student.verified && (student.expires_at === null || new Date(student.expires_at) > new Date());
+    const isActive  = student && student.verified && (student.expires_at === null || new Date(student.expires_at) > new Date());
+    const isExpired = student && student.verified && student.expires_at && new Date(student.expires_at) <= new Date();
     const isPending = student && !student.verified && student.docupipe_status !== 'failed';
     const isFailed  = student && student.docupipe_status === 'failed';
 
@@ -47,7 +48,7 @@ export default function BecomeStudentForm({ student, status }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route(isActive ? 'student.renew' : 'student.store'), {
+        post(route((isActive || isExpired) ? 'student.renew' : 'student.store'), {
             forceFormData: true,
             onSuccess: () => {
                 setOpen(false);
@@ -79,6 +80,39 @@ export default function BecomeStudentForm({ student, status }) {
                 >
                     Intentar de nuevo
                 </button>
+            </div>
+        );
+    }
+
+    if (isExpired) {
+        return (
+            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 sm:p-5">
+                <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-orange-900 text-sm">Carnet caducado</h3>
+                        <p className="text-xs text-orange-700 mt-0.5">
+                            Tu carnet caduco el {new Date(student.expires_at).toLocaleDateString('es-ES')}. Renuevalo para seguir activo.
+                        </p>
+                    </div>
+                </div>
+                <button type="button" onClick={() => setOpen(!open)}
+                    className="text-sm font-semibold text-orange-700 hover:text-orange-800 underline">
+                    {open ? 'Cancelar' : 'Renovar carnet'}
+                </button>
+                {open && (
+                    <form onSubmit={submit} className="mt-4 space-y-3">
+                        <FormFields data={data} setData={setData} errors={errors} preview={preview} handleFile={handleFile} fileRef={fileRef} isRenew />
+                        <button type="submit" disabled={processing}
+                            className="w-full min-h-10 bg-orange-600 hover:bg-orange-700 disabled:opacity-60 text-white text-sm font-semibold py-2 rounded-lg transition">
+                            {processing ? 'Renovando...' : 'Renovar carnet'}
+                        </button>
+                    </form>
+                )}
             </div>
         );
     }

@@ -54,11 +54,22 @@ class AdminController extends Controller
             ->latest()
             ->paginate(20);
 
+        $companies = Company::select('id', 'name', 'applications_email')
+            ->orderBy('name')
+            ->get();
+
+        $allStudents = Student::with('user:id,name,email')
+            ->where('verified', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return Inertia::render('Admin/Dashboard', [
             'pendingEmailUsers' => $pendingEmailUsers,
-            'pendingStudents' => $pendingStudents,
-            'pendingWorkers'  => $pendingWorkers,
-            'applications'    => $applications,
+            'pendingStudents'   => $pendingStudents,
+            'pendingWorkers'    => $pendingWorkers,
+            'applications'      => $applications,
+            'companies'         => $companies,
+            'allStudents'       => $allStudents,
         ]);
     }
 
