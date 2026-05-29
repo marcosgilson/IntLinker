@@ -65,10 +65,14 @@ class AdminController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $errorLogs = ErrorLog::with('user:id,name,email')
-            ->latest()
-            ->limit(100)
-            ->get(['id', 'type', 'message', 'file', 'line', 'url', 'method', 'ip', 'user_id', 'status_code', 'resolved', 'created_at']);
+        try {
+            $errorLogs = ErrorLog::with('user:id,name,email')
+                ->latest()
+                ->limit(100)
+                ->get(['id', 'type', 'message', 'file', 'line', 'url', 'method', 'ip', 'user_id', 'status_code', 'resolved', 'created_at']);
+        } catch (\Throwable) {
+            $errorLogs = collect();
+        }
 
         return Inertia::render('Admin/Dashboard', [
             'pendingEmailUsers' => $pendingEmailUsers,
