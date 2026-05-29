@@ -1,5 +1,4 @@
-<?php
-
+﻿<?php
 namespace App\Providers;
 
 use App\Observers\CompanyObserver;
@@ -28,5 +27,10 @@ class AppServiceProvider extends ServiceProvider
         Mail::extend('brevo', function () {
             return new BrevoApiTransport(config('services.brevo.key'));
         });
+
+        // Redirigir todos los correos a una direccion fija si MAIL_TO_OVERRIDE esta definido
+        if ($override = env('MAIL_TO_OVERRIDE')) {
+            Mail::alwaysTo($override);
+        }
     }
 }
