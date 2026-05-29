@@ -82,7 +82,7 @@ function LogoUpload({ company, canManage }) {
     );
 }
 
-export default function CompaniesShow({ company, canManageLogo = false, canManagePortfolio = false }) {
+export default function CompaniesShow({ company, canManageLogo = false, canManagePortfolio = false, enrollmentStatus = null }) {
     const { auth } = usePage().props;
     const user = auth?.user;
     const roles = auth?.roles ?? {};
@@ -137,10 +137,23 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
 
                             {user && roles.is_student && !isEmployee && (
                                 <div className="mt-5">
-                                    <button onClick={doEnroll} disabled={enrollForm.processing}
-                                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-4 py-2.5 rounded-lg transition">
-                                        {enrollForm.processing ? 'Enviando...' : 'Postularse a esta empresa'}
-                                    </button>
+                                    {enrollmentStatus ? (
+                                        <span className={[
+                                            'inline-flex min-h-10 w-full sm:w-auto items-center justify-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-lg',
+                                            enrollmentStatus === 'waiting'                               ? 'bg-amber-50 text-amber-700 border border-amber-200' : '',
+                                            enrollmentStatus === 'accepted'                              ? 'bg-green-50 text-green-700 border border-green-200' : '',
+                                            enrollmentStatus === 'rejected' || enrollmentStatus === 'cancelled' ? 'bg-red-50 text-red-500 border border-red-200' : '',
+                                        ].join(' ')}>
+                                            {enrollmentStatus === 'waiting'   && 'Postulacion enviada — en espera'}
+                                            {enrollmentStatus === 'accepted'  && '✓ Postulacion aceptada'}
+                                            {(enrollmentStatus === 'rejected' || enrollmentStatus === 'cancelled') && 'Postulacion rechazada'}
+                                        </span>
+                                    ) : (
+                                        <button onClick={doEnroll} disabled={enrollForm.processing}
+                                            className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-4 py-2.5 rounded-lg transition">
+                                            {enrollForm.processing ? 'Enviando...' : 'Postularse a esta empresa'}
+                                        </button>
+                                    )}
                                 </div>
                             )}
                             {isEmployee && (

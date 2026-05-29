@@ -53,12 +53,17 @@ class CompanyController extends Controller
             $q->select('users.id', 'users.name', 'users.profile_photo')->where('users.is_admin', false);
         }]);
 
-        $user = Auth::user();
+        $user       = Auth::user();
+        $student    = $user?->student;
+        $enrollment = $student
+            ? $student->enrollments()->where('company_id', $company->id)->first(['status'])
+            : null;
 
         return Inertia::render('Companies/Show', [
             'company'            => $company,
             'canManageLogo'      => $user?->can('update', $company) ?? false,
             'canManagePortfolio' => $user?->can('update', $company) ?? false,
+            'enrollmentStatus'   => $enrollment?->status,
         ]);
     }
 
