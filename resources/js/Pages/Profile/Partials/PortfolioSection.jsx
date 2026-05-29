@@ -26,8 +26,8 @@ function SectionHeader({ title, onAdd, isOwner, count, max }) {
             </div>
             {isOwner && (
                 <button onClick={onAdd} disabled={atMax}
-                    title={atMax ? Limite de  alcanzado : undefined}
-                    className={w-8 h-8 flex items-center justify-center rounded-full transition-colors }>
+                    title={atMax ? `Limite de ${max} alcanzado` : undefined}
+                    className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${atMax ? 'text-gray-300 cursor-not-allowed' : 'text-gray-400 hover:text-indigo-600 hover:bg-indigo-50'}`}>
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
                     </svg>
