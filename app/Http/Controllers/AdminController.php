@@ -54,7 +54,8 @@ class AdminController extends Controller
             ->latest()
             ->paginate(20);
 
-        $companies = Company::select('id', 'name', 'applications_email')
+        $companies = Company::select('id', 'name', 'city', 'applications_email')
+            ->whereNull('applications_email')
             ->orderBy('name')
             ->get();
 
