@@ -159,7 +159,7 @@ class CompanyController extends Controller
             'portfolio.gallery.*.caption'            => ['nullable', 'string', 'max:500'],
         ]);
 
-        $portfolio = $validated['portfolio'];
+        $portfolio = $validated['portfolio'] ?? [];
         if (isset($portfolio['education'])) {
             foreach ($portfolio['education'] as &$edu) {
                 foreach (['institution', 'degree', 'field', 'description'] as $f) {

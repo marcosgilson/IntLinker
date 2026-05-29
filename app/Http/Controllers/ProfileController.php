@@ -113,7 +113,7 @@ class ProfileController extends Controller
             'portfolio.gallery.*.caption'            => ['nullable', 'string', 'max:500'],
         ]);
 
-        $portfolio = $validated['portfolio'];
+        $portfolio = $validated['portfolio'] ?? [];
         // Strip HTML tags from all text fields
         if (isset($portfolio['education'])) {
             foreach ($portfolio['education'] as &$edu) {
