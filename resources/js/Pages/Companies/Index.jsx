@@ -155,57 +155,117 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
     );
 }
 
-function CompanyCard({ company, highlightedCity }) {
-    const { auth } = usePage().props;
-    const user = auth?.user;
-    const roles = auth?.roles ?? {};
-    const enrollForm = useForm({ company_id: company.id });
-    const doEnroll = () => enrollForm.post(route('enrollments.store'));
+const STATUS_CONFIG = {
+    waiting:   { label: 'En espera',  bg: 'bg-amber-50',  border: 'border-amber-200',  text: 'text-amber-700',  icon: '⏳', modalBg: 'bg-amber-500'  },
+    accepted:  { label: 'Aceptado',   bg: 'bg-green-50',  border: 'border-green-200',  text: 'text-green-700',  icon: '✓',  modalBg: 'bg-green-500'  },
+    rejected:  { label: 'Rechazado',  bg: 'bg-red-50',    border: 'border-red-200',    text: 'text-red-600',    icon: '✕',  modalBg: 'bg-red-500'    },
+    cancelled: { label: 'Cancelado',  bg: 'bg-gray-50',   border: 'border-gray-200',   text: 'text-gray-500',   icon: '—',  modalBg: 'bg-gray-400'   },
+};
 
+function EnrollmentModal({ company, status, onClose }) {
+    const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.waiting;
     return (
-        <div className={`bg-white rounded-2xl shadow-sm border p-4 sm:p-6 flex flex-col gap-4 hover:shadow-md transition ${highlightedCity ? 'border-indigo-200 ring-1 ring-indigo-100' : 'border-gray-100'}`}>
-            <div className="flex items-start gap-3">
-                {company.logo_url ? (
-                    <img src={company.logo_url} alt={company.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover flex-shrink-0"/>
-                ) : (
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold flex-shrink-0`}>
-                        {initials(company.name)}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+            <div className="relative bg-white rounded-2xl shadow-xl max-w-sm w-full p-6" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center gap-4 mb-4">
+                    <div className={`w-12 h-12 rounded-xl ${cfg.modalBg} flex items-center justify-center text-white text-xl font-bold flex-shrink-0`}>
+                        {cfg.icon}
                     </div>
-                )}
-                <div className="flex-1 min-w-0">
-                    <h2 className="font-bold text-gray-900 break-words">{company.name}</h2>
-                    {company.city && (
-                        <p className={`text-xs mt-0.5 flex items-center gap-1 ${highlightedCity ? 'text-indigo-500 font-medium' : 'text-gray-400'}`}>
-                            {company.city}
-                        </p>
-                    )}
-                    {company.pending_count > 0 && (
-                        <span className="text-xs text-indigo-600 font-medium">
-                            {company.pending_count} candidato{company.pending_count !== 1 ? 's' : ''} en proceso
-                        </span>
-                    )}
+                    <div>
+                        <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Tu postulacion en</p>
+                        <h3 className="font-bold text-gray-900 text-lg leading-tight">{company.name}</h3>
+                    </div>
                 </div>
-            </div>
-            {company.description && <p className="text-sm text-gray-600 line-clamp-3 break-words">{company.description}</p>}
-            <div className="mt-auto flex flex-col sm:flex-row gap-2">
-                <Link href={route('companies.show', company.id)}
-                    className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-800 border border-indigo-200 hover:border-indigo-400 px-4 py-2 rounded-lg transition">
-                    Ver empresa
-                </Link>
-                {user && roles.is_student && (
-                    <button onClick={doEnroll} disabled={enrollForm.processing}
-                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-4 py-2 rounded-lg transition">
-                        {enrollForm.processing ? 'Enviando...' : 'Postularse'}
+                <div className={`rounded-xl border ${cfg.bg} ${cfg.border} px-4 py-3 mb-5`}>
+                    <p className={`text-sm font-semibold ${cfg.text}`}>{cfg.icon} Estado: {cfg.label}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                        {status === 'waiting'   && 'Tu solicitud ha sido enviada y esta siendo revisada por la empresa.'}
+                        {status === 'accepted'  && 'Enhorabuena, la empresa ha aceptado tu postulacion.'}
+                        {status === 'rejected'  && 'La empresa no ha seleccionado tu perfil en este momento.'}
+                        {status === 'cancelled' && 'Esta postulacion fue cancelada.'}
+                    </p>
+                </div>
+                <div className="flex gap-3">
+                    <Link href={route('companies.show', company.id)}
+                        className="flex-1 inline-flex min-h-10 items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-800 border border-indigo-200 hover:border-indigo-400 px-4 py-2 rounded-lg transition">
+                        Ver empresa
+                    </Link>
+                    <button onClick={onClose}
+                        className="flex-1 inline-flex min-h-10 items-center justify-center text-sm font-semibold text-gray-600 hover:text-gray-800 border border-gray-200 hover:border-gray-300 px-4 py-2 rounded-lg transition">
+                        Cerrar
                     </button>
-                )}
+                </div>
             </div>
         </div>
     );
 }
 
+function CompanyCard({ company, highlightedCity, enrollmentStatus }) {
+    const { auth } = usePage().props;
+    const user = auth?.user;
+    const roles = auth?.roles ?? {};
+    const enrollForm = useForm({ company_id: company.id });
+    const [showModal, setShowModal] = useState(false);
+    const doEnroll = () => enrollForm.post(route('enrollments.store'), { preserveScroll: true });
+    const cfg = enrollmentStatus ? STATUS_CONFIG[enrollmentStatus] : null;
+
+    return (
+        <>
+            {showModal && enrollmentStatus && (
+                <EnrollmentModal company={company} status={enrollmentStatus} onClose={() => setShowModal(false)} />
+            )}
+            <div className={`bg-white rounded-2xl shadow-sm border p-4 sm:p-6 flex flex-col gap-4 hover:shadow-md transition ${highlightedCity ? 'border-indigo-200 ring-1 ring-indigo-100' : 'border-gray-100'}`}>
+                <div className="flex items-start gap-3">
+                    {company.logo_url ? (
+                        <img src={company.logo_url} alt={company.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover flex-shrink-0"/>
+                    ) : (
+                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${stringToColor(company.name)} flex items-center justify-center text-white font-bold flex-shrink-0`}>
+                            {initials(company.name)}
+                        </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                        <h2 className="font-bold text-gray-900 break-words">{company.name}</h2>
+                        {company.city && (
+                            <p className={`text-xs mt-0.5 flex items-center gap-1 ${highlightedCity ? 'text-indigo-500 font-medium' : 'text-gray-400'}`}>
+                                {company.city}
+                            </p>
+                        )}
+                        {company.pending_count > 0 && (
+                            <span className="text-xs text-indigo-600 font-medium">
+                                {company.pending_count} candidato{company.pending_count !== 1 ? 's' : ''} en proceso
+                            </span>
+                        )}
+                    </div>
+                </div>
+                {company.description && <p className="text-sm text-gray-600 line-clamp-3 break-words">{company.description}</p>}
+                <div className="mt-auto flex flex-col sm:flex-row gap-2">
+                    <Link href={route('companies.show', company.id)}
+                        className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-800 border border-indigo-200 hover:border-indigo-400 px-4 py-2 rounded-lg transition">
+                        Ver empresa
+                    </Link>
+                    {user && roles.is_student && !auth?.user?.is_admin && (
+                        enrollmentStatus ? (
+                            <button onClick={() => setShowModal(true)}
+                                className={`inline-flex min-h-10 w-full sm:w-auto items-center justify-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg border transition ${cfg.bg} ${cfg.border} ${cfg.text}`}>
+                                {cfg.icon} {cfg.label}
+                            </button>
+                        ) : (
+                            <button onClick={doEnroll} disabled={enrollForm.processing}
+                                className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-4 py-2 rounded-lg transition">
+                                {enrollForm.processing ? 'Enviando...' : 'Postularse'}
+                            </button>
+                        )
+                    )}
+                </div>
+            </div>
+        </>
+    );
+}
+
 export default function CompaniesIndex({
     companies = {}, allCities = [], allCompanyNames = [],
-    selectedCities: initCities = [], selectedCompanies: initCompanies = []
+    selectedCities: initCities = [], selectedCompanies: initCompanies = [], enrollmentStatuses = {}
 }) {
     const { auth } = usePage().props;
     const user = auth?.user;
@@ -283,7 +343,8 @@ export default function CompaniesIndex({
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                             {list.map(company => (
                                 <CompanyCard key={company.id} company={company}
-                                    highlightedCity={selectedCities.includes(company.city)}/>
+                                    highlightedCity={selectedCities.includes(company.city)}
+                                    enrollmentStatus={enrollmentStatuses[company.id] ?? null}/>
                             ))}
                         </div>
                     )}

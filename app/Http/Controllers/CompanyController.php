@@ -38,12 +38,20 @@ class CompanyController extends Controller
         $allCities       = Company::select('city')->whereNotNull('city')->where('city', '!=', '')->distinct()->orderBy('city')->pluck('city');
         $allCompanyNames = Company::select('id', 'name')->orderBy('name')->get();
 
+        $student = Auth::user()?->student;
+        $enrollmentStatuses = $student
+            ? $student->enrollments()
+                ->whereIn('company_id', $paginated->pluck('id'))
+                ->pluck('status', 'company_id')
+            : collect();
+
         return Inertia::render('Companies/Index', [
-            'companies'         => $paginated,
-            'allCities'         => $allCities,
-            'allCompanyNames'   => $allCompanyNames,
-            'selectedCities'    => $cities,
-            'selectedCompanies' => $companies_filter,
+            'companies'          => $paginated,
+            'allCities'          => $allCities,
+            'allCompanyNames'    => $allCompanyNames,
+            'selectedCities'     => $cities,
+            'selectedCompanies'  => $companies_filter,
+            'enrollmentStatuses' => $enrollmentStatuses,
         ]);
     }
 
