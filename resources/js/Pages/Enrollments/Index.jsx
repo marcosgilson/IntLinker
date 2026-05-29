@@ -117,25 +117,20 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
             <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
                 <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-20 w-auto" />
+                            <IntLinkerLogo className="h-8 sm:h-10 w-auto" />
                         </Link>
                         <div className="flex items-center gap-3">
-                            <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-3 py-2">
+                            <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 sm:px-3 py-2 truncate max-w-[100px] sm:max-w-none">
                                 {auth.user?.name}
                             </Link>
-                            <Link
-                                href="/inicio"
-                                className="text-sm text-gray-500 hover:text-indigo-600 transition px-3 py-2"
-                            >
-                                ← Inicio
-                            </Link>
+                            <Link href="/inicio" className="flex items-center gap-1 text-sm text-gray-500 hover:text-indigo-600 transition px-2 sm:px-3 py-2"><span>←</span><span className="hidden sm:inline">Inicio</span></Link>
                         </div>
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-4xl mx-auto px-4 sm:px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-4xl mx-auto px-4 sm:px-6">
                     {/* Header */}
                     <div className="mb-8">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mis postulaciones</h1>
