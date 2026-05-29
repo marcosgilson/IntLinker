@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // TEMPORAL - BORRAR DESPUES DE TESTEAR
 Route::get('/test-email', function () {
     $config = [
