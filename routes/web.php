@@ -1,10 +1,21 @@
 ﻿<?php
 // TEMPORAL - BORRAR DESPUES DE TESTEAR
 Route::get('/test-email', function () {
-    \Illuminate\Support\Facades\Mail::raw('Test email IntLinker - si recibes esto el correo funciona correctamente.', function ($m) {
-        $m->to('gilsoncampillo1@gmail.com')->subject('Test Email IntLinker');
-    });
-    return 'Email enviado a gilsoncampillo1@gmail.com - revisa la bandeja de entrada';
+    $config = [
+        'MAIL_MAILER' => env('MAIL_MAILER', 'NO CONFIGURADO'),
+        'MAIL_HOST'   => env('MAIL_HOST', 'NO CONFIGURADO'),
+        'MAIL_PORT'   => env('MAIL_PORT', 'NO CONFIGURADO'),
+        'MAIL_FROM'   => env('MAIL_FROM_ADDRESS', 'NO CONFIGURADO'),
+        'BREVO_KEY'   => env('BREVO_KEY') ? 'PRESENTE (' . substr(env('BREVO_KEY'), 0, 6) . '...)' : 'NO CONFIGURADO',
+    ];
+    try {
+        \Illuminate\Support\Facades\Mail::raw('Test email IntLinker', function ($m) {
+            $m->to('gilsoncampillo1@gmail.com')->subject('Test Email IntLinker');
+        });
+        return response()->json(['resultado' => 'ENVIADO OK', 'config' => $config]);
+    } catch (\Exception $e) {
+        return response()->json(['resultado' => 'ERROR', 'mensaje' => $e->getMessage(), 'config' => $config]);
+    }
 });
 
 
