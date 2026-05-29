@@ -112,7 +112,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-6xl mx-auto px-4 sm:px-6 space-y-4 sm:space-y-5">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-[90rem] mx-auto px-4 sm:px-6 space-y-4 sm:space-y-5">
                     {/* Header card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="h-24 bg-gradient-to-r from-indigo-500 to-violet-600" />
