@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Enrollment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -50,28 +51,38 @@ class EnrollmentController extends Controller
 
         $company = Company::findOrFail($request->validated('company_id'));
 
-        if ($student->hasEnrolledIn($company->id)) {
-            $existing = $student->enrollments()->where('company_id', $company->id)->first();
+        $error = DB::transaction(function () use ($student, $company) {
+            // Lock the student row so concurrent requests queue here
+            $locked = $student->newQuery()->lockForUpdate()->find($student->id);
 
-            if ($existing->isCancelled()) {
-                return back()->withErrors(['enrollment' => 'No puedes volver a postularte a esta empresa.']);
+            if ($locked->hasEnrolledIn($company->id)) {
+                $existing = $locked->enrollments()->where('company_id', $company->id)->first();
+
+                return $existing->isCancelled()
+                    ? 'No puedes volver a postularte a esta empresa.'
+                    : 'Ya tienes una postulación activa en esta empresa.';
             }
 
-            return back()->withErrors(['enrollment' => 'Ya tienes una postulación activa en esta empresa.']);
-        }
+            if ($locked->activeEnrollments()->count() >= 5) {
+                return 'Has alcanzado el límite de 5 postulaciones activas.';
+            }
 
-        if (! $student->hasActiveEnrollmentSlots()) {
-            return back()->withErrors(['enrollment' => 'Has alcanzado el limite de 5 postulaciónes activas.']);
-        }
+            Enrollment::create([
+                'student_id' => $locked->id,
+                'company_id' => $company->id,
+                'status'     => 'waiting',
+            ]);
 
-        Enrollment::create([
-            'student_id' => $student->id,
-            'company_id' => $company->id,
-            'status'     => 'waiting',
-        ]);
+            return null;
+        });
+
+        if ($error) {
+            return back()->withErrors(['enrollment' => $error]);
+        }
 
         return back()->with('status', 'Postulación enviada correctamente.');
     }
+
 
     /**
      * Cancel an enrollment (student-initiated).
