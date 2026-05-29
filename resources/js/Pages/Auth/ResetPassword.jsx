@@ -16,13 +16,13 @@ export default function ResetPassword({ token, email }) {
 
     return (
         <GuestLayout>
-            <Head title="Nueva contraseña — IntLinker" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">Nueva contraseña</h1>
-            <p className="text-sm text-gray-500 mb-5">Elige una nueva contraseña para tu cuenta.</p>
+            <Head title="Nueva contrasena — IntLinker" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">Nueva contrasena</h1>
+            <p className="text-sm text-gray-500 mb-5">Elige una nueva contrasena para tu cuenta.</p>
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electronico</label>
                     <input
                         id="email"
                         type="email"
@@ -35,7 +35,7 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Nueva contraseña</label>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Nueva contrasena</label>
                     <input
                         id="password"
                         type="password"
@@ -49,7 +49,7 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div>
-                    <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700 mb-1">Confirmar contraseña</label>
+                    <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700 mb-1">Confirmar contrasena</label>
                     <input
                         id="password_confirmation"
                         type="password"
@@ -66,7 +66,7 @@ export default function ResetPassword({ token, email }) {
                     disabled={processing}
                     className="w-full py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-semibold text-sm transition"
                 >
-                    {processing ? 'Guardando...' : 'Guardar contraseña'}
+                    {processing ? 'Guardando...' : 'Guardar contrasena'}
                 </button>
             </form>
         </GuestLayout>

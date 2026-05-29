@@ -67,7 +67,7 @@ export default function BecomeStudentForm({ student, status }) {
                         </svg>
                     </div>
                     <div className="flex-1">
-                        <h3 className="font-bold text-red-900 text-sm">Verificación rechazada</h3>
+                        <h3 className="font-bold text-red-900 text-sm">Verificacion rechazada</h3>
                         {student.docupipe_failure_reason && (
                             <p className="text-xs text-red-700 mt-0.5">{student.docupipe_failure_reason}</p>
                         )}
@@ -93,8 +93,8 @@ export default function BecomeStudentForm({ student, status }) {
                         </svg>
                     </div>
                     <div>
-                        <h3 className="font-bold text-amber-900 text-sm">Verificación pendiente</h3>
-                        <p className="text-xs text-amber-700 mt-0.5">Tu carnet está siendo revisado. Te avisaremos por correo cuando se complete.</p>
+                        <h3 className="font-bold text-amber-900 text-sm">Verificacion pendiente</h3>
+                        <p className="text-xs text-amber-700 mt-0.5">Tu carnet esta siendo revisado. Te avisaremos por correo cuando se complete.</p>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@ export default function BecomeStudentForm({ student, status }) {
                         <h3 className="font-bold text-emerald-900 text-sm">Alumno activo</h3>
                         <p className="text-xs text-emerald-600 mt-0.5">
                             Caduca: {new Date(student.expires_at).toLocaleDateString('es-ES')}
-                            {student.verified ? '' : ' · Pendiente de verificación'}
+                            {student.verified ? '' : ' · Pendiente de verificacion'}
                         </p>
                     </div>
                     <Link href="/postulaciones" className="text-sm font-semibold text-emerald-600 hover:underline w-full sm:w-auto sm:ml-auto sm:whitespace-nowrap">
@@ -127,7 +127,7 @@ export default function BecomeStudentForm({ student, status }) {
                     onClick={() => setOpen(!open)}
                     className="text-sm font-semibold text-emerald-700 hover:text-emerald-800 underline"
                 >
-                    {open ? 'Cancelar renovación' : 'Renovar carnet'}
+                    {open ? 'Cancelar renovacion' : 'Renovar carnet'}
                 </button>
                 {open && (
                     <form onSubmit={submit} className="mt-4 space-y-3">

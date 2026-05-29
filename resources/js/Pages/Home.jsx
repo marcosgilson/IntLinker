@@ -31,7 +31,7 @@ const steps = [
     {
         number: '01',
         title: 'Crea tu perfil',
-        desc: 'Regístrate y verifica tu identidad con tu carnet de estudiante mediante OCR.',
+        desc: 'Registrate y verifica tu identidad con tu carnet de estudiante mediante OCR.',
         icon: (
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -51,7 +51,7 @@ const steps = [
     {
         number: '03',
         title: 'Conecta y crece',
-        desc: 'Postula directamente (máx. 5 activas) y empieza tu carrera profesional.',
+        desc: 'Postula directamente (max. 5 activas) y empieza tu carrera profesional.',
         icon: (
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -78,7 +78,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
 
     return (
         <>
-            <Head title="IntLinker — Encuentra tus prácticas" />
+            <Head title="IntLinker — Encuentra tus practicas" />
 
             <AuthModal
                 show={authModal !== null}
@@ -97,7 +97,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         </div>
 
                         <div className="hidden md:flex items-center gap-4 lg:gap-8 text-sm font-medium text-gray-600">
-                            <a href="#como-funciona" className="hover:text-indigo-600 transition-colors">Cómo funciona</a>
+                            <a href="#como-funciona" className="hover:text-indigo-600 transition-colors">Como funciona</a>
                             <Link href="/empresas" className="hover:text-indigo-600 transition-colors">Empresas</Link>
                         </div>
 
@@ -145,7 +145,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                         onClick={openLogin}
                                         className="inline-flex min-h-10 items-center justify-center text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors px-4 py-2 rounded-lg"
                                     >
-                                        Iniciar sesión
+                                        Iniciar sesion
                                     </button>
                                     <button
                                         onClick={openRegister}
@@ -203,7 +203,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         </h1>
 
                         <p className="text-base sm:text-lg md:text-xl text-indigo-200 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0">
-                            IntLinker conecta estudiantes con empresas líderes para encontrar las prácticas que impulsen tu carrera profesional.
+                            IntLinker conecta estudiantes con empresas lideres para encontrar las practicas que impulsen tu carrera profesional.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -216,14 +216,14 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                 </Link>
                             ) : (
                                 <button onClick={openRegister} className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-all shadow-lg shadow-indigo-900/30 text-base">
-                                    Buscar prácticas
+                                    Buscar practicas
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
                                 </button>
                             )}
                             <a href="#como-funciona" className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border border-white/30 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-white/10 transition-all text-sm sm:text-base">
-                                Cómo funciona
+                                Como funciona
                             </a>
                         </div>
 
@@ -245,12 +245,12 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                     </div>
                 </section>
 
-                {/* Cómo funciona */}
+                {/* Como funciona */}
                 <section id="como-funciona" className="py-16 sm:py-24 bg-gray-50">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6">
                         <div className="text-center mb-12 sm:mb-16">
                             <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Proceso</span>
-                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mt-2">Así de fácil funciona</h2>
+                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mt-2">Asi de facil funciona</h2>
                             <p className="text-gray-500 mt-3 max-w-xl mx-auto">Tres pasos para conectar tu talento con la empresa ideal.</p>
                         </div>
 
@@ -290,8 +290,8 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                 <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
-                                <p className="text-lg font-medium">Todavía no hay empresas registradas.</p>
-                                <p className="text-sm mt-1">Pronto aparecerán aquí las primeras colaboraciones.</p>
+                                <p className="text-lg font-medium">Todavia no hay empresas registradas.</p>
+                                <p className="text-sm mt-1">Pronto apareceran aqui las primeras colaboraciones.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
@@ -346,12 +346,12 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                 <section className="py-16 sm:py-20 bg-gradient-to-r from-indigo-600 to-violet-600">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
                         <h2 className="text-2xl sm:text-4xl font-extrabold text-white mb-4">
-                            {user ? '¡Bienvenido de nuevo!' : '¿Listo para dar el salto?'}
+                            {user ? '!Bienvenido de nuevo!' : '?Listo para dar el salto?'}
                         </h2>
                         <p className="text-indigo-200 text-base sm:text-lg mb-8">
                             {user
                                 ? 'Explora las empresas disponibles y gestiona tus postulaciones.'
-                                : 'Únete a la plataforma que conecta estudiantes con las mejores empresas.'}
+                                : 'Unete a la plataforma que conecta estudiantes con las mejores empresas.'}
                         </p>
                         {user ? (
                             <Link

@@ -29,9 +29,9 @@ export default function Register() {
                         </Link>
                         <h1 className="text-2xl font-bold text-gray-900">Crear cuenta</h1>
                         <p className="text-gray-500 text-sm mt-1">
-                            ¿Ya tienes cuenta?{' '}
+                            ?Ya tienes cuenta?{' '}
                             <Link href="/iniciar-sesion" className="text-indigo-600 hover:underline font-medium">
-                                Inicia sesión
+                                Inicia sesion
                             </Link>
                         </p>
                     </div>
@@ -55,7 +55,7 @@ export default function Register() {
                             </div>
 
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electronico</label>
                                 <input
                                     id="email"
                                     type="email"
@@ -71,7 +71,7 @@ export default function Register() {
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contrasena</label>
                                     <input
                                         id="password"
                                         type="password"

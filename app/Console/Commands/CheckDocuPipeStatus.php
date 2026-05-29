@@ -54,7 +54,7 @@ class CheckDocuPipeStatus extends Command
                 Log::info("docupipe:check std result for student {$student->id}", $data);
                 $this->processResult($student, $data);
             } elseif ($status === 'failed') {
-                $this->failStudent($student, 'Error en la estandarizaciÃ³n del documento.');
+                $this->failStudent($student, 'Error en la estandarizacion del documento.');
             }
             return;
         }
@@ -75,7 +75,7 @@ class CheckDocuPipeStatus extends Command
                 }
             }
 
-            // Parsing done (or we don't have jobId â€” try standardize anyway)
+            // Parsing done (or we don't have jobId – try standardize anyway)
             Log::info("docupipe:check starting standardization for student {$student->id}");
             try {
                 $std = $docuPipe->startStandardize($student->docupipe_document_id, $schemaId);
@@ -86,7 +86,7 @@ class CheckDocuPipeStatus extends Command
                 ]);
                 Log::info("docupipe:check standardization started for student {$student->id}, stdId={$std['standardizationId']}");
             } catch (\Throwable $e) {
-                Log::warning("docupipe:check standardize failed for student {$student->id}: " . $e->getMessage() . " â€” will retry next minute");
+                Log::warning("docupipe:check standardize failed for student {$student->id}: " . $e->getMessage() . " – will retry next minute");
             }
         }
     }
@@ -172,8 +172,8 @@ class CheckDocuPipeStatus extends Command
     private function normalize(string $name): string
     {
         $name = mb_strtolower(trim($name));
-        $map  = ['Ã¡'=>'a','Ã©'=>'e','Ã­'=>'i','Ã³'=>'o','Ãº'=>'u','Ã¼'=>'u','Ã±'=>'n',
-                 'Ã '=>'a','Ã¨'=>'e','Ã¬'=>'i','Ã²'=>'o','Ã¹'=>'u'];
+        $map  = ['a'=>'a','e'=>'e','i'=>'i','o'=>'o','u'=>'u','u'=>'u','n'=>'n',
+                 'a'=>'a','e'=>'e','i'=>'i','o'=>'o','u'=>'u'];
         return preg_replace('/\s+/', ' ', strtr($name, $map));
     }
 }

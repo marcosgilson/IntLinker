@@ -11,10 +11,10 @@ export default function ForgotPassword({ status }) {
 
     return (
         <GuestLayout>
-            <Head title="Recuperar contraseña — IntLinker" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">Recuperar contraseña</h1>
+            <Head title="Recuperar contrasena — IntLinker" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">Recuperar contrasena</h1>
             <p className="text-sm text-gray-500 mb-5">
-                Escribe tu correo y te enviaremos un enlace para restablecer tu contraseña.
+                Escribe tu correo y te enviaremos un enlace para restablecer tu contrasena.
             </p>
 
             {status && (
@@ -26,7 +26,7 @@ export default function ForgotPassword({ status }) {
             <form onSubmit={submit} className="space-y-4">
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                        Correo electrónico
+                        Correo electronico
                     </label>
                     <input
                         id="email"
@@ -50,7 +50,7 @@ export default function ForgotPassword({ status }) {
             </form>
 
             <p className="mt-5 text-center text-sm text-gray-500">
-                <Link href="/iniciar-sesion" className="text-indigo-600 hover:underline font-medium">Volver al inicio de sesión</Link>
+                <Link href="/iniciar-sesion" className="text-indigo-600 hover:underline font-medium">Volver al inicio de sesion</Link>
             </p>
         </GuestLayout>
     );

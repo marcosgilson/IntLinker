@@ -43,7 +43,7 @@ function EnrollmentCard({ enrollment }) {
     const canCancel = enrollment.status !== 'cancelled';
 
     const cancel = () => {
-        if (!confirm('¿Cancelar esta postulación? No podrás volver a postularte a esta empresa.')) return;
+        if (!confirm('?Cancelar esta postulacion? No podras volver a postularte a esta empresa.')) return;
         destroy(route('enrollments.destroy', enrollment.id));
     };
 
@@ -74,18 +74,18 @@ function EnrollmentCard({ enrollment }) {
 
             {/* Status explanation */}
             {enrollment.status === 'waiting' && (
-                <p className="text-sm text-gray-500">Tu postulación está siendo revisada por la empresa.</p>
+                <p className="text-sm text-gray-500">Tu postulacion esta siendo revisada por la empresa.</p>
             )}
             {enrollment.status === 'accepted' && (
                 <p className="text-sm text-emerald-700 bg-emerald-50 rounded-lg px-3 py-2">
-                    La empresa ha mostrado interés en tu perfil. Espera su contacto.
+                    La empresa ha mostrado interes en tu perfil. Espera su contacto.
                 </p>
             )}
             {enrollment.status === 'cancelled' && (
                 <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
                     {enrollment.cancelled_by === 'company'
                         ? 'La empresa ha cerrado tu candidatura.'
-                        : 'Cancelaste esta postulación voluntariamente.'}
+                        : 'Cancelaste esta postulacion voluntariamente.'}
                     {' '}No puedes volver a postularte.
                 </p>
             )}
@@ -97,7 +97,7 @@ function EnrollmentCard({ enrollment }) {
                     disabled={processing}
                     className="mt-auto inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 hover:border-red-300 rounded-lg px-4 py-2 transition disabled:opacity-50"
                 >
-                    {processing ? 'Cancelando…' : 'Cancelar postulación'}
+                    {processing ? 'Cancelando…' : 'Cancelar postulacion'}
                 </button>
             )}
         </div>
@@ -134,7 +134,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                     {/* Header */}
                     <div className="mb-8">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mis postulaciones</h1>
-                        <p className="text-gray-300 mt-1">Solo tú puedes ver este apartado.</p>
+                        <p className="text-gray-300 mt-1">Solo tu puedes ver este apartado.</p>
                     </div>
 
                     {/* Slots counter */}
@@ -180,7 +180,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
                             <p className="text-lg font-medium">Sin postulaciones activas</p>
-                            <p className="text-sm mt-1">Explora las empresas y postúlate a las que te interesen.</p>
+                            <p className="text-sm mt-1">Explora las empresas y postulate a las que te interesen.</p>
                             <Link href="/empresas" className="mt-4 inline-block text-sm font-semibold text-indigo-600 hover:underline">
                                 Ver empresas →
                             </Link>

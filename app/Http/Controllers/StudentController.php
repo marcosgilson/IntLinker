@@ -56,7 +56,7 @@ class StudentController extends Controller
 
         Log::info("StudentController: student record created for user {$user->id}, documentId={$upload['documentId']}");
 
-        return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificación.');
+        return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificacion.');
     }
 
     public function renew(BecomeStudentRequest $request, DocuPipeService $docuPipe): RedirectResponse
@@ -94,7 +94,7 @@ class StudentController extends Controller
 
         Log::info("StudentController: renewal uploaded for user {$user->id}, documentId={$upload['documentId']}");
 
-        return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificación.');
+        return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificacion.');
     }
 
     public function addSchool(AddSchoolRequest $request): RedirectResponse
@@ -118,7 +118,7 @@ class StudentController extends Controller
             'verified'           => false,
         ]);
 
-        return back()->with('status', 'Escuela añadida. Pendiente de verificación.');
+        return back()->with('status', 'Escuela anadida. Pendiente de verificacion.');
     }
 
     public function removeSchool(Request $request, School $school): RedirectResponse

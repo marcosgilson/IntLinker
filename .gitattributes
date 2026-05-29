@@ -1,11 +1,20 @@
+# Normalize line endings to LF for all text files
 * text=auto eol=lf
 
-*.blade.php diff=html
-*.css diff=css
-*.html diff=html
-*.md diff=markdown
-*.php diff=php
+# Explicitly UTF-8, LF for source files
+*.php text eol=lf encoding=utf-8
+*.jsx text eol=lf encoding=utf-8
+*.js  text eol=lf encoding=utf-8
+*.css text eol=lf encoding=utf-8
+*.json text eol=lf encoding=utf-8
+*.blade.php text eol=lf encoding=utf-8
 
-/.github export-ignore
-CHANGELOG.md export-ignore
-.styleci.yml export-ignore
+# Binary files - no line ending conversion
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary

@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { router } from '@inertiajs/react';
 
 const SECTORS = [
-    'Tecnología', 'Salud', 'Educación', 'Finanzas', 'Retail', 'Logística',
-    'Hostelería', 'Construcción', 'Consultoría', 'Marketing', 'Industria', 'Otro',
+    'Tecnologia', 'Salud', 'Educacion', 'Finanzas', 'Retail', 'Logistica',
+    'Hosteleria', 'Construccion', 'Consultoria', 'Marketing', 'Industria', 'Otro',
 ];
 
 const BENEFIT_SUGGESTIONS = [
-    'Teletrabajo', 'Horario flexible', 'Formación continua', 'Seguro médico',
+    'Teletrabajo', 'Horario flexible', 'Formacion continua', 'Seguro medico',
     'Tickets restaurante', 'Bonos de transporte', 'Ambiente joven', 'Proyectos internacionales',
     'Plan de carrera', 'Comedor en oficina',
 ];
@@ -108,9 +108,9 @@ export default function CompanyPortfolioSection({ company, canManage }) {
 
             {editing ? (
                 <div className="px-6 py-5 space-y-4">
-                    <EditField label="Descripción">
+                    <EditField label="Descripcion">
                         <textarea value={draft.about} onChange={e => setDraft(d => ({ ...d, about: e.target.value }))}
-                            rows={4} maxLength={1500} placeholder="Cuéntanos quiénes sois..."
+                            rows={4} maxLength={1500} placeholder="Cuentanos quienes sois..."
                             className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none" />
                     </EditField>
 
@@ -122,10 +122,10 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                                 {SECTORS.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </EditField>
-                        <EditField label="Tamaño de empresa">
+                        <EditField label="Tamano de empresa">
                             <select value={draft.size} onChange={e => setDraft(d => ({ ...d, size: e.target.value }))}
                                 className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300">
-                                <option value="">Seleccionar tamaño</option>
+                                <option value="">Seleccionar tamano</option>
                                 {['1-10', '11-50', '51-200', '201-500', '500+'].map(s => <option key={s} value={s}>{s} empleados</option>)}
                             </select>
                         </EditField>
@@ -135,11 +135,11 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                         <div className="flex gap-2">
                             <input value={benefitInput} onChange={e => setBenefitInput(e.target.value)}
                                 onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addBenefit(benefitInput); }}}
-                                placeholder="Añadir beneficio..." maxLength={60}
+                                placeholder="Anadir beneficio..." maxLength={60}
                                 className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" />
                             <button onClick={() => addBenefit(benefitInput)}
                                 className="px-3 py-2 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl text-sm font-medium transition-colors">
-                                Añadir
+                                Anadir
                             </button>
                         </div>
                         <div className="flex flex-wrap gap-1.5 mt-2">
@@ -153,9 +153,9 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                         <TagList tags={draft.benefits} onRemove={i => setDraft(d => ({ ...d, benefits: d.benefits.filter((_, idx) => idx !== i) }))} />
                     </EditField>
 
-                    <EditField label="¿Por qué trabajar con nosotros?">
+                    <EditField label="?Por que trabajar con nosotros?">
                         <textarea value={draft.why_us} onChange={e => setDraft(d => ({ ...d, why_us: e.target.value }))}
-                            rows={3} maxLength={800} placeholder="Describe qué os hace especiales..."
+                            rows={3} maxLength={800} placeholder="Describe que os hace especiales..."
                             className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none" />
                     </EditField>
 
@@ -184,10 +184,10 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                 </div>
             ) : !hasContent ? (
                 <div className="px-6 py-8 text-center">
-                    <p className="text-sm text-gray-400 mb-3">Aún no habéis rellenado el portfolio de la empresa.</p>
+                    <p className="text-sm text-gray-400 mb-3">Aun no habeis rellenado el portfolio de la empresa.</p>
                     <button onClick={openEdit}
                         className="text-sm font-semibold text-indigo-600 hover:text-indigo-700 hover:underline">
-                        + Añadir información
+                        + Anadir informacion
                     </button>
                 </div>
             ) : (
@@ -200,7 +200,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                     )}
                     {portfolio.about && (
                         <div>
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quiénes somos</h3>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quienes somos</h3>
                             <p className="text-sm text-gray-600 whitespace-pre-line leading-relaxed">{portfolio.about}</p>
                         </div>
                     )}
@@ -212,7 +212,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                     )}
                     {portfolio.why_us && (
                         <div>
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">¿Por qué trabajar con nosotros?</h3>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">?Por que trabajar con nosotros?</h3>
                             <p className="text-sm text-gray-600 whitespace-pre-line leading-relaxed">{portfolio.why_us}</p>
                         </div>
                     )}

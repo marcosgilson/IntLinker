@@ -70,10 +70,10 @@ export default function RolesSection() {
                             </div>
                             <div>
                                 <p className="font-semibold text-gray-600 text-sm">Alumno</p>
-                                <p className="text-xs text-gray-400">No activo — actívalo para postularte</p>
+                                <p className="text-xs text-gray-400">No activo — activalo para postularte</p>
                             </div>
                         </div>
-                        <span className="text-xs text-gray-400 italic">Próximamente</span>
+                        <span className="text-xs text-gray-400 italic">Proximamente</span>
                     </div>
                 )}
 
@@ -88,7 +88,7 @@ export default function RolesSection() {
                             </div>
                             <div>
                                 <p className="font-semibold text-violet-900 text-sm">Trabajador</p>
-                                <p className="text-xs text-violet-600">Perteneces a una o más empresas</p>
+                                <p className="text-xs text-violet-600">Perteneces a una o mas empresas</p>
                             </div>
                         </div>
                         <Link

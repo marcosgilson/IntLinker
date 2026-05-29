@@ -37,7 +37,7 @@ export default function BecomeWorkerForm({ companies, status }) {
     };
 
     const doLeave = () => {
-        if (!confirm('¿Seguro que quieres abandonar tu empresa? Tendras que volver a verificarte para unirte a otra.')) return;
+        if (!confirm('?Seguro que quieres abandonar tu empresa? Tendras que volver a verificarte para unirte a otra.')) return;
         leaveForm.delete(route('worker.leave'));
     };
 
@@ -54,7 +54,7 @@ export default function BecomeWorkerForm({ companies, status }) {
                     </div>
                     <div className="flex-1">
                         <h3 className="font-bold text-violet-900 text-sm">
-                            {isVerifiedWorker ? 'Trabajador verificado' : 'Verificación pendiente'}
+                            {isVerifiedWorker ? 'Trabajador verificado' : 'Verificacion pendiente'}
                         </h3>
                         {currentCompany ? (
                             <p className="text-xs text-violet-700 mt-1">

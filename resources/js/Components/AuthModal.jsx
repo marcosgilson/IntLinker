@@ -41,7 +41,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
 
     return (
         <form onSubmit={submit} className="space-y-4">
-            <Field label="Correo electrónico" id="login-email" error={errors.email}>
+            <Field label="Correo electronico" id="login-email" error={errors.email}>
                 <Input
                     id="login-email"
                     type="email"
@@ -54,7 +54,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                 />
             </Field>
 
-            <Field label="Contraseña" id="login-password" error={errors.password}>
+            <Field label="Contrasena" id="login-password" error={errors.password}>
                 <Input
                     id="login-password"
                     type="password"
@@ -74,14 +74,14 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                         checked={data.remember}
                         onChange={(e) => setData('remember', e.target.checked)}
                     />
-                    <span className="text-gray-600">Recuérdame</span>
+                    <span className="text-gray-600">Recuerdame</span>
                 </label>
                 {canResetPassword && (
                     <Link
                         href={route('password.request')}
                         className="text-indigo-600 hover:text-indigo-700 font-medium"
                     >
-                        ¿Olvidaste tu contraseña?
+                        ?Olvidaste tu contrasena?
                     </Link>
                 )}
             </div>
@@ -91,13 +91,13 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                 disabled={processing}
                 className="w-full min-h-10 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition text-sm"
             >
-                {processing ? 'Entrando…' : 'Iniciar sesión'}
+                {processing ? 'Entrando…' : 'Iniciar sesion'}
             </button>
 
             <p className="text-center text-sm text-gray-500">
-                ¿No tienes cuenta?{' '}
+                ?No tienes cuenta?{' '}
                 <button type="button" onClick={onSwitch} className="text-indigo-600 hover:underline font-medium">
-                    Regístrate gratis
+                    Registrate gratis
                 </button>
             </p>
         </form>
@@ -135,7 +135,7 @@ function RegisterForm({ onSwitch, onClose }) {
                 />
             </Field>
 
-            <Field label="Correo electrónico" id="reg-email" error={errors.email}>
+            <Field label="Correo electronico" id="reg-email" error={errors.email}>
                 <Input
                     id="reg-email"
                     type="email"
@@ -148,7 +148,7 @@ function RegisterForm({ onSwitch, onClose }) {
             </Field>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Field label="Contraseña" id="reg-password" error={errors.password}>
+                <Field label="Contrasena" id="reg-password" error={errors.password}>
                     <Input
                         id="reg-password"
                         type="password"
@@ -159,7 +159,7 @@ function RegisterForm({ onSwitch, onClose }) {
                         required
                     />
                 </Field>
-                <Field label="Confirmar contraseña" id="reg-confirm" error={errors.password_confirmation}>
+                <Field label="Confirmar contrasena" id="reg-confirm" error={errors.password_confirmation}>
                     <Input
                         id="reg-confirm"
                         type="password"
@@ -181,9 +181,9 @@ function RegisterForm({ onSwitch, onClose }) {
             </button>
 
             <p className="text-center text-sm text-gray-500">
-                ¿Ya tienes cuenta?{' '}
+                ?Ya tienes cuenta?{' '}
                 <button type="button" onClick={onSwitch} className="text-indigo-600 hover:underline font-medium">
-                    Inicia sesión
+                    Inicia sesion
                 </button>
             </p>
         </form>
@@ -246,7 +246,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login', canRese
                     {/* Tabs */}
                     <div className="flex gap-1 bg-gray-100 p-1 rounded-lg">
                         {[
-                            { key: 'login',    label: 'Iniciar sesión' },
+                            { key: 'login',    label: 'Iniciar sesion' },
                             { key: 'register', label: 'Registrarse' },
                         ].map(({ key, label }) => (
                             <button

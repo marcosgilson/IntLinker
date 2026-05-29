@@ -72,7 +72,7 @@ export default function AuthenticatedLayout({ children }) {
                                 <UserAvatar user={user} />
                                 <span className="text-sm font-semibold text-gray-900">{user?.name}</span>
                             </Link>
-                            <button onClick={logout} className="text-left text-sm text-red-500 hover:text-red-600 py-1 transition">Cerrar sesión</button>
+                            <button onClick={logout} className="text-left text-sm text-red-500 hover:text-red-600 py-1 transition">Cerrar sesion</button>
                         </div>
                     </div>
                 )}

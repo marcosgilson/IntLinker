@@ -4,35 +4,35 @@ import Footer from '@/Components/Footer';
 import { useState, useRef, useEffect } from 'react';
 
 const SPANISH_CITIES = [
-    // Madrid y Ã¡rea metropolitana
+    // Madrid y area metropolitana
     'Madrid','Alcobendas','Tres Cantos','Majadahonda','Boadilla del Monte',
-    'Las Rozas de Madrid','AlcalÃ¡ de Henares','LeganÃ©s','Getafe','MÃ³stoles',
-    'Fuenlabrada','AlcorcÃ³n','Pozuelo de AlarcÃ³n','TorrejÃ³n de Ardoz',
-    // CataluÃ±a
-    'Barcelona','Martorell','El Prat de Llobregat','Sant Cugat del VallÃ¨s',
-    'Palau-solitÃ  i Plegamans','Sabadell','Terrassa','Badalona','Lleida',
-    'Tarragona','Girona','MatarÃ³','Hospitalet de Llobregat',
+    'Las Rozas de Madrid','Alcala de Henares','Leganes','Getafe','Mostoles',
+    'Fuenlabrada','Alcorcon','Pozuelo de Alarcon','Torrejon de Ardoz',
+    // Cataluna
+    'Barcelona','Martorell','El Prat de Llobregat','Sant Cugat del Valles',
+    'Palau-solita i Plegamans','Sabadell','Terrassa','Badalona','Lleida',
+    'Tarragona','Girona','Mataro','Hospitalet de Llobregat',
     // Comunitat Valenciana
-    'Valencia','Tavernes Blanques','Almussafes','Alicante','CastellÃ³n de la Plana',
+    'Valencia','Tavernes Blanques','Almussafes','Alicante','Castellon de la Plana',
     'Vila-real','Elche','Torrent','Sagunto',
-    // AndalucÃ­a
-    'Sevilla','MÃ¡laga','Granada','CÃ³rdoba','AlmerÃ­a','Cantoria','Huelva',
-    'Jerez de la Frontera','CÃ¡diz','Los Barrios','San Fernando','Algeciras',
+    // Andalucia
+    'Sevilla','Malaga','Granada','Cordoba','Almeria','Cantoria','Huelva',
+    'Jerez de la Frontera','Cadiz','Los Barrios','San Fernando','Algeciras',
     'Dos Hermanas','Marbella',
-    // PaÃ­s Vasco y Navarra
-    'Bilbao','San SebastiÃ¡n','Vitoria-Gasteiz','Beasain','Hernani',
-    'Arrasate-MondragÃ³n','Donostia','Pamplona','Cizur Menor',
-    // AragÃ³n y La Rioja
-    'Zaragoza','Figueruelas','Haro','LogroÃ±o',
+    // Pais Vasco y Navarra
+    'Bilbao','San Sebastian','Vitoria-Gasteiz','Beasain','Hernani',
+    'Arrasate-Mondragon','Donostia','Pamplona','Cizur Menor',
+    // Aragon y La Rioja
+    'Zaragoza','Figueruelas','Haro','Logrono',
     // Galicia
-    'A CoruÃ±a','Arteixo','Vigo','Santiago de Compostela','Lugo','Ourense',
+    'A Coruna','Arteixo','Vigo','Santiago de Compostela','Lugo','Ourense',
     // Asturias y Cantabria
-    'Oviedo','GijÃ³n','AvilÃ©s','Santander','Torrelavega',
-    // Castilla y LeÃ³n
-    'Valladolid','Burgos','Salamanca','LeÃ³n','Palencia','Segovia',
+    'Oviedo','Gijon','Aviles','Santander','Torrelavega',
+    // Castilla y Leon
+    'Valladolid','Burgos','Salamanca','Leon','Palencia','Segovia',
     // Otras capitales y ciudades
     'Palma','Las Palmas de Gran Canaria','Santa Cruz de Tenerife',
-    'San CristÃ³bal de La Laguna','Murcia','Cartagena','Badajoz','Toledo',
+    'San Cristobal de La Laguna','Murcia','Cartagena','Badajoz','Toledo',
     'Guadalajara','Ciudad Real',
 ];
 
@@ -101,7 +101,7 @@ function CitySelect({ value, onChange, error }) {
                 <span>{value || 'Selecciona una ciudad...'}</span>
                 <div className="flex items-center gap-1">
                     {value && (
-                        <span onClick={clear} className="text-gray-400 hover:text-gray-600 px-1 text-base leading-none">Ã—</span>
+                        <span onClick={clear} className="text-gray-400 hover:text-gray-600 px-1 text-base leading-none">-</span>
                     )}
                     <svg className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -193,8 +193,8 @@ function CreateCompanyForm() {
                         error={errors.city}
                     />
                 </Field>
-                <Field label="DescripciÃ³n" error={errors.description}>
-                    <textarea rows={3} placeholder="Breve descripciÃ³n..."
+                <Field label="Descripcion" error={errors.description}>
+                    <textarea rows={3} placeholder="Breve descripcion..."
                         value={data.description} onChange={e => setData('description', e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400
                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
@@ -267,12 +267,12 @@ function UnverifiedUserRow({ user }) {
                         {urgent ? '⚠️' : '⏳'} Expira en: {pad(h)}:{pad(m)}:{pad(s)}
                     </p>
                 ) : (
-                    <p className="text-xs font-medium mt-1 text-red-600">⛔ Expirado — se eliminará pronto</p>
+                    <p className="text-xs font-medium mt-1 text-red-600">⛔ Expirado — se eliminara pronto</p>
                 )}
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
                 <button
-                    onClick={() => { if (window.confirm('Verificar la cuenta de ' + user.name + '? El usuario podrá acceder a la plataforma.')) { verify.patch(route('admin.unverified-users.verify', user.id)); } }}
+                    onClick={() => { if (window.confirm('Verificar la cuenta de ' + user.name + '? El usuario podra acceder a la plataforma.')) { verify.patch(route('admin.unverified-users.verify', user.id)); } }}
                     disabled={verify.processing}
                     className="inline-flex min-h-10 flex-1 sm:flex-none items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition disabled:opacity-50"
                 >
@@ -301,7 +301,7 @@ function StudentRow({ student }) {
                     <p className="font-bold text-gray-900">{student.user?.name}</p>
                     <p className="text-xs text-gray-400">{student.user?.email}</p>
                     <p className="text-xs text-gray-500 mt-1">
-                        Escuela: <span className="font-medium">{student.school_name || 'â€”'}</span>
+                        Escuela: <span className="font-medium">{student.school_name || '–'}</span>
                         {student.school_email && <> Â· {student.school_email}</>}
                     </p>
                 </div>
@@ -515,7 +515,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
     return (
         <>
-            <Head title="Panel Admin â€” IntLinker" />
+            <Head title="Panel Admin – IntLinker" />
 
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
@@ -554,17 +554,17 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
                     <div className="space-y-10">
                         <Section title="Cuentas sin verificar email" count={pendingEmailUsers.length}
-                            emptyText="No hay cuentas pendientes de verificaciÃ³n de email.">
+                            emptyText="No hay cuentas pendientes de verificacion de email.">
                             {pendingEmailUsers.map(u => <UnverifiedUserRow key={u.id} user={u} />)}
                         </Section>
 
-                        <Section title="Alumnos pendientes de verificaciÃ³n" count={pendingStudents.length}
-                            emptyText="No hay alumnos pendientes de verificaciÃ³n.">
+                        <Section title="Alumnos pendientes de verificacion" count={pendingStudents.length}
+                            emptyText="No hay alumnos pendientes de verificacion.">
                             {pendingStudents.map(s => <StudentRow key={s.id} student={s} />)}
                         </Section>
 
-                        <Section title="Trabajadores pendientes de verificaciÃ³n" count={pendingWorkers.length}
-                            emptyText="No hay trabajadores pendientes de verificaciÃ³n.">
+                        <Section title="Trabajadores pendientes de verificacion" count={pendingWorkers.length}
+                            emptyText="No hay trabajadores pendientes de verificacion.">
                             {pendingWorkers.map(w => <WorkerRow key={`${w.user_id}-${w.company_id}`} worker={w} />)}
                         </Section>
 

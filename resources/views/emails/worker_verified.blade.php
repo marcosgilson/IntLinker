@@ -21,7 +21,7 @@
         @endif
         <tr>
           <td style="padding:32px 40px 40px;">
-            <h1 style="margin:0 0 12px;font-size:24px;color:#111827;">¡Enhorabuena, {{ $name }}!</h1>
+            <h1 style="margin:0 0 12px;font-size:24px;color:#111827;">!Enhorabuena, {{ $name }}!</h1>
             <p style="margin:0 0 24px;font-size:15px;color:#6b7280;line-height:1.6;">
               Tu solicitud como <strong style="color:#4f46e5;">trabajador</strong> en
               <strong style="color:#4f46e5;">{{ $companyName }}</strong> ha sido revisada y

@@ -34,6 +34,6 @@ class CompanyApplicationController extends Controller
             'status'       => 'pending',
         ]);
 
-        return back()->with('status', 'Solicitud enviada. Recibirás una respuesta en breve.');
+        return back()->with('status', 'Solicitud enviada. Recibiras una respuesta en breve.');
     }
 }
