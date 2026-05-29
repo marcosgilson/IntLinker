@@ -204,7 +204,8 @@ class AdminController extends Controller
 
     public function verifyUser(User $user): RedirectResponse
     {
-        $user->update(['email_verified_at' => now()]);
+        $user->email_verified_at = now();
+        $user->save();
         return back()->with('status', "Usuario \"{$user->name}\" verificado correctamente. Ya puede acceder a la plataforma.");
     }
     public function rejectWorker(Request $request): RedirectResponse
