@@ -34,12 +34,12 @@ class CompanyController extends Controller
 
         $query->orderBy('name');
 
-        $páginated       = $query->páginate(20)->withQueryString();
+        $paginated       = $query->paginate(20)->withQueryString();
         $allCities       = Company::select('city')->whereNotNull('city')->where('city', '!=', '')->distinct()->orderBy('city')->pluck('city');
         $allCompanyNames = Company::select('id', 'name')->orderBy('name')->get();
 
         return Inertia::render('Companies/Index', [
-            'companies'         => $páginated,
+            'companies'         => $paginated,
             'allCities'         => $allCities,
             'allCompanyNames'   => $allCompanyNames,
             'selectedCities'    => $cities,
