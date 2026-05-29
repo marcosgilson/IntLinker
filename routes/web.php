@@ -85,8 +85,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/usuarios-sin-verificar/{user}', [AdminController::class, 'deleteUnverifiedUser'])->name('unverified-users.delete');
         Route::patch('/usuarios-sin-verificar/{user}/verificar', [AdminController::class, 'verifyUser'])->name('unverified-users.verify');
         Route::patch('/companies/{company}/email', [AdminController::class, 'updateCompanyEmail'])->name('companies.email.update');
+        // Error logs
+        Route::patch('/errors/{error}/resolve', [AdminController::class, 'resolveError'])->name('errors.resolve');
+        Route::delete('/errors/{error}', [AdminController::class, 'deleteError'])->name('errors.delete');
+        Route::delete('/errors', [AdminController::class, 'clearResolvedErrors'])->name('errors.clear-resolved');
     });
 });
+
+// Client-side JS error reporting
+Route::post('/api/client-error', function (\Illuminate\Http\Request $request) {
+    try {
+        \App\Models\ErrorLog::create([
+            'type'    => 'JavaScript/' . substr($request->input('message', 'Unknown'), 0, 100),
+            'message' => substr($request->input('message', ''), 0, 1000),
+            'trace'   => substr(
+                ($request->input('stack', '') . "\n\nComponent Stack:\n" . $request->input('componentStack', '')),
+                0, 5000
+            ),
+            'url'     => substr($request->input('url', ''), 0, 1000),
+            'method'  => 'GET',
+            'ip'      => $request->ip(),
+            'user_id' => auth()->id(),
+            'status_code' => 0,
+        ]);
+    } catch (\Throwable) {}
+    return response()->noContent();
+})->middleware('web')->name('client-error');
 
 require __DIR__ . '/auth.php';
 

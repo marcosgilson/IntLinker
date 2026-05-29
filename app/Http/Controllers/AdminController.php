@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\CompanyApplication;
+use App\Models\ErrorLog;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -64,6 +65,11 @@ class AdminController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $errorLogs = ErrorLog::with('user:id,name,email')
+            ->latest()
+            ->limit(100)
+            ->get(['id', 'type', 'message', 'file', 'line', 'url', 'method', 'ip', 'user_id', 'status_code', 'resolved', 'created_at']);
+
         return Inertia::render('Admin/Dashboard', [
             'pendingEmailUsers' => $pendingEmailUsers,
             'pendingStudents'   => $pendingStudents,
@@ -71,6 +77,7 @@ class AdminController extends Controller
             'applications'      => $applications,
             'companies'         => $companies,
             'allStudents'       => $allStudents,
+            'errorLogs'         => $errorLogs,
         ]);
     }
 
@@ -234,6 +241,22 @@ class AdminController extends Controller
 
         return back()->with('status', 'Registro de trabajador rechazado y eliminado.');
     }
+
+    public function resolveError(ErrorLog $error): RedirectResponse
+    {
+        $error->update(['resolved' => true]);
+        return back()->with('status', 'Error marcado como resuelto.');
+    }
+
+    public function deleteError(ErrorLog $error): RedirectResponse
+    {
+        $error->delete();
+        return back()->with('status', 'Error eliminado.');
+    }
+
+    public function clearResolvedErrors(): RedirectResponse
+    {
+        ErrorLog::where('resolved', true)->delete();
+        return back()->with('status', 'Errores resueltos eliminados.');
+    }
 }
-
-

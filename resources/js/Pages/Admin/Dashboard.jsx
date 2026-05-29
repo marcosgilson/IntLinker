@@ -1,5 +1,6 @@
-﻿import IntLinkerLogo from '@/Components/IntLinkerLogo';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import React from 'react';
+import IntLinkerLogo from '@/Components/IntLinkerLogo';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 import { useState, useRef, useEffect } from 'react';
 
@@ -518,7 +519,7 @@ function CompanyEmailRow({ company }) {
     );
 }
 // â”€ Main page â”€
-export default function AdminDashboard({ applications = {}, pendingEmailUsers = [], pendingStudents = [], pendingWorkers = [], companies = [], allStudents = [] }) {
+export default function AdminDashboard({ applications = {}, pendingEmailUsers = [], pendingStudents = [], pendingWorkers = [], companies = [], allStudents = [], errorLogs = [] }) {
     const { auth } = usePage().props;
     const appList = applications.data ?? [];
     const pending = appList.filter(a => a.status === 'pending');
@@ -626,6 +627,26 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                                 </div>
                             ))}
                         </Section>
+
+                        {errorLogs.length > 0 && (
+                            <Section
+                                title="Registro de errores"
+                                count={errorLogs.filter(e => !e.resolved).length}
+                                emptyText="No hay errores registrados."
+                            >
+                                {errorLogs.filter(e => !e.resolved).length > 0 && (
+                                    <div className="flex justify-end mb-2">
+                                        <button
+                                            onClick={() => router.delete(route('admin.errors.clear-resolved'), { preserveScroll: true })}
+                                            className="text-xs text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Limpiar resueltos
+                                        </button>
+                                    </div>
+                                )}
+                                {errorLogs.map(e => <ErrorLogRow key={e.id} error={e} />)}
+                            </Section>
+                        )}
 
                         <CreateCompanyForm />
                     </div>
