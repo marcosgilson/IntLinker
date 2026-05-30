@@ -17,7 +17,7 @@ class AdminController extends Controller
 {
     public function dashboard(): Response
     {
-                // Eliminar usuarios expirados (>48h sin verificar)
+        // Eliminar usuarios expirados (>48h sin verificar)
         User::whereNull('email_verified_at')
             ->where('created_at', '<', now()->subHours(48))
             ->delete();
@@ -42,6 +42,8 @@ class AdminController extends Controller
                 'company_employees.user_id',
                 'company_employees.company_id',
                 'company_employees.position',
+                'company_employees.id_trabajador',
+                'company_employees.work_card_image',
                 'company_employees.created_at',
                 'users.name as user_name',
                 'users.email as user_email',
@@ -165,7 +167,7 @@ class AdminController extends Controller
         return back()->with('status', 'Solicitud rechazada.');
     }
 
-    
+
     public function updateCompanyEmail(Request $request, Company $company): RedirectResponse
     {
         $validated = $request->validate([
@@ -177,7 +179,7 @@ class AdminController extends Controller
 
     // â”€ Student verification â”€
 
-        public function verifyStudent(Student $student): RedirectResponse
+    public function verifyStudent(Student $student): RedirectResponse
     {
         $student->update(['verified' => true]);
         // Email deshabilitado: $student->user->notify(new StudentVerifiedNotification());

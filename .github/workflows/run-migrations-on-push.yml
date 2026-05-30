@@ -2,7 +2,7 @@ name: Run migrations on push (Railway CLI)
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   migrate:
@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli

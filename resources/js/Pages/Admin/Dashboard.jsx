@@ -350,13 +350,23 @@ function WorkerRow({ worker }) {
                     <p className="text-xs text-gray-400">{worker.user_email}</p>
                     <p className="text-xs text-gray-500 mt-1">
                         Empresa: <span className="font-medium">{worker.company_name}</span>
-                        {worker.position && <> Â· {worker.position}</>}
+                        {worker.position && <> · {worker.position}</>}
+                        {worker.id_trabajador && (
+                            <><br />ID trabajador: <span className="font-medium">{worker.id_trabajador}</span></>
+                        )}
                     </p>
                 </div>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200 flex-shrink-0">
                     Pendiente
                 </span>
             </div>
+
+            {worker.work_card_image && (
+                <div className="mb-4">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Carnet / comprobante enviado:</p>
+                    <img src={worker.work_card_image} alt="Carnet trabajador" className="w-full max-w-xs rounded-xl border border-gray-200 shadow-sm" />
+                </div>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-2">
                 <button onClick={() => verify.patch(route('admin.workers.verify'))}
@@ -402,6 +412,13 @@ function ApplicationRow({ app }) {
 
             {app.description && (
                 <p className="text-sm text-gray-600 mb-3 line-clamp-2">{app.description}</p>
+            )}
+
+            {app.work_card_image && (
+                <div className="mb-3">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Carnet / comprobante enviado:</p>
+                    <img src={app.work_card_image} alt="Carnet trabajador" className="w-full max-w-xs rounded-xl border border-gray-200 shadow-sm" />
+                </div>
             )}
 
             {app.status === 'pending' && (

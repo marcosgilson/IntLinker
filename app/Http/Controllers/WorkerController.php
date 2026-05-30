@@ -6,6 +6,8 @@ use App\Helpers\ImageHelper;
 use App\Http\Requests\BecomeWorkerRequest;
 use App\Models\Company;
 use App\Models\CompanyApplication;
+use App\Models\User;
+use App\Notifications\NewWorkerApplicationForAdminNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -49,7 +51,7 @@ class WorkerController extends Controller
             return back()->with('status', 'Solicitud enviada. Pendiente de verificación por el administrador.');
         }
 
-        CompanyApplication::create([
+        $application = CompanyApplication::create([
             'user_id'         => $user->id,
             'company_name'    => $companyName,
             'position'        => $position,
@@ -57,6 +59,11 @@ class WorkerController extends Controller
             'id_trabajador'   => $idTrabajador,
             'status'          => 'pending',
         ]);
+
+        $admins = User::where('is_admin', true)->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new NewWorkerApplicationForAdminNotification($application));
+        }
 
         return back()->with('status', 'Solicitud enviada. El administrador la revisara pronto.');
     }
