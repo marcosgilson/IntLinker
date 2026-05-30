@@ -298,7 +298,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                                 {companies.map((company) => (
                                     <Link
                                         key={company.id}
-                                        href={`/companies/${company.id}`}
+                                        href={route('companies.show', company.id)}
                                         className="group border border-gray-200 rounded-2xl p-4 sm:p-6 hover:border-indigo-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                                     >
                                         <div className="flex items-start gap-3 mb-4">
