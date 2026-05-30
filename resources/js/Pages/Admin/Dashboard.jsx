@@ -364,7 +364,7 @@ function WorkerRow({ worker }) {
             {worker.work_card_image && (
                 <div className="mb-4">
                     <p className="text-sm font-semibold text-gray-700 mb-2">Carnet / comprobante enviado:</p>
-                    <img src={worker.work_card_image} alt="Carnet trabajador" className="w-full max-w-xs rounded-xl border border-gray-200 shadow-sm" />
+                    <img src={worker.work_card_image} alt="Carnet trabajador" className="w-full max-w-full rounded-xl border border-gray-200 shadow-sm" />
                 </div>
             )}
 
@@ -417,7 +417,7 @@ function ApplicationRow({ app }) {
             {app.work_card_image && (
                 <div className="mb-3">
                     <p className="text-sm font-semibold text-gray-700 mb-2">Carnet / comprobante enviado:</p>
-                    <img src={app.work_card_image} alt="Carnet trabajador" className="w-full max-w-xs rounded-xl border border-gray-200 shadow-sm" />
+                    <img src={app.work_card_image} alt="Carnet trabajador" className="w-full max-w-full rounded-xl border border-gray-200 shadow-sm" />
                 </div>
             )}
 
@@ -486,10 +486,10 @@ function Section({ title, count, children, emptyText }) {
     const hidden = items.length - 5;
     return (
         <div>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 sm:gap-3 mb-4">
                 <h2 className="text-lg font-bold text-white">{title}</h2>
                 {count > 0 && (
-                    <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
+                    <span className="inline-flex items-center justify-center text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
                         {count} pendiente{count !== 1 ? 's' : ''}
                     </span>
                 )}
@@ -592,7 +592,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                         <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-20 sm:h-20 w-auto" />
                         </Link>
-                        <div className="flex items-center gap-3 min-w-0">
+                        <div className="flex flex-wrap items-center gap-3 min-w-0">
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">Admin</span>
                             {totalPending > 0 && (
                                 <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
