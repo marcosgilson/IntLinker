@@ -128,7 +128,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
                     </div>
                 </nav>
 
-                <div className="pt-24 sm:pt-28 pb-12 w-full max-w-full sm:max-w-[80rem] mx-auto px-4 sm:px-6">
+                <div className="pt-24 sm:pt-28 pb-12 w-full max-w-[80rem] mx-auto px-4 sm:px-6">
                     <div className="mb-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Solicitudes de empresa</h1>
