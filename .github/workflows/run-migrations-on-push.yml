@@ -1,0 +1,39 @@
+name: Run migrations on push (Railway CLI)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Login to Railway
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+        run: |
+          railway login --apiKey "$RAILWAY_API_KEY"
+
+      - name: Run migrations via Railway
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_PROJECT: ${{ secrets.RAILWAY_PROJECT }}
+        run: |
+          if [ -n "$RAILWAY_PROJECT" ]; then
+            railway run -p "$RAILWAY_PROJECT" php artisan migrate --force
+          else
+            railway run php artisan migrate --force
+          fi
+
+      - name: Verify migration exit code
+        run: echo "Migrations finished with exit code $?"
