@@ -201,7 +201,7 @@ function CreateCompanyForm() {
                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" />
                 </Field>
                 <Field label="Correo de postulaciónes" error={errors.applications_email}>
-                    <div className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0">
+                    <div className="flex flex-col sm:flex-row items-stretch gap-2 w-full">
                         <input
                             type="text"
                             placeholder="info"
@@ -485,7 +485,7 @@ function Section({ title, count, children, emptyText }) {
     const visible = collapsible && !expanded ? items.slice(0, 5) : items;
     const hidden = items.length - 5;
     return (
-        <div>
+        <div className="w-full">
             <div className="flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 sm:gap-3 mb-4">
                 <h2 className="text-lg font-bold text-white">{title}</h2>
                 {count > 0 && (
@@ -588,11 +588,11 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-auto sm:h-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-3 sm:py-0">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-20 sm:h-20 w-auto" />
+                            <IntLinkerLogo className="h-12 sm:h-20 w-auto" />
                         </Link>
-                        <div className="flex flex-wrap items-center gap-3 min-w-0">
+                        <div className="flex flex-wrap items-center gap-3 min-w-0 w-full sm:w-auto justify-between sm:justify-end">
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">Admin</span>
                             {totalPending > 0 && (
                                 <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
@@ -615,13 +615,13 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-[80rem] mx-auto px-4 sm:px-6">
+                <div className="pt-24 sm:pt-28 pb-12 w-full max-w-full sm:max-w-[80rem] mx-auto px-4 sm:px-6">
                     <div className="mb-8">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Panel de administración</h1>
                         <p className="text-gray-300 mt-1">Verifica identidades y gestióna empresas.</p>
                     </div>
 
-                    <div className="space-y-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <Section title="Cuentas sin verificar email" count={pendingEmailUsers.length}
                             emptyText="No hay cuentas pendientes de verificación de email.">
                             {pendingEmailUsers.map(u => <UnverifiedUserRow key={u.id} user={u} />)}
@@ -657,8 +657,8 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                         <Section title="Todos los alumnos verificados" count={allStudents.length}
                             emptyText="No hay alumnos verificados aun.">
                             {allStudents.map(s => (
-                                <div key={s.id} className="bg-white/10 rounded-xl px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                    <div className="flex items-center gap-3 min-w-0">
+                                <div key={s.id} className="bg-white/10 rounded-xl px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between w-full min-w-0">
+                                    <div className="flex flex-wrap items-center gap-3 min-w-0">
                                         {s.user?.photo_url ? (
                                             <img src={s.user.photo_url} alt={s.user?.name}
                                                 className="w-8 h-8 rounded-full object-cover ring-2 ring-white/20" />

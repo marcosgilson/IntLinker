@@ -25,7 +25,7 @@ function ApplicationCard({ app }) {
     const cfg = STATUS_CFG[app.status] ?? { label: app.status, cls: 'bg-gray-100 text-gray-500 border-gray-200' };
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 break-words">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 break-words w-full min-w-0">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-3">
                 <div>
                     <p className="font-bold text-gray-900">{app.company_name}</p>
@@ -112,11 +112,11 @@ export default function AdminCompanyApplications({ applications = {} }) {
             <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-auto sm:h-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-3 sm:py-0">
                         <Link href="/inicio" className="flex items-center gap-2">
-                            <IntLinkerLogo className="h-20 sm:h-20 w-auto" />
+                            <IntLinkerLogo className="h-12 sm:h-20 w-auto" />
                         </Link>
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-wrap items-center gap-3 min-w-0 w-full sm:w-auto justify-between sm:justify-end">
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">Admin</span>
                             <Link href="/perfil" className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition px-2 sm:px-3 py-2 truncate max-w-[120px] sm:max-w-none">
                                 {auth.user?.name}
@@ -128,7 +128,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-[80rem] mx-auto px-4 sm:px-6">
+                <div className="pt-24 sm:pt-28 pb-12 w-full max-w-full sm:max-w-[80rem] mx-auto px-4 sm:px-6">
                     <div className="mb-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Solicitudes de empresa</h1>
@@ -142,11 +142,11 @@ export default function AdminCompanyApplications({ applications = {} }) {
                     </div>
 
                     {list.length === 0 ? (
-                        <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-16 text-center text-gray-400">
+                        <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-16 text-center text-gray-400 w-full">
                             <p className="text-lg font-medium">Sin solicitudes todavia.</p>
                         </div>
                     ) : (
-                        <div className="space-y-8">
+                        <div className="w-full space-y-8">
                             {pending.length > 0 && (
                                 <div>
                                     <p className="text-xs font-semibold text-amber-600 uppercase tracking-widest mb-3">
