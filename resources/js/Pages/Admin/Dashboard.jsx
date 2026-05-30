@@ -364,7 +364,7 @@ function WorkerRow({ worker }) {
             {worker.work_card_image && (
                 <div className="mb-4">
                     <p className="text-sm font-semibold text-gray-700 mb-2">Carnet / comprobante enviado:</p>
-                    <img src={worker.work_card_image} alt="Carnet trabajador" className="w-full max-w-full rounded-xl border border-gray-200 shadow-sm" />
+                    <img src={worker.work_card_image} alt="Carnet trabajador" className="w-full max-w-full max-h-72 object-contain rounded-xl border border-gray-200 shadow-sm" />
                 </div>
             )}
 
@@ -417,7 +417,7 @@ function ApplicationRow({ app }) {
             {app.work_card_image && (
                 <div className="mb-3">
                     <p className="text-sm font-semibold text-gray-700 mb-2">Carnet / comprobante enviado:</p>
-                    <img src={app.work_card_image} alt="Carnet trabajador" className="w-full max-w-full rounded-xl border border-gray-200 shadow-sm" />
+                    <img src={app.work_card_image} alt="Carnet trabajador" className="w-full max-w-full max-h-72 object-contain rounded-xl border border-gray-200 shadow-sm" />
                 </div>
             )}
 

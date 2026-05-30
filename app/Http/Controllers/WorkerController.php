@@ -36,7 +36,7 @@ class WorkerController extends Controller
 
         $user->update(['name' => $request->validated('name')]);
 
-        $imagePath    = ImageHelper::compressToBase64($request->file('work_card_image'), 800, 85);
+        $imagePath    = ImageHelper::compressToBase64($request->file('work_card_image'), 400, 70);
         $idTrabajador = 'TRB-' . strtoupper(Str::random(8));
 
         $company = Company::where('name', $companyName)->first();
