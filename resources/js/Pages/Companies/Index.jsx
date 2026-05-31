@@ -14,6 +14,15 @@ function initials(name) {
     return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
+function translatePaginationLabel(label) {
+    return String(label)
+        .replace(/&laquo;|«/g, 'Anterior')
+        .replace(/&raquo;|»/g, 'Siguiente')
+        .replace(/Previous/gi, 'Anterior')
+        .replace(/Next/gi, 'Siguiente')
+        .trim();
+}
+
 function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCompanies, onChangeCities, onChangeCompanies, onClearAll }) {
     const [query, setQuery] = useState('');
     const [open, setOpen] = useState(false);
@@ -57,7 +66,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
     const hasFilters = selectedCities.length > 0 || selectedCompanies.length > 0;
 
     return (
-        <div className="w-full max-w-full sm:max-w-4xl">
+        <div className="w-full max-w-2xl">
             {/* Input */}
             <div className="relative">
                 <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-400 focus-within:border-indigo-400 transition">
@@ -340,7 +349,7 @@ export default function CompaniesIndex({
                             <p className="text-lg font-medium">No se encontraron empresas.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                             {list.map(company => (
                                 <CompanyCard key={company.id} company={company}
                                     highlightedCity={selectedCities.includes(company.city)}
@@ -349,17 +358,17 @@ export default function CompaniesIndex({
                         </div>
                     )}
 
-                    {companies.links && companies.links.length > 3 && (
+                    {companies.links && companies.links.length > 1 && (
                         <div className="mt-10 flex justify-center gap-2 flex-wrap">
                             {companies.links.map((link, i) => (
                                 link.url ? (
                                     <Link key={i} href={link.url}
                                         className={`px-4 py-2 text-sm rounded-lg border transition ${link.active ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-400'}`}>
-                                        {link.label.replace("Previous", "Anterior").replace("Next", "Siguiente")}
+                                        {translatePaginationLabel(link.label)}
                                     </Link>
                                 ) : (
                                     <span key={i} className="px-4 py-2 text-sm rounded-lg border bg-gray-50 text-gray-300 border-gray-100">
-                                        {link.label.replace("Previous", "Anterior").replace("Next", "Siguiente")}
+                                        {translatePaginationLabel(link.label)}
                                     </span>
                                 )
                             ))}

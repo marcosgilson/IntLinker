@@ -9,6 +9,13 @@ const STATUS_CFG = {
     rejected: { label: 'Rechazada',  cls: 'bg-red-50 text-red-600 border-red-200' },
 };
 
+const translatePaginationLabel = (label) => String(label)
+    .replace(/&laquo;|«/g, 'Anterior')
+    .replace(/&raquo;|»/g, 'Siguiente')
+    .replace(/Previous/gi, 'Anterior')
+    .replace(/Next/gi, 'Siguiente')
+    .trim();
+
 function ApplicationCard({ app }) {
     const [notesOpen, setNotesOpen] = useState(false);
     const approveForm = useForm({ admin_notes: '' });
@@ -172,7 +179,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
                     )}
 
                     {/* Págination */}
-                    {applications.links && applications.links.length > 3 && (
+                    {applications.links && applications.links.length > 1 && (
                         <div className="mt-10 flex justify-center gap-2 flex-wrap">
                             {applications.links.map((link, i) => (
                                 link.url ? (
@@ -185,14 +192,14 @@ export default function AdminCompanyApplications({ applications = {} }) {
                                                 : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-400'
                                         }`}
                                     >
-                                        {link.label.replace('Previous', 'Anterior').replace('Next', 'Siguiente')}
+                                        {translatePaginationLabel(link.label)}
                                     </Link>
                                 ) : (
                                     <span
                                         key={i}
                                         className="px-4 py-2 text-sm rounded-lg border bg-gray-50 text-gray-300 border-gray-100"
                                     >
-                                        {link.label.replace('Previous', 'Anterior').replace('Next', 'Siguiente')}
+                                        {translatePaginationLabel(link.label)}
                                     </span>
                                 )
                             ))}
