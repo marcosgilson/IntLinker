@@ -449,11 +449,11 @@ function ErrorLogRow({ error }) {
             : 'bg-amber-100 text-amber-700';
     const label = error.status_code === 0 ? 'JS' : error.status_code;
     return (
-        <div className={`rounded-xl border border-gray-700 bg-gray-800/50 p-3 sm:p-4${error.resolved ? ' opacity-50' : ''}`}>
+        <div className={`w-full min-w-0 rounded-xl border border-gray-700 bg-gray-800/50 p-3 sm:p-4${error.resolved ? ' opacity-50' : ''}`}>
             <div className="flex flex-wrap items-start gap-2 justify-between">
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap min-w-0">
                     <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${statusColor}`}>{label}</span>
-                    <span className="text-xs text-gray-400 font-mono">{error.method} {error.url}</span>
+                    <span className="text-xs text-gray-400 font-mono break-all">{error.method} {error.url}</span>
                     {error.resolved && <span className="text-xs text-green-400 font-semibold">Resuelto</span>}
                 </div>
                 <div className="flex items-center gap-2">
@@ -468,10 +468,10 @@ function ErrorLogRow({ error }) {
                         className="text-xs text-red-400 hover:text-white transition-colors">Eliminar</button>
                 </div>
             </div>
-            <p className="text-sm font-semibold text-white mt-1">{error.message}</p>
+            <p className="text-sm font-semibold text-white mt-1 break-words">{error.message}</p>
             <p className="text-xs text-gray-400 mt-0.5">{new Date(error.created_at).toLocaleString('es-ES')}</p>
             {open && (
-                <pre className="mt-3 bg-gray-900 rounded-lg p-3 text-xs text-gray-300 overflow-auto max-h-64 whitespace-pre-wrap">{error.trace}</pre>
+                <pre className="mt-3 bg-gray-900 rounded-lg p-3 text-xs text-gray-300 overflow-auto max-h-64 whitespace-pre-wrap break-words">{error.trace}</pre>
             )}
         </div>
     );
