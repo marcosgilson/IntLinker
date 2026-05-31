@@ -57,7 +57,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
     const hasFilters = selectedCities.length > 0 || selectedCompanies.length > 0;
 
     return (
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-full sm:max-w-4xl">
             {/* Input */}
             <div className="relative">
                 <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-400 focus-within:border-indigo-400 transition">
@@ -310,7 +310,7 @@ export default function CompaniesIndex({
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-[90rem] mx-auto px-4 sm:px-6">
                     <div className="mb-6">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Empresas colaboradoras</h1>
                         <p className="text-gray-300 mt-1">Busca por empresa o localidad.</p>
@@ -340,7 +340,7 @@ export default function CompaniesIndex({
                             <p className="text-lg font-medium">No se encontraron empresas.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                             {list.map(company => (
                                 <CompanyCard key={company.id} company={company}
                                     highlightedCity={selectedCities.includes(company.city)}
