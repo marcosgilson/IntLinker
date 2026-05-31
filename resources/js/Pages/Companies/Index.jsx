@@ -15,12 +15,15 @@ function initials(name) {
 }
 
 function translatePaginationLabel(label) {
-    return String(label)
-        .replace(/&laquo;|«/g, 'Anterior')
-        .replace(/&raquo;|»/g, 'Siguiente')
-        .replace(/Previous/gi, 'Anterior')
-        .replace(/Next/gi, 'Siguiente')
+    const trimmed = String(label).trim();
+    const cleaned = trimmed
+        .replace(/&laquo;|«/g, '')
+        .replace(/&raquo;|»/g, '')
         .trim();
+
+    if (/^Previous$/i.test(cleaned)) return 'Anterior';
+    if (/^Next$/i.test(cleaned)) return 'Siguiente';
+    return cleaned;
 }
 
 function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCompanies, onChangeCities, onChangeCompanies, onClearAll }) {

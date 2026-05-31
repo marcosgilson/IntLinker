@@ -92,7 +92,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
     if (!hasContent && !canManage) return null;
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden w-full max-w-full">
             <div className="px-6 py-5 flex items-center justify-between border-b border-gray-100">
                 <h2 className="text-base font-bold text-gray-900">Sobre la empresa</h2>
                 {canManage && !editing && (
@@ -114,7 +114,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                             className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none" />
                     </EditField>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="grid gap-4 lg:grid-cols-2">
                         <EditField label="Sector">
                             <select value={draft.sector} onChange={e => setDraft(d => ({ ...d, sector: e.target.value }))}
                                 className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300">
@@ -159,7 +159,7 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                             className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none" />
                     </EditField>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="grid gap-4 lg:grid-cols-2">
                         <EditField label="Sitio web">
                             <input value={draft.website} onChange={e => setDraft(d => ({ ...d, website: e.target.value }))}
                                 placeholder="https://vuestra-web.com" type="url" maxLength={200}

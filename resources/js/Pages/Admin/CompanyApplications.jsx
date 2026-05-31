@@ -9,12 +9,17 @@ const STATUS_CFG = {
     rejected: { label: 'Rechazada',  cls: 'bg-red-50 text-red-600 border-red-200' },
 };
 
-const translatePaginationLabel = (label) => String(label)
-    .replace(/&laquo;|«/g, 'Anterior')
-    .replace(/&raquo;|»/g, 'Siguiente')
-    .replace(/Previous/gi, 'Anterior')
-    .replace(/Next/gi, 'Siguiente')
-    .trim();
+const translatePaginationLabel = (label) => {
+    const trimmed = String(label).trim();
+    const cleaned = trimmed
+        .replace(/&laquo;|«/g, '')
+        .replace(/&raquo;|»/g, '')
+        .trim();
+
+    if (/^Previous$/i.test(cleaned)) return 'Anterior';
+    if (/^Next$/i.test(cleaned)) return 'Siguiente';
+    return cleaned;
+};
 
 function ApplicationCard({ app }) {
     const [notesOpen, setNotesOpen] = useState(false);
