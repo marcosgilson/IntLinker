@@ -12,6 +12,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentProfileController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', fn () => redirect('/inicio'));
 
@@ -119,6 +120,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::delete('/errors', [App\Http\Controllers\AdminController::class, 'clearResolvedErrors'])->name('admin.errors.clear-resolved');
 });
 require __DIR__ . '/auth.php';
+
+
+
+
+// Fallback route for unknown URLs -> show Inertia 404 page
+Route::fallback(function () {
+    return Inertia::render('Errors/NotFound')->toResponse(request())->setStatusCode(404);
+});
 
 
 
