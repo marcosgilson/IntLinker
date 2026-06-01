@@ -154,7 +154,7 @@ function CompanyCard({ company }) {
     return (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
             {/* Header */}
-            <div className="p-4 sm:p-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="p-4 sm:p-6 flex flex-col gap-4 sm:flex-row items-start sm:items-center">
                 <LogoUpload company={company} />
                 <div className="flex-1 min-w-0">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-900 break-words">{company.name}</h2>
