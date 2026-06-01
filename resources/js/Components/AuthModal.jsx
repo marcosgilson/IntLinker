@@ -75,7 +75,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                         onChange={(e) => setData('remember', e.target.checked)}
                     />
                     <span className="text-gray-600">Recuerdame</span>
-                </label>
+                </label>{/*
                 {canResetPassword && (
                     <Link
                         href={route('password.request')}
@@ -83,7 +83,7 @@ function LoginForm({ onSwitch, onClose, canResetPassword }) {
                     >
                         ¿Olvidaste tu contraseña?
                     </Link>
-                )}
+                )}*/}
             </div>
 
             <button

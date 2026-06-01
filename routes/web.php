@@ -14,7 +14,7 @@ use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn () => redirect('/inicio'));
+Route::get('/', fn() => redirect('/inicio'));
 
 Route::get('/inicio', [HomeController::class, 'index'])->name('home');
 
@@ -101,7 +101,8 @@ Route::post('/api/client-error', function (\Illuminate\Http\Request $request) {
             'message' => substr($request->input('message', ''), 0, 1000),
             'trace'   => substr(
                 ($request->input('stack', '') . "\n\nComponent Stack:\n" . $request->input('componentStack', '')),
-                0, 5000
+                0,
+                5000
             ),
             'url'     => substr($request->input('url', ''), 0, 1000),
             'method'  => 'GET',
@@ -109,7 +110,8 @@ Route::post('/api/client-error', function (\Illuminate\Http\Request $request) {
             'user_id' => auth()->id(),
             'status_code' => 0,
         ]);
-    } catch (\Throwable) {}
+    } catch (\Throwable) {
+    }
     return response()->noContent();
 })->middleware('web')->name('client-error');
 
@@ -128,7 +130,3 @@ require __DIR__ . '/auth.php';
 Route::fallback(function () {
     return Inertia::render('Errors/NotFound')->toResponse(request())->setStatusCode(404);
 });
-
-
-
-
