@@ -170,7 +170,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
                                 </div>
                             )}
 
-                            {processed.length > 0 && (
+                            {/*{processed.length > 0 && (
                                 <div>
                                     <p className="text-xs font-semibold text-indigo-300 uppercase tracking-widest mb-3">
                                         Procesadas ({processed.length})
@@ -179,7 +179,7 @@ export default function AdminCompanyApplications({ applications = {} }) {
                                         {processed.map(app => <ApplicationCard key={app.id} app={app} />)}
                                     </div>
                                 </div>
-                            )}
+                            )}*/}
                         </div>
                     )}
 
