@@ -7,7 +7,6 @@ use App\Http\Requests\BecomeWorkerRequest;
 use App\Models\Company;
 use App\Models\CompanyApplication;
 use App\Models\User;
-use App\Notifications\NewWorkerApplicationForAdminNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -60,10 +59,8 @@ class WorkerController extends Controller
             'status'          => 'pending',
         ]);
 
-        $admins = User::where('is_admin', true)->get();
-        foreach ($admins as $admin) {
-            $admin->notify(new NewWorkerApplicationForAdminNotification($application));
-        }
+        // Email deshabilitado: $admins = User::where('is_admin', true)->get();
+        // foreach ($admins as $admin) { $admin->notify(new NewWorkerApplicationForAdminNotification($application)); }
 
         return back()->with('status', 'Solicitud enviada. El administrador la revisara pronto.');
     }
