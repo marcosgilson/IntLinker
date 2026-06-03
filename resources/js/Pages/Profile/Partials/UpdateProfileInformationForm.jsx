@@ -3,17 +3,20 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
-import { useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage, router } from '@inertiajs/react';
+import { useEffect } from 'react';
 
 export default function UpdateProfileInformation({
     className = '',
 }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
+    const { data, setData, patch, errors, processing, recentlySuccessful, clearErrors } =
         useForm('update-profile', {
             name: user.name,
         });
+
+    useEffect(() => { clearErrors(); }, []);
 
     const submit = (e) => {
         e.preventDefault();

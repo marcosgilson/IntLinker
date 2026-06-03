@@ -7,12 +7,14 @@ export default function BecomeStudentForm({ student, status }) {
     const [preview, setPreview] = useState(null);
     const fileRef = useRef(null);
 
-    const { data, setData, post, processing, errors, reset } = useForm('become-student', {
+    const { data, setData, post, processing, errors, reset, clearErrors } = useForm('become-student', {
         name: auth.user.name,
         school_name: '',
         school_email: '',
         student_card_image: null,
     });
+
+    useEffect(() => { clearErrors(); }, []);
 
     const isActive  = student && student.verified && (student.expires_at === null || new Date(student.expires_at) > new Date());
     const isExpired = student && student.verified && student.expires_at && new Date(student.expires_at) <= new Date();

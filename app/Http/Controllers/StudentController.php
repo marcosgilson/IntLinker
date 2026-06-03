@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ImageHelper;
 use App\Http\Requests\AddSchoolRequest;
 use App\Http\Requests\BecomeStudentRequest;
+use App\Http\Requests\RenewStudentRequest;
 use App\Models\School;
 use App\Models\Student;
 use App\Services\DocuPipeService;
@@ -58,7 +59,7 @@ class StudentController extends Controller
         return back()->with('status', 'Carnet recibido. Te notificaremos por correo cuando se complete la verificación.');
     }
 
-    public function renew(BecomeStudentRequest $request, DocuPipeService $docuPipe): RedirectResponse
+    public function renew(RenewStudentRequest $request, DocuPipeService $docuPipe): RedirectResponse
     {
         $user = $request->user();
 

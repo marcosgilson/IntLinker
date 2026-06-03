@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useForm, usePage, Link } from '@inertiajs/react';
 
 export default function BecomeWorkerForm({ companies, status }) {
@@ -12,12 +12,14 @@ export default function BecomeWorkerForm({ companies, status }) {
     const [preview, setPreview] = useState(null);
     const fileRef = useRef(null);
 
-    const { data, setData, post, processing, errors, reset } = useForm('become-worker', {
+    const { data, setData, post, processing, errors, reset, clearErrors } = useForm('become-worker', {
         name: auth.user.name,
         company_name: '',
         position: '',
         work_card_image: null,
     });
+
+    useEffect(() => { clearErrors(); }, []);
 
     const leaveForm = useForm();
 
