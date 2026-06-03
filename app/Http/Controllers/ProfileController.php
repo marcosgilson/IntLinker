@@ -89,49 +89,75 @@ class ProfileController extends Controller
 
     public function updatePortfolio(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'portfolio'                              => ['required', 'array'],
-            'portfolio.education'                    => ['sometimes', 'array', 'max:10'],
-            'portfolio.education.*.id'               => ['required', 'string', 'max:64'],
-            'portfolio.education.*.institution'      => ['required', 'string', 'max:200'],
-            'portfolio.education.*.degree'           => ['nullable', 'string', 'max:200'],
-            'portfolio.education.*.field'            => ['nullable', 'string', 'max:200'],
-            'portfolio.education.*.start_year'       => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'portfolio.education.*.end_year'         => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'portfolio.education.*.current'          => ['sometimes', 'boolean'],
-            'portfolio.education.*.description'      => ['nullable', 'string', 'max:1000'],
-            'portfolio.projects'                     => ['sometimes', 'array', 'max:8'],
-            'portfolio.projects.*.id'                => ['required', 'string', 'max:64'],
-            'portfolio.projects.*.title'             => ['required', 'string', 'max:200'],
-            'portfolio.projects.*.description'       => ['nullable', 'string', 'max:1000'],
-            'portfolio.projects.*.url'               => ['nullable', 'url', 'max:500'],
-            'portfolio.projects.*.image_url'         => ['nullable', 'string', 'max:2000000'],
-            'portfolio.gallery'                      => ['sometimes', 'array', 'max:12'],
-            'portfolio.gallery.*.id'                 => ['required', 'string', 'max:64'],
-            'portfolio.gallery.*.url'                => ['required', 'string', 'max:2000000'],
-            'portfolio.gallery.*.type'               => ['nullable', 'string', 'in:image,video,link'],
-            'portfolio.gallery.*.caption'            => ['nullable', 'string', 'max:500'],
+        $request->validate([
+            'portfolio'                         => ['required', 'array'],
+            'portfolio.bio'                     => ['nullable', 'string', 'max:1000'],
+            'portfolio.links'                   => ['sometimes', 'array'],
+            'portfolio.links.github'            => ['nullable', 'string', 'max:500'],
+            'portfolio.links.linkedin'          => ['nullable', 'string', 'max:500'],
+            'portfolio.links.website'           => ['nullable', 'string', 'max:500'],
+            'portfolio.links.twitter'           => ['nullable', 'string', 'max:500'],
+            'portfolio.education'               => ['sometimes', 'array', 'max:10'],
+            'portfolio.education.*.id'          => ['required', 'string', 'max:64'],
+            'portfolio.education.*.institution' => ['required', 'string', 'max:200'],
+            'portfolio.education.*.degree'      => ['nullable', 'string', 'max:200'],
+            'portfolio.education.*.field'       => ['nullable', 'string', 'max:200'],
+            'portfolio.education.*.start_year'  => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'portfolio.education.*.end_year'    => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'portfolio.education.*.current'     => ['sometimes', 'boolean'],
+            'portfolio.education.*.description' => ['nullable', 'string', 'max:1000'],
+            'portfolio.projects'                => ['sometimes', 'array', 'max:8'],
+            'portfolio.projects.*.id'           => ['required', 'string', 'max:64'],
+            'portfolio.projects.*.title'        => ['required', 'string', 'max:200'],
+            'portfolio.projects.*.description'  => ['nullable', 'string', 'max:1000'],
+            'portfolio.projects.*.url'          => ['nullable', 'string', 'max:500'],
+            'portfolio.projects.*.image_url'    => ['nullable', 'string', 'max:2000000'],
+            'portfolio.gallery'                 => ['sometimes', 'array', 'max:12'],
+            'portfolio.gallery.*'               => ['nullable', 'string', 'max:2000000'],
         ]);
 
-        $portfolio = $validated['portfolio'] ?? [];
-        // Strip HTML tags from all text fields
-        if (isset($portfolio['education'])) {
-            foreach ($portfolio['education'] as &$edu) {
-                foreach (['institution', 'degree', 'field', 'description'] as $f) {
-                    if (isset($edu[$f])) $edu[$f] = strip_tags($edu[$f]);
-                }
-            }
+        $raw = $request->input('portfolio', []);
+
+        // Build portfolio from only the known fields to prevent mass injection
+        $portfolio = [
+            'bio'       => isset($raw['bio'])   ? strip_tags($raw['bio'])   : null,
+            'links'     => [
+                'github'   => $raw['links']['github']   ?? null,
+                'linkedin' => $raw['links']['linkedin']  ?? null,
+                'website'  => $raw['links']['website']   ?? null,
+                'twitter'  => $raw['links']['twitter']   ?? null,
+            ],
+            'education' => [],
+            'projects'  => [],
+            'gallery'   => [],
+        ];
+
+        foreach ($raw['education'] ?? [] as $edu) {
+            $portfolio['education'][] = [
+                'id'          => $edu['id'] ?? null,
+                'institution' => strip_tags($edu['institution'] ?? ''),
+                'degree'      => strip_tags($edu['degree'] ?? ''),
+                'field'       => strip_tags($edu['field'] ?? ''),
+                'start_year'  => $edu['start_year'] ?? null,
+                'end_year'    => $edu['end_year'] ?? null,
+                'current'     => (bool) ($edu['current'] ?? false),
+                'description' => strip_tags($edu['description'] ?? ''),
+            ];
         }
-        if (isset($portfolio['projects'])) {
-            foreach ($portfolio['projects'] as &$proj) {
-                foreach (['title', 'description'] as $f) {
-                    if (isset($proj[$f])) $proj[$f] = strip_tags($proj[$f]);
-                }
-            }
+
+        foreach ($raw['projects'] ?? [] as $proj) {
+            $portfolio['projects'][] = [
+                'id'          => $proj['id'] ?? null,
+                'title'       => strip_tags($proj['title'] ?? ''),
+                'description' => strip_tags($proj['description'] ?? ''),
+                'url'         => $proj['url'] ?? null,
+                'image_url'   => $proj['image_url'] ?? null,
+            ];
         }
-        if (isset($portfolio['gallery'])) {
-            foreach ($portfolio['gallery'] as &$item) {
-                if (isset($item['caption'])) $item['caption'] = strip_tags($item['caption']);
+
+        foreach ($raw['gallery'] ?? [] as $img) {
+            if (is_string($img) && strlen($img) <= 2000000) {
+                $portfolio['gallery'][] = $img;
             }
         }
 

@@ -135,50 +135,31 @@ class CompanyController extends Controller
     {
         $this->authorize('update', $company);
 
-        $validated = $request->validate([
-            'portfolio'                              => ['required', 'array'],
-            'portfolio.education'                    => ['sometimes', 'array', 'max:10'],
-            'portfolio.education.*.id'               => ['required', 'string', 'max:64'],
-            'portfolio.education.*.institution'      => ['required', 'string', 'max:200'],
-            'portfolio.education.*.degree'           => ['nullable', 'string', 'max:200'],
-            'portfolio.education.*.field'            => ['nullable', 'string', 'max:200'],
-            'portfolio.education.*.start_year'       => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'portfolio.education.*.end_year'         => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'portfolio.education.*.current'          => ['sometimes', 'boolean'],
-            'portfolio.education.*.description'      => ['nullable', 'string', 'max:1000'],
-            'portfolio.projects'                     => ['sometimes', 'array', 'max:8'],
-            'portfolio.projects.*.id'                => ['required', 'string', 'max:64'],
-            'portfolio.projects.*.title'             => ['required', 'string', 'max:200'],
-            'portfolio.projects.*.description'       => ['nullable', 'string', 'max:1000'],
-            'portfolio.projects.*.url'               => ['nullable', 'url', 'max:500'],
-            'portfolio.projects.*.image_url'         => ['nullable', 'string', 'max:2000000'],
-            'portfolio.gallery'                      => ['sometimes', 'array', 'max:12'],
-            'portfolio.gallery.*.id'                 => ['required', 'string', 'max:64'],
-            'portfolio.gallery.*.url'                => ['required', 'string', 'max:2000000'],
-            'portfolio.gallery.*.type'               => ['nullable', 'string', 'in:image,video,link'],
-            'portfolio.gallery.*.caption'            => ['nullable', 'string', 'max:500'],
+        $request->validate([
+            'portfolio'              => ['required', 'array'],
+            'portfolio.about'        => ['nullable', 'string', 'max:1500'],
+            'portfolio.sector'       => ['nullable', 'string', 'max:100'],
+            'portfolio.size'         => ['nullable', 'string', 'max:50'],
+            'portfolio.benefits'     => ['sometimes', 'array', 'max:20'],
+            'portfolio.benefits.*'   => ['string', 'max:60'],
+            'portfolio.why_us'       => ['nullable', 'string', 'max:1500'],
+            'portfolio.website'      => ['nullable', 'string', 'max:500'],
+            'portfolio.linkedin'     => ['nullable', 'string', 'max:500'],
         ]);
 
-        $portfolio = $validated['portfolio'] ?? [];
-        if (isset($portfolio['education'])) {
-            foreach ($portfolio['education'] as &$edu) {
-                foreach (['institution', 'degree', 'field', 'description'] as $f) {
-                    if (isset($edu[$f])) $edu[$f] = strip_tags($edu[$f]);
-                }
-            }
-        }
-        if (isset($portfolio['projects'])) {
-            foreach ($portfolio['projects'] as &$proj) {
-                foreach (['title', 'description'] as $f) {
-                    if (isset($proj[$f])) $proj[$f] = strip_tags($proj[$f]);
-                }
-            }
-        }
-        if (isset($portfolio['gallery'])) {
-            foreach ($portfolio['gallery'] as &$item) {
-                if (isset($item['caption'])) $item['caption'] = strip_tags($item['caption']);
-            }
-        }
+        $raw = $request->input('portfolio', []);
+
+        $portfolio = [
+            'about'    => isset($raw['about'])   ? strip_tags($raw['about'])   : null,
+            'sector'   => $raw['sector']   ?? null,
+            'size'     => $raw['size']     ?? null,
+            'why_us'   => isset($raw['why_us'])  ? strip_tags($raw['why_us'])  : null,
+            'website'  => $raw['website']  ?? null,
+            'linkedin' => $raw['linkedin'] ?? null,
+            'benefits' => array_map('strip_tags', array_values(array_filter(
+                is_array($raw['benefits'] ?? null) ? $raw['benefits'] : []
+            ))),
+        ];
 
         $company->update(['portfolio' => $portfolio]);
         return back()->with('status', 'portfolio-updated');

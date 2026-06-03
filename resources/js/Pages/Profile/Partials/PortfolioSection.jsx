@@ -201,6 +201,12 @@ export default function PortfolioSection({ portfolio: initialPortfolio, isOwner 
             const file = e.target.files[0];
             if (!file) return;
             if (imgs.length >= LIMITS.gallery) return;
+            // ~1.5 MB limit (base64 is ~33% larger than raw)
+            if (file.size > 1024 * 1024) {
+                alert('La imagen no puede superar 1 MB.');
+                e.target.value = '';
+                return;
+            }
             setUploading(true);
             const reader = new FileReader();
             reader.onload = () => {
