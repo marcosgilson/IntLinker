@@ -122,7 +122,7 @@ export default function CompanyEnrollmentsIndex({ company, enrollments = [] }) {
                     </div>
                 </nav>
 
-                <div className="pt-24 pb-12 max-w-6xl mx-auto px-6">
+                <div className="pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="mb-8">
                         <h1 className="text-3xl font-extrabold text-white">Candidatos</h1>
                         <p className="text-gray-300 mt-1">{company.name} · {enrollments.length} postulación{enrollments.length !== 1 ? 'es' : ''} en total</p>

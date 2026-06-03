@@ -39,7 +39,7 @@ export default function StudentProfile({ student, enrollments = [], portfolio = 
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-4xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
 
                     {/* Student card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">

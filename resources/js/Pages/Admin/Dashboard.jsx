@@ -615,7 +615,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                     </div>
                 </nav>
 
-                <div className="pt-24 sm:pt-28 pb-12 w-full max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="pt-24 sm:pt-28 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="mb-8">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Panel de administración</h1>
                         <p className="text-gray-300 mt-1">Verifica identidades y gestióna empresas.</p>

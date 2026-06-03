@@ -99,7 +99,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
 
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-[110rem] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-14 sm:h-16 flex items-center justify-between gap-3">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
                         <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-20 sm:h-20 w-auto" />
                         </Link>
@@ -112,7 +112,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-[110rem] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 space-y-4 sm:space-y-5">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-5">
                     {/* Header card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="h-24 bg-gradient-to-r from-indigo-500 to-violet-600" />

@@ -262,7 +262,7 @@ export default function MyCompany({ companies = [] }) {
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-[90rem] mx-auto px-4 sm:px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mi empresa</h1>

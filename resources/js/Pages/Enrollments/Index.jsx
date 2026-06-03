@@ -130,7 +130,7 @@ export default function EnrollmentsIndex({ enrollments = [], activeSlots = 0, ma
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-4xl mx-auto px-4 sm:px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6">
                     {/* Header */}
                     <div className="mb-8">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mis postulaciónes</h1>

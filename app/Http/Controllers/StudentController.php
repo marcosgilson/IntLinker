@@ -20,7 +20,6 @@ class StudentController extends Controller
         $user = $request->user();
 
         if ($user->student) {
-            // Allow re-submission if previous verification failed
             if ($user->student->docupipe_status === 'failed') {
                 $user->student->delete();
             } else {

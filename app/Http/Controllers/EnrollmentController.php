@@ -52,7 +52,7 @@ class EnrollmentController extends Controller
         $company = Company::findOrFail($request->validated('company_id'));
 
         $error = DB::transaction(function () use ($student, $company) {
-            // Lock the student row so concurrent requests queue here
+
             $locked = $student->newQuery()->lockForUpdate()->find($student->id);
 
             if ($locked->hasEnrolledIn($company->id)) {

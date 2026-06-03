@@ -322,7 +322,7 @@ export default function CompaniesIndex({
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-[90rem] mx-auto px-4 sm:px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="mb-6">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Empresas colaboradoras</h1>
                         <p className="text-gray-300 mt-1">Busca por empresa o localidad.</p>
