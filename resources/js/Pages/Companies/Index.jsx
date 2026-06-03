@@ -125,7 +125,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                                 {companySuggestións.map(c => (
                                     <button key={c.id} onMouseDown={() => addCompany(c.name)}
                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-violet-50 hover:text-violet-700 flex items-center gap-2 transition">
-                                        <span className="text-violet-400">🏢</span> {c.name}
+                                        {c.name}
                                     </button>
                                 ))}
                             </>
@@ -149,7 +149,7 @@ function UnifiedSearch({ allCities, allCompanyNames, selectedCities, selectedCom
                     ))}
                     {selectedCompanies.map(name => (
                         <span key={name} className="inline-flex items-center gap-1.5 bg-violet-100 text-violet-700 text-sm font-medium px-3 py-1 rounded-full">
-                            🏢 {name}
+                            {name}
                             <button onClick={() => removeCompany(name)} className="hover:text-violet-900">
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12"/>

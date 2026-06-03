@@ -58,7 +58,7 @@ export default function BecomeWorkerForm({ companies, status }) {
                         </h3>
                         {currentCompany ? (
                             <p className="text-xs text-violet-700 mt-1">
-                                {isVerifiedWorker ? '✓' : '⏳'} {currentCompany.name}
+                                {isVerifiedWorker ? 'Verificado:' : 'Pendiente:'} {currentCompany.name}
                                 {currentCompany.city ? ` · ${currentCompany.city}` : ''}
                             </p>
                         ) : (

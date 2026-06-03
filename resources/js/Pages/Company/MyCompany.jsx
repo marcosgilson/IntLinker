@@ -211,7 +211,7 @@ function CompanyCard({ company }) {
                     <div className="px-4 sm:px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-gray-100">
                         {company.applications_email && (
                             <p className="text-xs text-gray-400">
-                                📧 {company.applications_email}
+                                {company.applications_email}
                             </p>
                         )}
                         <div className="flex w-full flex-col sm:flex-row sm:w-auto sm:items-center gap-3 sm:ml-auto">

@@ -75,7 +75,7 @@ function EnrollmentRow({ enrollment, companyId }) {
                             disabled={acceptForm.processing || removeForm.processing}
                             className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg transition disabled:opacity-50"
                         >
-                            {acceptForm.processing ? 'Aceptando…' : '✓ Aceptar candidato'}
+                            {acceptForm.processing ? 'Aceptando…' : 'Aceptar candidato'}
                         </button>
                     )}
                     <button

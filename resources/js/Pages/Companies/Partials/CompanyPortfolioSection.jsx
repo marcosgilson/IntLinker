@@ -41,10 +41,10 @@ function TagList({ tags, onRemove }) {
     );
 }
 
-function InfoRow({ icon, children }) {
+function InfoRow({ children }) {
     return (
         <div className="flex items-center gap-2 text-sm text-gray-600">
-            <span className="text-gray-400">{icon}</span>
+            
             {children}
         </div>
     );
@@ -194,8 +194,8 @@ export default function CompanyPortfolioSection({ company, canManage }) {
                 <div className="px-6 py-5 space-y-5">
                     {(portfolio.sector || portfolio.size) && (
                         <div className="flex flex-wrap gap-3">
-                            {portfolio.sector && <InfoRow icon="🏢">{portfolio.sector}</InfoRow>}
-                            {portfolio.size && <InfoRow icon="👥">{portfolio.size} empleados</InfoRow>}
+                            {portfolio.sector && <InfoRow>{portfolio.sector}</InfoRow>}
+                            {portfolio.size && <InfoRow>{portfolio.size} empleados</InfoRow>}
                         </div>
                     )}
                     {portfolio.about && (

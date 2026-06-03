@@ -95,7 +95,7 @@ function ApplicationCard({ app }) {
                             disabled={approveForm.processing || rejectForm.processing}
                             className="inline-flex min-h-10 w-full sm:w-auto items-center justify-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg transition disabled:opacity-50"
                         >
-                            {approveForm.processing ? 'Aprobando…' : '✓ Aprobar solicitud'}
+                            {approveForm.processing ? 'Aprobando…' : 'Aprobar solicitud'}
                         </button>
                         <button
                             onClick={doReject}

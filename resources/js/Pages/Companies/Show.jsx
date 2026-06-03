@@ -145,7 +145,7 @@ export default function CompaniesShow({ company, canManageLogo = false, canManag
                                             enrollmentStatus === 'rejected' || enrollmentStatus === 'cancelled' ? 'bg-red-50 text-red-500 border border-red-200' : '',
                                         ].join(' ')}>
                                             {enrollmentStatus === 'waiting'   && 'Postulacion enviada — en espera'}
-                                            {enrollmentStatus === 'accepted'  && '✓ Postulacion aceptada'}
+                                            {enrollmentStatus === 'accepted'  && 'Postulacion aceptada'}
                                             {(enrollmentStatus === 'rejected' || enrollmentStatus === 'cancelled') && 'Postulacion rechazada'}
                                         </span>
                                     ) : (
