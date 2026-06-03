@@ -588,7 +588,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
 
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 h-auto sm:h-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-3 sm:py-0">
+                    <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 h-auto sm:h-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-3 sm:py-0">
                         <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-12 sm:h-20 w-auto" />
                         </Link>
@@ -615,7 +615,7 @@ export default function AdminDashboard({ applications = {}, pendingEmailUsers = 
                     </div>
                 </nav>
 
-                <div className="pt-24 sm:pt-28 pb-12 w-full max-w-screen-2xl mx-auto px-4 sm:px-6">
+                <div className="pt-24 sm:pt-28 pb-12 w-full px-4 sm:px-6 lg:px-10 xl:px-16">
                     <div className="mb-8">
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Panel de administración</h1>
                         <p className="text-gray-300 mt-1">Verifica identidades y gestióna empresas.</p>

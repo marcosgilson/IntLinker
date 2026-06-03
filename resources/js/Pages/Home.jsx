@@ -91,7 +91,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
 
                 {/* Navbar */}
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
+                    <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 h-14 sm:h-16 flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
                             <IntLinkerLogo className="h-20 sm:h-20 w-auto" />
                         </div>
@@ -187,7 +187,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
                         style={{ backgroundImage: 'radial-gradient(circle at 25% 50%, #6366f1 0%, transparent 50%), radial-gradient(circle at 75% 20%, #8b5cf6 0%, transparent 50%)' }}
                     />
 
-                    <div className="relative max-w-screen-2xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
+                    <div className="relative w-full px-4 sm:px-6 lg:px-10 xl:px-16 py-16 sm:py-24 text-center">
                         {companyCount > 0 && (
                             <span className="inline-flex items-center gap-2 bg-white/10 text-indigo-200 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-white/20">
                                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
@@ -247,7 +247,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
 
                 {/* Como funciona */}
                 <section id="como-funciona" className="py-16 sm:py-24 bg-gray-50">
-                    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6">
+                    <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
                         <div className="text-center mb-12 sm:mb-16">
                             <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Proceso</span>
                             <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mt-2">Asi de facil funciona</h2>
@@ -271,7 +271,7 @@ export default function Home({ companies = [], stats = {}, canResetPassword = tr
 
                 {/* Empresas colaboradoras */}
                 <section id="empresas" className="py-16 sm:py-24 bg-white">
-                    <div className="max-w-screen-2xl mx-auto px-6">
+                    <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
                         <div className="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-12">
                             <div>
                                 <span className="text-indigo-600 font-semibold text-sm uppercase tracking-widest">Empresas</span>
