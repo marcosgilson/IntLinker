@@ -130,7 +130,7 @@ export default function Edit({ status, student, companies, profile_photo_url, ba
             <Head title="Perfil — IntLinker" />
 
             <div className="py-4 sm:py-8">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-5">
+                <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-5">
 
                     {/* Back link */}
                     <div className="flex items-center gap-2 mb-1">

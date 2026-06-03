@@ -247,7 +247,7 @@ export default function MyCompany({ companies = [] }) {
             <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-violet-900 font-sans">
                 {/* Navbar */}
                 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
+                    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
                         <Link href="/inicio" className="flex items-center gap-2">
                             <IntLinkerLogo className="h-20 sm:h-20 w-auto" />
                         </Link>
@@ -262,7 +262,7 @@ export default function MyCompany({ companies = [] }) {
                     </div>
                 </nav>
 
-                <div className="pt-20 sm:pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="pt-20 sm:pt-24 pb-12 max-w-screen-2xl mx-auto px-4 sm:px-6">
                     <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Mi empresa</h1>

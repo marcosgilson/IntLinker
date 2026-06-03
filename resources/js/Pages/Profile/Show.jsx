@@ -17,7 +17,7 @@ export default function Show({ profileUser, profileRoles, profile_photo_url, ban
             <Head title={`${user.name} — IntLinker`} />
 
             <div className="py-6 sm:py-8">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-4">
+                <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 space-y-4">
 
                     {/* Profile card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
