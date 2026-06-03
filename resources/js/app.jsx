@@ -7,11 +7,16 @@ import ErrorBoundary from './Components/ErrorBoundary';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-// 419 — CSRF token expired: reload to get a fresh token
+// 419 — CSRF token expired: show a brief toast and reload to get a fresh token
 router.on('invalid', (event) => {
     if (event.detail.response.status === 419) {
         event.preventDefault();
-        window.location.reload();
+        const toast = document.createElement('div');
+        toast.textContent = 'Sesión renovada. Por favor, inténtalo de nuevo.';
+        toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.3)';
+        document.body.appendChild(toast);
+        setTimeout(() => window.location.reload(), 1500);
+        return;
     }
     // 500 / 503 — server error on an Inertia request: go to home instead of showing raw HTML
     if (event.detail.response.status >= 500) {
